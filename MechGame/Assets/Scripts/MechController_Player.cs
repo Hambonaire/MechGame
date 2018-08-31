@@ -32,30 +32,38 @@ public class MechController_Player : MonoBehaviour {
     public Transform leftArmBarrel;
 
     [SerializeField]
-    int ammoRight;
+    int ammoSecondary;
     [SerializeField]
-    int ammoLeft;
+    int ammoPrimary;
 
-    public GameObject bulletRight;
-    public float rateOfFireRight;
-    float nextFireRight;
-    public int maxAmmoRight;
-    public float reloadTimeRight;
-    float nextReloadRightEnd;
-    bool reloadingRight = false;
+    public GameObject bulletSecondary;
+    public float rateOfFireSecondary;
+    float nextFireSecondary;
+    public int maxAmmoSecondary;
+    public float reloadTimeSecondary;
+    float nextReloadSecondaryEnd;
+    bool reloadingSecondary = false;
+    [Range(0f, 100f)]
+    public float spraySecondary;    
+    public float bulletSpeedSecondary;
+    public float bulletLifeSecondary;
 
-    public GameObject bulletLeft;  
-    public float rateOfFireLeft;  
-    float nextFireLeft;  
-    public int maxAmmoLeft;
-    public float reloadTimeLeft;    
-    float nextReloadLeftEnd;   
-    bool reloadingLeft = false;
+    public GameObject bulletPrimary;  
+    public float rateOfFirePrimary;  
+    float nextFirePrimary;  
+    public int maxAmmoPrimary;
+    public float reloadTimePrimary;    
+    float nextReloadPrimaryEnd;   
+    bool reloadingPrimary = false;
+    [Range(0f, 100f)]
+    public float sprayPrimary;
+    public float bulletSpeedPrimary;
+    public float bulletLifePrimary;
 
     private void Start()
     {
-        ammoRight = maxAmmoRight;
-        ammoLeft = maxAmmoLeft;
+        ammoSecondary = maxAmmoSecondary;
+        ammoPrimary = maxAmmoPrimary;
     }
 
     private void Update()
@@ -65,24 +73,24 @@ public class MechController_Player : MonoBehaviour {
         // Get input direction
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
-        if (Input.GetMouseButton(0))
-        {
-            FireRight(rateOfFireRight);
-        }
-        if (reloadingRight && Time.time > nextReloadRightEnd)
-        {
-            ammoRight = maxAmmoRight;
-            reloadingRight = false;
-        }
-
         if (Input.GetMouseButton(1))
         {
-            FireLeft(rateOfFireLeft);
+            FireSecondary(rateOfFireSecondary);
         }
-        if (reloadingLeft && Time.time > nextReloadLeftEnd)
+        if (reloadingSecondary && Time.time > nextReloadSecondaryEnd)
         {
-            ammoLeft = maxAmmoLeft;
-            reloadingLeft = false;
+            ammoSecondary = maxAmmoSecondary;
+            reloadingSecondary = false;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            FirePrimary(rateOfFirePrimary);
+        }
+        if (reloadingPrimary && Time.time > nextReloadPrimaryEnd)
+        {
+            ammoPrimary = maxAmmoPrimary;
+            reloadingPrimary = false;
         }
 
         #endregion
@@ -126,52 +134,60 @@ public class MechController_Player : MonoBehaviour {
         Debug.DrawRay(leftArmBarrel.position, forwardLeft, Color.green);
     }
 
-    private void FireRight(float RoFRight)
+    private void FireSecondary(float RoFSecondary)
     {
-        if (Time.time > nextFireRight && ammoRight > 0)
+        if (Time.time > nextFireSecondary && ammoSecondary > 0)
         {
-            nextFireRight = Time.time + RoFRight;
-            ammoRight--;
+            nextFireSecondary = Time.time + RoFSecondary;
+            ammoSecondary--;
+
+            // Random bullet spray
+            float randX = Random.Range(-spraySecondary / 50, spraySecondary / 50);
+            float randZ = Random.Range(-spraySecondary / 50, spraySecondary / 50);
 
             // Create the Bullet from the Bullet Prefab
-            var bullet = (GameObject)Instantiate(bulletRight, rightArmBarrel.position, torso.transform.rotation);
-            bullet.transform.rotation *= Quaternion.Euler(90, 0, 0);
+            var bullet = (GameObject)Instantiate(bulletSecondary, leftArmBarrel.position, torso.transform.rotation);
+            bullet.transform.rotation *= Quaternion.Euler(90 + randX, 0, randZ);
 
             // Add velocity to the bullet
-            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 150;
+            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeedSecondary;
 
-            // Destroy the bullet after 2 seconds
-            Destroy(bullet, 2.0f);
+            // Destroy the bullet after _ seconds
+            Destroy(bullet, bulletLifeSecondary);
         }
-        if (ammoRight == 0 && !reloadingRight)
+        if (ammoSecondary == 0 && !reloadingSecondary)
         {
-            nextReloadRightEnd = Time.time + reloadTimeRight;
-            reloadingRight = true;
+            nextReloadSecondaryEnd = Time.time + reloadTimeSecondary;
+            reloadingSecondary = true;
         }
 
     }
 
-    private void FireLeft(float RoFLeft)
+    private void FirePrimary(float RoFPrimary)
     {
-        if (Time.time > nextFireLeft && ammoLeft > 0)
+        if (Time.time > nextFirePrimary && ammoPrimary > 0)
         {
-            nextFireLeft = Time.time + RoFLeft;
-            ammoLeft--;
+            nextFirePrimary = Time.time + RoFPrimary;
+            ammoPrimary--;
+
+            // Random bullet spray
+            float randX = Random.Range(-sprayPrimary / 50, sprayPrimary / 50);
+            float randZ = Random.Range(-sprayPrimary / 50, sprayPrimary / 50);
 
             // Create the Bullet from the Bullet Prefab
-            var bullet = (GameObject)Instantiate(bulletLeft, leftArmBarrel.position, torso.transform.rotation);
-            bullet.transform.rotation *= Quaternion.Euler(90, 0, 0);
+            var bullet = (GameObject)Instantiate(bulletPrimary, rightArmBarrel.position, torso.transform.rotation);
+            bullet.transform.rotation *= Quaternion.Euler(90 + randX, 0, randZ);
 
             // Add velocity to the bullet
-            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 80;
+            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeedPrimary;
 
-            // Destroy the bullet after 2 seconds
-            Destroy(bullet, 5.0f);
+            // Destroy the bullet after _ seconds
+            Destroy(bullet, bulletLifePrimary);
         }
-        if (ammoLeft == 0 && !reloadingLeft)
+        if (ammoPrimary == 0 && !reloadingPrimary)
         {
-            nextReloadLeftEnd = Time.time + reloadTimeLeft;
-            reloadingLeft = true;
+            nextReloadPrimaryEnd = Time.time + reloadTimePrimary;
+            reloadingPrimary = true;
         }
 
     }

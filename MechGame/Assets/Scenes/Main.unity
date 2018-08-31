@@ -180,7 +180,10 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of bc2ec71... REvert
 --- !u!1 &200964743
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +269,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 200964743}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+<<<<<<< HEAD
 >>>>>>> parent of a03a9d2... Made Prefabs
+=======
+>>>>>>> parent of bc2ec71... REvert
 --- !u!1 &258950162
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,10 +385,14 @@ Transform:
   m_LocalRotation: {x: -0.24184473, y: -0.66446304, z: 0.24184473, w: 0.66446304}
   m_LocalPosition: {x: 0.5, y: -1.4, z: 0.2}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LocalScale: {x: 0.39999998, y: 1.5, z: 0.19999999}
 =======
   m_LocalScale: {x: 0.3, y: 1.5, z: 0.19999999}
 >>>>>>> parent of a03a9d2... Made Prefabs
+=======
+  m_LocalScale: {x: 0.3, y: 1.5, z: 0.19999999}
+>>>>>>> parent of bc2ec71... REvert
   m_Children: []
   m_Father: {fileID: 976395031}
   m_RootOrder: 3
@@ -1144,10 +1154,17 @@ Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 898360544}
   m_LocalRotation: {x: 0.45451945, y: -0.54167527, z: -0.45451945, w: 0.54167527}
   m_LocalPosition: {x: -0.5, y: -0.79999995, z: 0.2}
   m_LocalScale: {x: 0.3, y: 1.0000002, z: 0.19999999}
+=======
+  m_GameObject: {fileID: 632979696}
+  m_LocalRotation: {x: -0.24184473, y: -0.66446304, z: 0.24184473, w: 0.66446304}
+  m_LocalPosition: {x: -0.5, y: -1.4, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 1.5, z: 0.19999999}
+>>>>>>> parent of bc2ec71... REvert
   m_Children: []
   m_Father: {fileID: 976395031}
   m_RootOrder: 5
@@ -1365,6 +1382,101 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+<<<<<<< HEAD
+=======
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f365e00e56d49ad489c1b4fcf090cbf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 4
+  runSpeed: 8
+  cam: {fileID: 534669902}
+  torso: {fileID: 1332711748}
+  legs: {fileID: 976395030}
+  characterController: {fileID: 633082353}
+  rightArmBarrel: {fileID: 1271490625}
+  leftArmBarrel: {fileID: 477339345}
+  ammoSecondary: 0
+  ammoPrimary: 0
+  bulletSecondary: {fileID: 819979783}
+  rateOfFireSecondary: 0.5
+  maxAmmoSecondary: 4
+  reloadTimeSecondary: 10
+  spraySecondary: 0
+  bulletSpeedSecondary: 80
+  bulletLifeSecondary: 10
+  bulletPrimary: {fileID: 2122745223}
+  rateOfFirePrimary: 0.15
+  maxAmmoPrimary: 30
+  reloadTimePrimary: 5
+  sprayPrimary: 19.5
+  bulletSpeedPrimary: 150
+  bulletLifePrimary: 2
+--- !u!1 &819979783
+=======
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157054955095608, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114355257792966474, guid: 0fad8a17db8854e42a6a2268fcbb6c1d,
+        type: 2}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 534669902}
+    - target: {fileID: 114355257792966474, guid: 0fad8a17db8854e42a6a2268fcbb6c1d,
+        type: 2}
+      propertyPath: bulletSecondary
+      value: 
+      objectReference: {fileID: 819979783}
+    - target: {fileID: 114355257792966474, guid: 0fad8a17db8854e42a6a2268fcbb6c1d,
+        type: 2}
+      propertyPath: bulletPrimary
+      value: 
+      objectReference: {fileID: 2122745223}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!1 &819979783 stripped
+>>>>>>> a03a9d280ddaf5362ed5f79f4166479d44734505
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1822311578745774, guid: 2f61fc269ca00fa4ab3a748fc09296e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1761224775}
+--- !u!1001 &1226681127
+Prefab:
+  m_ObjectHideFlags: 0
+>>>>>>> parent of bc2ec71... REvert
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1529,9 +1641,13 @@ Transform:
   - {fileID: 898360545}
   - {fileID: 632979697}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   - {fileID: 200964744}
 >>>>>>> parent of a03a9d2... Made Prefabs
+=======
+  - {fileID: 200964744}
+>>>>>>> parent of bc2ec71... REvert
   m_Father: {fileID: 633082351}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2515,9 +2631,13 @@ GameObject:
   - component: {fileID: 2122745224}
   - component: {fileID: 2122745228}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   - component: {fileID: 2122745229}
 >>>>>>> parent of a03a9d2... Made Prefabs
+=======
+  - component: {fileID: 2122745229}
+>>>>>>> parent of bc2ec71... REvert
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -2609,7 +2729,10 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of bc2ec71... REvert
 --- !u!96 &2122745229
 TrailRenderer:
   serializedVersion: 2
@@ -2738,4 +2861,12 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+<<<<<<< HEAD
 >>>>>>> parent of a03a9d2... Made Prefabs
+=======
+=======
+  m_CorrespondingSourceObject: {fileID: 1320342091092506, guid: 0fa21b5058335a641ba4b3e81755767d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1226681127}
+>>>>>>> a03a9d280ddaf5362ed5f79f4166479d44734505
+>>>>>>> parent of bc2ec71... REvert
