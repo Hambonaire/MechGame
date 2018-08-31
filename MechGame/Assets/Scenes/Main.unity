@@ -180,6 +180,7 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &200964743
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +266,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 200964743}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+=======
+>>>>>>> parent of 9d9c10b... made terrain
 --- !u!1 &258950162
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 364614926}
   m_LocalRotation: {x: -0.24184473, y: -0.66446304, z: 0.24184473, w: 0.66446304}
   m_LocalPosition: {x: 0.5, y: -1.4, z: 0.2}
-  m_LocalScale: {x: 0.3, y: 1.5, z: 0.19999999}
+  m_LocalScale: {x: 0.39999998, y: 1.5, z: 0.19999999}
   m_Children: []
   m_Father: {fileID: 976395031}
   m_RootOrder: 3
@@ -669,7 +672,7 @@ Transform:
   m_GameObject: {fileID: 632979696}
   m_LocalRotation: {x: -0.24184473, y: -0.66446304, z: 0.24184473, w: 0.66446304}
   m_LocalPosition: {x: -0.5, y: -1.4, z: 0.2}
-  m_LocalScale: {x: 0.3, y: 1.5, z: 0.19999999}
+  m_LocalScale: {x: 0.39999998, y: 1.5, z: 0.19999999}
   m_Children: []
   m_Father: {fileID: 976395031}
   m_RootOrder: 6
@@ -784,22 +787,16 @@ MonoBehaviour:
   characterController: {fileID: 633082353}
   rightArmBarrel: {fileID: 1271490625}
   leftArmBarrel: {fileID: 477339345}
-  ammoSecondary: 0
-  ammoPrimary: 0
-  bulletSecondary: {fileID: 819979783}
-  rateOfFireSecondary: 0.5
-  maxAmmoSecondary: 4
-  reloadTimeSecondary: 10
-  spraySecondary: 0
-  bulletSpeedSecondary: 80
-  bulletLifeSecondary: 10
-  bulletPrimary: {fileID: 2122745223}
-  rateOfFirePrimary: 0.15
-  maxAmmoPrimary: 30
-  reloadTimePrimary: 5
-  sprayPrimary: 19.5
-  bulletSpeedPrimary: 150
-  bulletLifePrimary: 2
+  ammoRight: 0
+  ammoLeft: 0
+  bulletRight: {fileID: 2122745223}
+  rateOfFireRight: 0.15
+  maxAmmoRight: 30
+  reloadTimeRight: 4
+  bulletLeft: {fileID: 819979783}
+  rateOfFireLeft: 0.5
+  maxAmmoLeft: 4
+  reloadTimeLeft: 10
 --- !u!1 &819979783
 =======
   m_Modification:
@@ -1105,7 +1102,6 @@ Transform:
   - {fileID: 1495401451}
   - {fileID: 898360545}
   - {fileID: 632979697}
-  - {fileID: 200964744}
   m_Father: {fileID: 633082351}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2088,7 +2084,6 @@ GameObject:
   - component: {fileID: 2122745225}
   - component: {fileID: 2122745224}
   - component: {fileID: 2122745228}
-  - component: {fileID: 2122745229}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -2179,6 +2174,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+<<<<<<< HEAD
 --- !u!96 &2122745229
 TrailRenderer:
   serializedVersion: 2
@@ -2312,3 +2308,5 @@ TrailRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1226681127}
 >>>>>>> a03a9d280ddaf5362ed5f79f4166479d44734505
+=======
+>>>>>>> parent of 9d9c10b... made terrain
