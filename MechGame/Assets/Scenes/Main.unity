@@ -181,6 +181,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of bc2ec71... REvert
@@ -565,6 +566,8 @@ Transform:
   m_Father: {fileID: 1201408325}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of 35c00ee... Merge branch 'master' of https://github.com/Hambonaire/MechGame
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 633082351}
   mouseSensitivity: 8
+<<<<<<< HEAD
 --- !u!1 &632979696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,8 +1365,12 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &898360545
+=======
+--- !u!4 &633082351 stripped
+>>>>>>> parent of 35c00ee... Merge branch 'master' of https://github.com/Hambonaire/MechGame
 Transform:
   m_ObjectHideFlags: 0
+<<<<<<< HEAD
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 898360544}
@@ -1414,6 +1422,9 @@ BoxCollider:
   bulletLifePrimary: 2
 --- !u!1 &819979783
 =======
+=======
+  serializedVersion: 2
+>>>>>>> parent of 35c00ee... Merge branch 'master' of https://github.com/Hambonaire/MechGame
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
@@ -1468,7 +1479,6 @@ BoxCollider:
   m_SourcePrefab: {fileID: 100100000, guid: 0fad8a17db8854e42a6a2268fcbb6c1d, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &819979783 stripped
->>>>>>> a03a9d280ddaf5362ed5f79f4166479d44734505
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1822311578745774, guid: 2f61fc269ca00fa4ab3a748fc09296e6,
     type: 2}
@@ -1524,6 +1534,7 @@ MeshFilter:
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &924483034
 GameObject:
+<<<<<<< HEAD
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -2870,3 +2881,8 @@ TrailRenderer:
   m_PrefabInternal: {fileID: 1226681127}
 >>>>>>> a03a9d280ddaf5362ed5f79f4166479d44734505
 >>>>>>> parent of bc2ec71... REvert
+=======
+  m_CorrespondingSourceObject: {fileID: 1320342091092506, guid: 0fa21b5058335a641ba4b3e81755767d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1226681127}
+>>>>>>> parent of 35c00ee... Merge branch 'master' of https://github.com/Hambonaire/MechGame
