@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: MachineGun(R)
+  m_EditorClassIdentifier: 
+  name: Machine Gun (R)
+  icon: {fileID: 0}
+  isDefaultItem: 1
+  prefab: {fileID: 1918660623350212, guid: c71304514de58144da34cab827443389, type: 2}
+  barrel: {fileID: 4969626331196826, guid: c71304514de58144da34cab827443389, type: 2}
+  maxAmmo: 30
+  bullet: {fileID: 1445590625573682, guid: 955f59690e1e3bc47b7381fb6faaff38, type: 2}
+  rateOfFire: 0.15
+  reloadTime: 5
+  bulletSpary: 26
+  bulletSpeed: 150
+  bulletLife: 2

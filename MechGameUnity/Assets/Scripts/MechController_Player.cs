@@ -23,48 +23,87 @@ public class MechController_Player : MonoBehaviour
     private float turnSmoothTime_Legs = .12f;
 
     public GameObject cam;
-    public GameObject torso;
-    public GameObject legs;
+    public GameObject torsoRoot;
+    public GameObject legsRoot;
     public CharacterController characterController;
 
     private Vector3 inputDirection;
 
-    public Transform rightArmBarrel;
-    public Transform leftArmBarrel;
+    public Cockpit cockpitItem;
+    public Weapon rightWeaponItem;
+    public Weapon leftWeaponItem;
+
+    GameObject rightArmWeapon;
+    GameObject leftArmWeapon;
+    GameObject cockpit;
+
+    Transform torsoConnection;
+    Transform rightArmBarrel;
+    Transform leftArmBarrel;
 
     [SerializeField]
     int ammoSecondary;
     [SerializeField]
     int ammoPrimary;
 
-    public GameObject bulletSecondary;
-    public float rateOfFireSecondary;
+    #region WeaponStats
+    GameObject bulletSecondary;
+    float rateOfFireSecondary;
     float nextFireSecondary;
-    public int maxAmmoSecondary;
-    public float reloadTimeSecondary;
+    int maxAmmoSecondary;
+    float reloadTimeSecondary;
     float nextReloadSecondaryEnd;
     bool reloadingSecondary = false;
     [Range(0f, 100f)]
-    public float spraySecondary;
-    public float bulletSpeedSecondary;
-    public float bulletLifeSecondary;
+    float spraySecondary;
+    float bulletSpeedSecondary;
+    float bulletLifeSecondary;
 
-    public GameObject bulletPrimary;
-    public float rateOfFirePrimary;
+    GameObject bulletPrimary;
+    float rateOfFirePrimary;
     float nextFirePrimary;
-    public int maxAmmoPrimary;
-    public float reloadTimePrimary;
+    int maxAmmoPrimary;
+    float reloadTimePrimary;
     float nextReloadPrimaryEnd;
     bool reloadingPrimary = false;
     [Range(0f, 100f)]
-    public float sprayPrimary;
-    public float bulletSpeedPrimary;
-    public float bulletLifePrimary;
+    float sprayPrimary;
+    float bulletSpeedPrimary;
+    float bulletLifePrimary;
+    #endregion
 
     private void Start()
     {
+        cockpit = Instantiate(cockpitItem.prefab, torsoRoot.transform.position, Quaternion.identity);
+        cockpit.transform.parent = torsoRoot.transform;
+
+        bulletPrimary= rightWeaponItem.bullet;
+        rateOfFirePrimary = rightWeaponItem.rateOfFire;
+        maxAmmoPrimary = rightWeaponItem.maxAmmo;
+        reloadTimePrimary = rightWeaponItem.reloadTime;
+        sprayPrimary = rightWeaponItem.bulletSpary;
+        bulletSpeedPrimary = rightWeaponItem.bulletSpeed;
+        bulletLifePrimary = rightWeaponItem.bulletLife;      
+
+        bulletSecondary = leftWeaponItem.bullet;
+        rateOfFireSecondary = leftWeaponItem.rateOfFire;
+        maxAmmoSecondary = leftWeaponItem.maxAmmo;
+        reloadTimeSecondary = leftWeaponItem.reloadTime;
+        spraySecondary = leftWeaponItem.bulletSpary;
+        bulletSpeedSecondary = leftWeaponItem.bulletSpeed;
+        bulletLifeSecondary = leftWeaponItem.bulletLife;
+
         ammoSecondary = maxAmmoSecondary;
         ammoPrimary = maxAmmoPrimary;
+
+        rightArmWeapon = Instantiate(rightWeaponItem.prefab, cockpitItem.rightArmConnection.position, Quaternion.identity) as GameObject;
+        rightArmWeapon.transform.parent = torsoRoot.transform;
+
+        leftArmWeapon = Instantiate(leftWeaponItem.prefab, cockpitItem.leftArmConnection.position, Quaternion.identity) as GameObject;
+        leftArmWeapon.transform.parent = torsoRoot.transform;
+
+        rightArmBarrel = rightArmWeapon.transform.Find("Barrel");
+        leftArmBarrel = leftArmWeapon.transform.Find("Barrel");
     }
 
     private void Update()
@@ -121,15 +160,15 @@ public class MechController_Player : MonoBehaviour
         characterController.Move((velocity + transform.forward * currentSpeed) * Time.deltaTime);
 
         //Torso Turning
-        Vector3 eulerRotation = new Vector3(cam.transform.transform.eulerAngles.x - 5, cam.transform.eulerAngles.y, torso.transform.eulerAngles.z);
-        torso.transform.rotation = Quaternion.Euler(eulerRotation);
+        Vector3 eulerRotation = new Vector3(cam.transform.transform.eulerAngles.x - 5, cam.transform.eulerAngles.y, torsoRoot.transform.eulerAngles.z);
+        torsoRoot.transform.rotation = Quaternion.Euler(eulerRotation);
 
         #endregion
 
-        Vector3 forwardRight = torso.transform.TransformDirection(Vector3.forward) * 10;
+        Vector3 forwardRight = torsoRoot.transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(rightArmBarrel.position, forwardRight, Color.red);
 
-        Vector3 forwardLeft = torso.transform.TransformDirection(Vector3.forward) * 10;
+        Vector3 forwardLeft = torsoRoot.transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(leftArmBarrel.position, forwardLeft, Color.green);
     }
 
@@ -145,7 +184,7 @@ public class MechController_Player : MonoBehaviour
             float randZ = Random.Range(-spraySecondary / 50, spraySecondary / 50);
 
             // Create the Bullet from the Bullet Prefab
-            var bullet = (GameObject)Instantiate(bulletSecondary, leftArmBarrel.position, torso.transform.rotation);
+            var bullet = (GameObject)Instantiate(bulletSecondary, leftArmBarrel.position, torsoRoot.transform.rotation);
             bullet.transform.rotation *= Quaternion.Euler(90 + randX, 0, randZ);
 
             // Add velocity to the bullet
@@ -173,11 +212,12 @@ public class MechController_Player : MonoBehaviour
             float randZ = Random.Range(-sprayPrimary / 50, sprayPrimary / 50);
 
             // Create the Bullet from the Bullet Prefab
-            var bullet = (GameObject)Instantiate(bulletPrimary, rightArmBarrel.position, torso.transform.rotation);
+            var bullet = (GameObject)Instantiate(bulletPrimary, rightArmBarrel.position, torsoRoot.transform.rotation);
             bullet.transform.rotation *= Quaternion.Euler(90 + randX, 0, randZ);
 
             // Add velocity to the bullet
             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeedPrimary;
+            Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
 
             // Destroy the bullet after _ seconds
             Destroy(bullet, bulletLifePrimary);
