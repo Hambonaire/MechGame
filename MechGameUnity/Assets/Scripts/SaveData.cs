@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
@@ -9,25 +9,34 @@ using System.Text;
 /// - Writing this data to a file.
 /// - Reading this data from a file.
 /// </summary>
-public class SaveData
+public class SaveData : MonoBehaviour
 {
     #region Defaults
     private const int DEFAULT_MONEY = 0;
-    public const int DEFAULT_COCKPIT_ID = 0;
-    public const int DEFAULT_WEAPON_LEFT_ID = 0;
-    public const int DEFAULT_WEAPON_RIGHT_ID = 0;
-    public const int DEFAULT_LEGS_ID = 0;
-    public const int DEFAULT_LEVEL = 0;
+    private const int DEFAULT_COCKPIT_ID = 0;
+    private const int DEFAULT_WEAPON_LEFT_ID = 0;
+    private const int DEFAULT_WEAPON_RIGHT_ID = 0;
+    private const int DEFAULT_LEGS_ID = 0;
+    private const int DEFAULT_LEVEL = 0;
     #endregion
 
-    public int cockpit = DEFAULT_COCKPIT_ID;
-    public int weaponLeft = DEFAULT_WEAPON_LEFT_ID;
-    public int weaponRight = DEFAULT_WEAPON_RIGHT_ID;
-    public int legs = DEFAULT_LEGS_ID;
-    public int lastLevel = DEFAULT_LEVEL;
-    public int money = DEFAULT_MONEY;
-    public List<int> accessories = new List<int>();
-    public List<int> inventoryItems = new List<int>();
+    private int cockpit { get; set; } = DEFAULT_COCKPIT_ID ;
+    private int weaponLeft { get; set; } = DEFAULT_WEAPON_LEFT_ID;
+    private int weaponRight { get; set; } = DEFAULT_WEAPON_RIGHT_ID;
+    private int legs { get; set; } = DEFAULT_LEGS_ID;
+    private int lastLevel { get; set; } = DEFAULT_LEVEL;
+    private int money { get; set; } = DEFAULT_MONEY;
+    private List<int> accessories { get; set; } = new List<int>();
+    private List<int> inventoryItems { get; set; } = new List<int>();
+
+    public static SaveData instance_Save;
+
+    void Awake()
+    {
+        instance_Save = this;
+
+        InventoryManager.onItemChangeCallback += Save;
+    }
 
     public void Save()
     {
