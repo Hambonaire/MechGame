@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
     #region Singleton
 
     public static InventoryManager instance;
-
+    
     void Awake()
     {
         instance = this;
@@ -23,11 +23,20 @@ public class InventoryManager : MonoBehaviour
     // Our current list of items in the inventory
     public List<Item> items = new List<Item>();
 
-    // Add a new item if enough room
+    // Add a new item
     public void Add(Item item)
     {
         items.Add(item);
 
+        List<int> ids = new List<int>
+
+        for each (item item_ in items)
+        {
+            ids.Add(item_.id);
+        }
+        
+        instance_Save.SetInventoryItems(ids);
+        
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
@@ -37,12 +46,17 @@ public class InventoryManager : MonoBehaviour
     {
         items.Remove(item);
 
+        List<int> ids = new List<int>
+
+        for each (item item_ in items)
+        {
+            ids.Add(item_.id);
+        }
+        
+        instance_Save.SetInventoryItems(ids);
+
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
-
-    public void Save()
-    {
-
-    }
+    
 }
