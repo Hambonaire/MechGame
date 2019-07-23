@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: QuadRockets
+  m_EditorClassIdentifier: 
+  name: Quad Rockets
+  icon: {fileID: 0}
+  isDefaultItem: 0
+  rightPrefab: {fileID: 0}
+  leftPrefab: {fileID: 1393261572092598, guid: f9464396019bce9438d11da9da10369b, type: 2}
+  maxAmmo: 4
+  bullet: {fileID: 1893817608812382, guid: ce590b6d64327bb41a029b08af022c0b, type: 2}
+  ballisticDamage: 100
+  energyDamage: 50
+  rateOfFire: 0.5
+  reloadTime: 10
+  bulletSpray: 0
+  bulletSpeed: 80
+  bulletLife: 4

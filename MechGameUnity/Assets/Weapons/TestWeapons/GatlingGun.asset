@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: GatlingGun
+  m_EditorClassIdentifier: 
+  name: Gatling Gun
+  icon: {fileID: 0}
+  isDefaultItem: 0
+  rightPrefab: {fileID: 1058704429028480, guid: 8028a7b817b7d5e47b7e7f11b242b6c9,
+    type: 2}
+  leftPrefab: {fileID: 1029266228591848, guid: 2ba514149113a474fbb13598e982d944, type: 2}
+  maxAmmo: 200
+  bullet: {fileID: 1445590625573682, guid: 2cffcdda5f2c5ef4e80d6ea986541df8, type: 2}
+  ballisticDamage: 3
+  energyDamage: 0
+  rateOfFire: 0.05
+  reloadTime: 10
+  bulletSpray: 20
+  bulletSpeed: 200
+  bulletLife: 1

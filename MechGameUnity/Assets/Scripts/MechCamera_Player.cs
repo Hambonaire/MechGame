@@ -41,8 +41,8 @@ public class MechCamera_Player : MonoBehaviour
     {
         //target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
         camZoom = zoomMinMax.y;
         camRotEnabled = true;
 
@@ -59,33 +59,24 @@ public class MechCamera_Player : MonoBehaviour
 
     void LateUpdate()
     {
+        Rotate();
 
-        #region Camera angle control
-        if (camRotEnabled)
-        {
-            yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
-            pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-            pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
+        Move();
 
-            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
-        }
-        #endregion
-
-        #region Camera zoom control
+        /*
         //camZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         //camZoom = Mathf.Clamp(camZoom, zoomMinMax.x, zoomMinMax.y);
         //currentZoom = Mathf.SmoothDamp(currentZoom, camZoom, ref zoomVelocity, zoomSmoothTime);
-        #endregion
 
         //Sets the camera's angle to calculated position
-        transform.eulerAngles = currentRotation;
+        
 
         //Sets the would-be position of the camera
         //normalPosition = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp(0, 1, (currentZoom / zoomMinMax.y));
-        transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset;
+        
 
         //Checks if the camera would-be clipping an object, if not then sets the camera to the would-be position
-        /*if (!clipping)
+        if (!clipping)
         {
             #region Basic clipping movement
             //smoother zoom but not full up-close
@@ -95,13 +86,13 @@ public class MechCamera_Player : MonoBehaviour
             //transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom - camVerticalOffset));
             #endregion
         }
-        */
+        
 
         //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
         //RaycastHit wallHit = new RaycastHit();
 
         //Checks to see if there is an object between the player and would-be position of the camera
-        /*if (Physics.Raycast(target.position, (normalPosition - target.position).normalized, out wallHit, Vector3.Distance(this.transform.position, target.position)))
+        if (Physics.Raycast(target.position, (normalPosition - target.position).normalized, out wallHit, Vector3.Distance(this.transform.position, target.position)))
         {
 
             clipping = true;
@@ -121,5 +112,31 @@ public class MechCamera_Player : MonoBehaviour
             clipping = false;
         }
         */
+    }
+
+    void Move()
+    {
+        transform.position =
+            //For height
+            (target.position + new Vector3(0, (target.gameObject.GetComponent<MechController_Player>().GetScaleFactor() - 1) * 3, 0))
+            -
+            // For distance behind
+            (transform.forward * (camZoom + Mathf.Pow(target.gameObject.GetComponent<MechController_Player>().GetScaleFactor() - 1, 2f)))
+            +
+            (transform.up * camVerticalOffset);
+    }
+
+    void Rotate()
+    {
+        if (camRotEnabled)
+        {
+            yaw += Input.GetAxis("Mouse X") * mouseSensitivity;
+            pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+            pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
+
+            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+        }
+
+        transform.eulerAngles = currentRotation;
     }
 }

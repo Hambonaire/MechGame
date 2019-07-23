@@ -1,0 +1,178 @@
+fileFormatVersion: 2
+guid: cca736b813477bc47bf090ce50df450f
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Base
+    100002: Base.001
+    100004: Cylinder
+    100006: Cylinder.001
+    100008: Cylinder.002
+    100010: Cylinder.003
+    100012: Cylinder.004
+    100014: Cylinder.005
+    100016: Cylinder.006
+    100018: Cylinder.007
+    100020: Cylinder.008
+    100022: Cylinder.009
+    100024: Cylinder.010
+    100026: Cylinder.011
+    100028: Dish
+    100030: Rotator
+    100032: //RootNode
+    100034: Cube
+    400000: Base
+    400002: Base.001
+    400004: Cylinder
+    400006: Cylinder.001
+    400008: Cylinder.002
+    400010: Cylinder.003
+    400012: Cylinder.004
+    400014: Cylinder.005
+    400016: Cylinder.006
+    400018: Cylinder.007
+    400020: Cylinder.008
+    400022: Cylinder.009
+    400024: Cylinder.010
+    400026: Cylinder.011
+    400028: Dish
+    400030: Rotator
+    400032: //RootNode
+    400034: Cube
+    2100000: Metal
+    2100002: DishBody
+    2100004: ConcreteBlock
+    2100006: No Name
+    2300000: Base
+    2300002: Base.001
+    2300004: Cylinder
+    2300006: Cylinder.001
+    2300008: Cylinder.002
+    2300010: Cylinder.003
+    2300012: Cylinder.004
+    2300014: Cylinder.005
+    2300016: Cylinder.006
+    2300018: Cylinder.007
+    2300020: Cylinder.008
+    2300022: Cylinder.009
+    2300024: Cylinder.010
+    2300026: Cylinder.011
+    2300028: Dish
+    2300030: Rotator
+    2300032: Cube
+    3300000: Base
+    3300002: Base.001
+    3300004: Cylinder
+    3300006: Cylinder.001
+    3300008: Cylinder.002
+    3300010: Cylinder.003
+    3300012: Cylinder.004
+    3300014: Cylinder.005
+    3300016: Cylinder.006
+    3300018: Cylinder.007
+    3300020: Cylinder.008
+    3300022: Cylinder.009
+    3300024: Cylinder.010
+    3300026: Cylinder.011
+    3300028: Dish
+    3300030: Rotator
+    3300032: Cube
+    4300000: Cylinder.011
+    4300002: Cylinder.010
+    4300004: Cylinder.009
+    4300006: Cylinder.008
+    4300008: Cylinder.007
+    4300010: Cylinder.006
+    4300012: Cylinder.005
+    4300014: Cylinder.004
+    4300016: Cylinder.003
+    4300018: Cylinder.002
+    4300020: Cylinder.001
+    4300022: Cylinder
+    4300024: Base.001
+    4300026: Rotator
+    4300028: Dish
+    4300030: Base
+    4300032: Cube
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 40
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

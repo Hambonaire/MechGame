@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: MissileBox_001
+  m_EditorClassIdentifier: 
+  name: Valkyrie VLK-01
+  icon: {fileID: 0}
+  isDefaultItem: 0
+  rightPrefab: {fileID: 1618754641527456, guid: 2aabe856ea89da247b8ba7b0241109f0,
+    type: 2}
+  leftPrefab: {fileID: 1194511120266532, guid: f23bec633490d8f4a8525f386a92bd73, type: 2}
+  maxAmmo: 24
+  bullet: {fileID: 1893817608812382, guid: ce590b6d64327bb41a029b08af022c0b, type: 2}
+  ballisticDamage: 30
+  energyDamage: 10
+  rateOfFire: 0.2
+  reloadTime: 15
+  bulletSpray: 40
+  bulletSpeed: 80
+  bulletLife: 5

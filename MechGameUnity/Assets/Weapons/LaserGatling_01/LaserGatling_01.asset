@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: LaserGatling_01
+  m_EditorClassIdentifier: 
+  name: Laser Gatling
+  icon: {fileID: 0}
+  isDefaultItem: 0
+  rightPrefab: {fileID: 7053266149424593988, guid: ea617df2d8ab95a4f8f4d28244ac35ba,
+    type: 3}
+  leftPrefab: {fileID: 7054541443169686879, guid: 64b7c7313ade038498e143ae9c0db133,
+    type: 3}
+  fireMode: 1
+  chargeTimeIfChargeType: 0
+  projectilesCountIfMultiType: 0
+  beamTimeIfBeamType: 1
+  autoTarget: 0
+  maxAmmo: 1000
+  bullet: {fileID: 3123661855471947661, guid: 50d9952e68268d345bd023ffa47a6bfc, type: 3}
+  ballisticDamage: 0
+  energyDamage: 4
+  rateOfFire: 0.17
+  reloadTime: 1
+  bulletSpray: 30
+  bulletSpeed: 275
+  bulletLife: 3
