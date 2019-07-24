@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Side { Both, Left, Right }
+public enum WeaponStyle { Regular, Underhand, Shoulder}
 public enum FireType { Regular, Beam, Charge, Multi}
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Mecha/Weapon")]
@@ -11,6 +13,8 @@ public class Weapon : Item {
     public GameObject rightPrefab;
     public GameObject leftPrefab;
 
+    public Side side = Side.Both;
+    public WeaponStyle style = WeaponStyle.Regular;
     public FireType fireMode = FireType.Regular;
     public float chargeTimeIfChargeType;
     public int projectilesCountIfMultiType;
