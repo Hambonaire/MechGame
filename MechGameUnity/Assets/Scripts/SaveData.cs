@@ -3,13 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
-/// <summary>
-/// Responsible for:
-/// - Maintaining the stats for a player and their progress
-/// - Writing this data to a file.
-/// - Reading this data from a file.
-/// </summary>
-public class SaveData : MonoBehaviour
+public class SaveData
 {
     #region Defaults
     private const int DEFAULT_MONEY = 0;
@@ -20,25 +14,20 @@ public class SaveData : MonoBehaviour
     private const int DEFAULT_LEVEL = 0;
     #endregion
 
+    #region data
     private int cockpit { get; set; } = DEFAULT_COCKPIT_ID ;
-    private int weaponLeft { get; set; } = DEFAULT_WEAPON_LEFT_ID;
-    private int weaponRight { get; set; } = DEFAULT_WEAPON_RIGHT_ID;
+    //private int weaponLeft { get; set; } = DEFAULT_WEAPON_LEFT_ID;
+    //private int weaponRight { get; set; } = DEFAULT_WEAPON_RIGHT_ID;
+    private List<int> leftWeapons { get; set; } = new List<int>();
+    private List<int> rightWeapons { get; set; } = new List<int>();
     private int legs { get; set; } = DEFAULT_LEGS_ID;
     private int lastLevel { get; set; } = DEFAULT_LEVEL;
     private int money { get; set; } = DEFAULT_MONEY;
     private List<int> accessories { get; set; } = new List<int>();
     private List<int> inventoryItems { get; set; } = new List<int>();
+    #endregion
 
-    public static SaveData instance_Save;
-
-    void Awake()
-    {
-        instance_Save = this;
-
-        InventoryManager.onItemChangeCallback += Save;
-    }
-
-    public void Save()
+    public static void Save()
     {
         string json = JsonUtility.ToJson(this, true);
 
@@ -96,8 +85,8 @@ public class SaveData : MonoBehaviour
         return (
             money == DEFAULT_MONEY &&
             cockpit == DEFAULT_COCKPIT_ID &&
-            weaponLeft == DEFAULT_WEAPON_LEFT_ID &&
-            weaponRight == DEFAULT_WEAPON_RIGHT_ID &&
+            //weaponLeft == DEFAULT_WEAPON_LEFT_ID &&
+            //weaponRight == DEFAULT_WEAPON_RIGHT_ID &&
             legs == DEFAULT_LEGS_ID &&
             lastLevel == DEFAULT_LEVEL &&
             accessories.Count == 0 &&
