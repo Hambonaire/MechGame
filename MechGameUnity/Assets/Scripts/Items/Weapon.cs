@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Side { Both, Left, Right }
+public enum Side { Left, Right }
 public enum WeaponStyle { Regular, Underhand, Shoulder}
 public enum FireType { Regular, Beam, Charge, Multi}
 
