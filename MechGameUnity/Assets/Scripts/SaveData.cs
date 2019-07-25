@@ -15,21 +15,21 @@ public class SaveData
     #endregion
 
     #region data
-    private int cockpit { get; set; } = DEFAULT_COCKPIT_ID ;
+    public int cockpit = DEFAULT_COCKPIT_ID ;
     //private int weaponLeft { get; set; } = DEFAULT_WEAPON_LEFT_ID;
     //private int weaponRight { get; set; } = DEFAULT_WEAPON_RIGHT_ID;
-    private List<int> leftWeapons { get; set; } = new List<int>();
-    private List<int> rightWeapons { get; set; } = new List<int>();
-    private int legs { get; set; } = DEFAULT_LEGS_ID;
-    private int lastLevel { get; set; } = DEFAULT_LEVEL;
-    private int money { get; set; } = DEFAULT_MONEY;
-    private List<int> accessories { get; set; } = new List<int>();
-    private List<int> inventoryItems { get; set; } = new List<int>();
+    public List<int> leftWeapons = new List<int>();
+    public List<int> rightWeapons = new List<int>();
+    public int legs = DEFAULT_LEGS_ID;
+    public int lastLevel = DEFAULT_LEVEL;
+    public int money = DEFAULT_MONEY;
+    public List<int> accessories = new List<int>();
+    public List<int> inventoryItems = new List<int>();
     #endregion
 
-    public static void Save()
+    public void Save()
     {
-        string json = JsonUtility.ToJson(this, true);
+        string json = JsonUtility.ToJson(this);
 
         int key = 129;
 
@@ -92,5 +92,6 @@ public class SaveData
             accessories.Count == 0 &&
             inventoryItems.Count == 0);
     }
+
 
 }

@@ -1,21 +1,18 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Database : MonoBehaviour
 {
-    // Make Singleton instance
+    // Make Singleton instance (?)
 
 	public List<Item> database = new List<Item>();
 
-    public Item GetActual(string byID)
+    public Item GetActual(int byID)
     {
-        if (string.IsNullOrEmpty(byID))
+        for (int i  = 0; i < database.Count; i++)
         {
-            return null;
-        }
-
-        for (int i  = 0; i < database.Length; i++)
-        {
-            if (database[i].itemID == byID)
+            if (database[i].idNum == byID)
             {
                 return database[i];
             }
@@ -25,16 +22,11 @@ public class Database : MonoBehaviour
         return null;
     }
 
-    public Item GetClone(string byID)
+    public Item GetClone(int byID)
     {
-        if (string.IsNullOrEmpty(byID))
+        for (int i = 0; i < database.Count; i++)
         {
-            return null;
-        }
-
-        for (int i = 0; i < database.Length; i++)
-        {
-            if (database[i].itemID == byID)
+            if (database[i].idNum == byID)
             {
                 var clone = Instantiate(database[i]);
                 return clone;

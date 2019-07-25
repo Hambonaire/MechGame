@@ -21,37 +21,38 @@ public class EquipmentManager : MonoBehaviour {
 		_instance = this;
 	}
 
-	#endregion
+    #endregion
 
-	Item currentCockpit;
-	Item currentLegs;
-	List<Item> currentWepLeftRegular = new List<Item>;
-	List<Item> currentWepLeftUnderhand = new List<Item>;
-	List<Item> currentWepLeftShoulder = new List<Item>;
-	List<Item> currentWepRightRegular = new List<Item>;
-	List<Item> currentWepRightUnderhand = new List<Item>;
-	List<Item> currentWepRightShoulder = new List<Item>;
-	List<Item> currentAccessories = new List<Item>;
+    Cockpit currentCockpit;
+    Legs currentLegs;
+	List<Weapon> currentWepLeftRegular = new List<Weapon>();
+	List<Weapon> currentWepLeftUnderhand = new List<Weapon>();
+	List<Weapon> currentWepLeftShoulder = new List<Weapon>();
+	List<Weapon> currentWepRightRegular = new List<Weapon>();
+	List<Weapon> currentWepRightUnderhand = new List<Weapon>();
+	List<Weapon> currentWepRightShoulder = new List<Weapon>();
+	List<Item> currentAccessories = new List<Item>();
 
 	// Callback for when an item is equipped
 	public delegate void OnEquipmentChanged(Item newItem, Item oldItem);
 	public event OnEquipmentChanged onEquipmentChanged;
 
 	InventoryManager inventory;
+    Database database;
 
 	void Start ()
 	{
 		inventory = InventoryManager.instance;
-		SaveData save = Load();
-				
-		currentLegs = Database.Instance.GetActual(save.legs);
-		
-		currentCockpit = Database.Instance.GetActual(save.cockpit);
+		SaveData save = SaveData.Load(); 
+
+        currentLegs = database.GetActual(save.legs) as Legs;
+
+        currentCockpit = database.GetActual(save.cockpit) as Cockpit;
 		
 		// Save Wep data as left and right
 		// loop thru saved left and rights and emplace here if enough space, which there should be since reading directly from save		
 		foreach (int i in save.leftWeapons) {
-			Weapon wep = Database.Instance.GetActual(i) as Weapon;
+			Weapon wep = database.GetActual(i) as Weapon;
 			if (wep.style == WeaponStyle.Regular && currentWepLeftRegular.Count < currentCockpit.leftRegularCount) {
 				currentWepLeftRegular.Add(wep);
 			} else if (wep.style == WeaponStyle.Underhand && currentWepLeftUnderhand.Count < currentCockpit.leftUnderhandCount) {
@@ -62,7 +63,7 @@ public class EquipmentManager : MonoBehaviour {
 		}
 		
 		foreach (int i in save.rightWeapons) {
-			Weapon wep = Database.Instance.GetActual(i) as Weapon;
+			Weapon wep = database.GetActual(i) as Weapon;
 			if (wep.style == WeaponStyle.Regular && currentWepRightRegular.Count < currentCockpit.rightRegularCount) {
 				currentWepRightRegular.Add(wep);
 			} else if (wep.style == WeaponStyle.Underhand && currentWepRightUnderhand.Count < currentCockpit.rightUnderhandCount) {
@@ -73,7 +74,7 @@ public class EquipmentManager : MonoBehaviour {
 		}
 		
 		foreach (int i in save.accessories) {
-			Item it = Database.Instance.GetActual(i);
+			Item it = database.GetActual(i);
 			if (currentAccessories.Count < currentCockpit.accessoryCount) {
 				currentAccessories.Add(it);
 			}
@@ -93,27 +94,27 @@ public class EquipmentManager : MonoBehaviour {
 	// Equip a new item
 	public void Equip (Item newItem)
 	{
-		Equipment oldItem = null;
+		Item oldItem = null;
 
 		// Find out what slot the item fits in
 		// and put it there.
-		int slotIndex = (int)newItem.equipSlot;
+		//int slotIndex = (int)newItem.equipSlot;
 
 		// If there was already an item in the slot
 		// make sure to put it back in the inventory
-		if (currentEquipment[slotIndex] != null)
-		{
-			oldItem = currentEquipment [slotIndex];
+		//if (currentEquipment[slotIndex] != null)
+		//{
+		//	oldItem = currentEquipment [slotIndex];
 
-			inventory.Add (oldItem);
-		}
+		//	inventory.Add (oldItem);
+		//}
 
 		// An item has been equipped so we trigger the callback
-		if (onEquipmentChanged != null)
-			onEquipmentChanged.Invoke(newItem, oldItem);
+		//if (onEquipmentChanged != null)
+		//	onEquipmentChanged.Invoke(newItem, oldItem);
 
-		currentEquipment [slotIndex] = newItem;
-		Debug.Log(newItem.name + " equipped!");
+		//currentEquipment [slotIndex] = newItem;
+		//Debug.Log(newItem.name + " equipped!");
 
 		//if (newItem.prefab) {
 		//	AttachToMesh (newItem.prefab, slotIndex);
@@ -123,21 +124,21 @@ public class EquipmentManager : MonoBehaviour {
 	}
 
 	void Unequip(int slotIndex) {
-		if (currentEquipment[slotIndex] != null)
-		{
-			Equipment oldItem = currentEquipment [slotIndex];
-			inventory.Add(oldItem);
+		//if (currentEquipment[slotIndex] != null)
+		//{
+		//	Equipment oldItem = currentEquipment [slotIndex];
+		//	inventory.Add(oldItem);
 				
-			currentEquipment [slotIndex] = null;
+		//	currentEquipment [slotIndex] = null;
 			//if (currentMeshes [slotIndex] != null) {
 			//	Destroy (currentMeshes [slotIndex].gameObject);
 			//}
 
 			// Equipment has been removed so we trigger the callback
-			if (onEquipmentChanged != null)
-				onEquipmentChanged.Invoke(null, oldItem);
+			//if (onEquipmentChanged != null)
+			//	onEquipmentChanged.Invoke(null, oldItem);
 			
-		}
+		//}
 
 	
 	}

@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     {
         instance = this;
 
-        onItemChangedCallback += Save;
+        //onItemChangedCallback += Save;
     }
 
     #endregion
@@ -28,14 +28,14 @@ public class InventoryManager : MonoBehaviour
     {
         items.Add(item);
 
-        List<int> ids = new List<int>
+        List<int> ids = new List<int>();
 
-        for each (item item_ in items)
+        foreach (Item item_ in items)
         {
-            ids.Add(item_.id);
+            ids.Add(item_.idNum);
         }
         
-        instance_Save.SetInventoryItems(ids);
+        //SaveData.SetInventoryItems(ids);
         
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
@@ -46,14 +46,14 @@ public class InventoryManager : MonoBehaviour
     {
         items.Remove(item);
 
-        List<int> ids = new List<int>
+        List<int> ids = new List<int>();
 
-        for each (item item_ in items)
+        foreach (Item item_ in items)
         {
-            ids.Add(item_.id);
+            ids.Add(item_.idNum);
         }
-        
-        instance_Save.SetInventoryItems(ids);
+
+        //SaveData.SetInventoryItems(ids);
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
