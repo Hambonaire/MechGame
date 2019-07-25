@@ -4,6 +4,41 @@ using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour {
 
+	Cockpit currentCockpit;
+    Legs currentLegs;
+	/*
+	List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>();
+		List<List<Weapon>> leftWeapons = new List<List<Weapon>>(); // 0
+			List<Weapon> WepLeftRegular = new List<Weapon>(); // 0,0
+			List<Weapon> WepLeftUnderhand = new List<Weapon>(); // 0,1
+			List<Weapon> WepLeftShoulder = new List<Weapon>(); // 0,2
+		List<List<Weapon>> rightWeapons = new List<List<Weapon>>(); // 1
+			List<Weapon> WepRightRegular = new List<Weapon>(); // 1,0
+			List<Weapon> WepRightUnderhand = new List<Weapon>(); // 1,1
+			List<Weapon> WepRightShoulder = new List<Weapon>(); //1,2
+	*/
+	var currentWeapons = new List<List<List<Weapon>>>() {
+		new List<List<Weapon>>() {	// 0	Left
+			new List<Weapon>(),		// 0,0	Left Reg
+			new List<Weapon>(),		// 0,1	Left UH
+			new List<Weapon>()		// 0,2	Left Shld
+		},
+		new List<List<Weapon>>() {	// 1	Right
+			new List<Weapon>(),		// 1,0	Right Reg
+			new List<Weapon>(),		// 1,1	Right UH
+			new List<Weapon>()		// 1,2	Right Shld
+		}
+	};
+	
+	List<Item> currentAccessories = new List<Item>();
+
+	// Callback for when an item is equipped
+	public delegate void OnEquipmentChanged(Item newItem, Item oldItem);
+	public event OnEquipmentChanged onEquipmentChanged;
+
+	InventoryManager inventory;
+    Database database;
+	
 	#region Singleton
 
 	public static EquipmentManager instance {
@@ -23,23 +58,6 @@ public class EquipmentManager : MonoBehaviour {
 
     #endregion
 
-    Cockpit currentCockpit;
-    Legs currentLegs;
-	List<Weapon> currentWepLeftRegular = new List<Weapon>();
-	List<Weapon> currentWepLeftUnderhand = new List<Weapon>();
-	List<Weapon> currentWepLeftShoulder = new List<Weapon>();
-	List<Weapon> currentWepRightRegular = new List<Weapon>();
-	List<Weapon> currentWepRightUnderhand = new List<Weapon>();
-	List<Weapon> currentWepRightShoulder = new List<Weapon>();
-	List<Item> currentAccessories = new List<Item>();
-
-	// Callback for when an item is equipped
-	public delegate void OnEquipmentChanged(Item newItem, Item oldItem);
-	public event OnEquipmentChanged onEquipmentChanged;
-
-	InventoryManager inventory;
-    Database database;
-
 	void Start ()
 	{
 		inventory = InventoryManager.instance;
@@ -51,8 +69,13 @@ public class EquipmentManager : MonoBehaviour {
 		
 		// Save Wep data as left and right
 		// loop thru saved left and rights and emplace here if enough space, which there should be since reading directly from save		
-		foreach (int i in save.leftWeapons) {
+		foreach (int i in save.weapons) {
 			Weapon wep = database.GetActual(i) as Weapon;
+			
+			if (currentWeapons[(int) wep.side][(int) wep.style].Count < currentCockpit.weaponMap[(int) wep.side][(int) wep.style]) {
+					currentWeapons[(int) wep.side][(int) wep.style].Add(wep);
+			}
+			/*	
 			if (wep.style == WeaponStyle.Regular && currentWepLeftRegular.Count < currentCockpit.leftRegularCount) {
 				currentWepLeftRegular.Add(wep);
 			} else if (wep.style == WeaponStyle.Underhand && currentWepLeftUnderhand.Count < currentCockpit.leftUnderhandCount) {
@@ -60,9 +83,12 @@ public class EquipmentManager : MonoBehaviour {
 			} else if (wep.style == WeaponStyle.Shoulder && currentWepLeftShoulder.Count < currentCockpit.leftShoulderCount) {
 				currentWepLeftShoulder.Add(wep);
 			}
+			*/
 		}
 		
+		/*
 		foreach (int i in save.rightWeapons) {
+			
 			Weapon wep = database.GetActual(i) as Weapon;
 			if (wep.style == WeaponStyle.Regular && currentWepRightRegular.Count < currentCockpit.rightRegularCount) {
 				currentWepRightRegular.Add(wep);
@@ -71,7 +97,9 @@ public class EquipmentManager : MonoBehaviour {
 			} else if (wep.style == WeaponStyle.Shoulder && currentWepRightShoulder.Count < currentCockpit.rightShoulderCount) {
 				currentWepRightShoulder.Add(wep);
 			}
+			
 		}
+		*/
 		
 		foreach (int i in save.accessories) {
 			Item it = database.GetActual(i);
@@ -100,6 +128,29 @@ public class EquipmentManager : MonoBehaviour {
 		// and put it there.
 		//int slotIndex = (int)newItem.equipSlot;
 
+		if (newItem is Cockpit) 
+		{
+			// Have to recheck weapons and accessories for space... call Equip()(?)
+		}
+		else if (newItem is Legs)
+		{
+			if (currentLegs != null) {
+				oldItem = currentLegs;
+				inventory.Add (oldItem);
+			}
+			
+			if (onEquipmentChanged != null)
+				onEquipmentChanged.Invoke(newItem, oldItem);
+			
+			currentLegs = newItem;
+			
+			// REBUILD MECH
+		}
+		else if (newItem is Weapon)
+		{
+			
+		}
+		
 		// If there was already an item in the slot
 		// make sure to put it back in the inventory
 		//if (currentEquipment[slotIndex] != null)
