@@ -4,15 +4,20 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Cockpit", menuName = "Mecha/Cockpit")]
 public class Cockpit : Item {
-
-    public int rightRegularCount = 1;
-    public int rightUnderhandCount = 0;
-    public int rightShoulderCount = 0;
     
     public int leftRegularCount = 1;
     public int leftUnderhandCount = 0;
     public int leftShoulderCount = 0;
     
+    public int rightRegularCount = 1;
+    public int rightUnderhandCount = 0;
+    public int rightShoulderCount = 0;
+
+    public Dictionary<int, Dictonary<int, int>> weaponMap = new Dictionary<int, Dictionary<int, int>>() {
+        { 0, new Dictionary<int, int> { { 0, leftRegularCount }, { 1, leftUnderhandCount }, { 2, leftShoulderCount } } },
+        { 1, new Dictionary<int, int> { { 0, rightRegularCount }, { 1, rightUnderhandCount }, { 2, rightUnderhandCount } } }
+    };
+
     public int accessoryCount = 0;
     
     public GameObject prefab;
