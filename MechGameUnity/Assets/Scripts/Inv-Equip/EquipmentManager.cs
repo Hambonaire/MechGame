@@ -6,17 +6,7 @@ public class EquipmentManager : MonoBehaviour {
 
 	Cockpit currentCockpit;
     Legs currentLegs;
-    /*
-	List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>();
-		List<List<Weapon>> leftWeapons = new List<List<Weapon>>(); // 0
-			List<Weapon> WepLeftRegular = new List<Weapon>(); // 0,0
-			List<Weapon> WepLeftUnderhand = new List<Weapon>(); // 0,1
-			List<Weapon> WepLeftShoulder = new List<Weapon>(); // 0,2
-		List<List<Weapon>> rightWeapons = new List<List<Weapon>>(); // 1
-			List<Weapon> WepRightRegular = new List<Weapon>(); // 1,0
-			List<Weapon> WepRightUnderhand = new List<Weapon>(); // 1,1
-			List<Weapon> WepRightShoulder = new List<Weapon>(); //1,2
-	*/
+   
     List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>() {
 		new List<List<Weapon>>() {	// 0	Left
 			new List<Weapon>(),		// 0,0	Left Reg
@@ -64,66 +54,53 @@ public class EquipmentManager : MonoBehaviour {
 		SaveData save = SaveData.Load(); 
 
         currentLegs = database.GetActual(save.legs) as Legs;
-
         currentCockpit = database.GetActual(save.cockpit) as Cockpit;
 		
-		// Save Wep data as left and right
-		// loop thru saved left and rights and emplace here if enough space, which there should be since reading directly from save		
 		foreach (int i in save.weapons) {
 			Weapon wep = database.GetActual(i) as Weapon;
 			
+			// Add if room
 			if (currentWeapons[(int) wep.side][(int) wep.style].Count < currentCockpit.weaponMap[(int) wep.side][(int) wep.style]) {
-					currentWeapons[(int) wep.side][(int) wep.style].Add(wep);
+				currentWeapons[(int) wep.side][(int) wep.style].Add(wep);
 			}
-			/*	
-			if (wep.style == WeaponStyle.Regular && currentWepLeftRegular.Count < currentCockpit.leftRegularCount) {
-				currentWepLeftRegular.Add(wep);
-			} else if (wep.style == WeaponStyle.Underhand && currentWepLeftUnderhand.Count < currentCockpit.leftUnderhandCount) {
-				currentWepLeftUnderhand.Add(wep);
-			} else if (wep.style == WeaponStyle.Shoulder && currentWepLeftShoulder.Count < currentCockpit.leftShoulderCount) {
-				currentWepLeftShoulder.Add(wep);
+			// Add to inventory if no room
+			else
+			{
+				inventory.Add(wep);
 			}
-			*/
 		}
-		
-		/*
-		foreach (int i in save.rightWeapons) {
-			
-			Weapon wep = database.GetActual(i) as Weapon;
-			if (wep.style == WeaponStyle.Regular && currentWepRightRegular.Count < currentCockpit.rightRegularCount) {
-				currentWepRightRegular.Add(wep);
-			} else if (wep.style == WeaponStyle.Underhand && currentWepRightUnderhand.Count < currentCockpit.rightUnderhandCount) {
-				currentWepRightUnderhand.Add(wep);
-			} else if (wep.style == WeaponStyle.Shoulder && currentWepRightShoulder.Count < currentCockpit.rightShoulderCount) {
-				currentWepRightShoulder.Add(wep);
-			}
-			
-		}
-		*/
 		
 		foreach (int i in save.accessories) {
 			Item it = database.GetActual(i);
+			
+			// Add if room
 			if (currentAccessories.Count < currentCockpit.accessoryCount) {
 				currentAccessories.Add(it);
 			}
+			// Add to inventory if no room
+			else
+			{
+				inventory.Add(it);
+			}
 		}
 
-	}
-
-	void Update () {
-		
 	}
 
 	/// Needs to be implemented(?), for param might create enum for each type (?)
 	//public Item GetEquipment(EquipmentSlot slot) {
 	//	return currentEquipment [(int)slot];
 	//}
+	
+	public Item GetEquipment()
+	{
+		return null;
+	}
 
 	// Equip a new item
 	public void Equip (Item newItem)
 	{
 		Item oldItem = null;
-
+		
 		// Find out what slot the item fits in
 		// and put it there.
 		//int slotIndex = (int)newItem.equipSlot;
@@ -131,6 +108,34 @@ public class EquipmentManager : MonoBehaviour {
 		if (newItem is Cockpit) 
 		{
 			// Have to recheck weapons and accessories for space... call Equip()(?)
+			
+			if (currentCockpit != null)
+			{
+				oldItem = currentCockpit;
+				inventory.Add(oldItem);
+				
+				for (int i = 0; i < currentWeapons.Count; i++) {
+					for (int j = 0; j < currentWeapons[i].Count; j++) {
+						for (int k = 0; k < currentWeapons[i][j].Count; k++) {
+							Weapon wep = currentWeapons[i][j][k];
+							if (currentCockpit.weaponMap[(int) wep.side][(int) wep.style] < k) {
+								currentWeapons[(int) wep.side][(int) wep.style] = wep;
+							} 
+							else {
+								inventory.Add(wep);
+							}
+						}
+					}
+				}
+				
+				// DO THE SAME ^^^ FOR ACCESSORY
+			}	
+			
+			if (onEquipmentChanged != null)
+				onEquipmentChanged.Invoke(newItem, oldItem);
+			
+			currentCockpit = newItem as Cockpit;
+			
 		}
 		else if (newItem is Legs)
 		{
@@ -148,7 +153,31 @@ public class EquipmentManager : MonoBehaviour {
 		}
 		else if (newItem is Weapon)
 		{
+			wep = newItem as Weapon;
 			
+			if (currentWeapons[(int) wep.side][(int) wep.style].Count >= currentCockpit.weaponMap[(int) wep.side][(int) wep.style]) {
+				oldItem = currentWeapons[(int) wep.side][(int) wep.style][0];
+				inventory.Add(oldItem);
+				currentWeapons[(int) wep.side][(int) wep.style].RemoveAt(0); // Needed (?), ref prob not removed thru inventory.Add() 
+			}
+			
+			if (onEquipmentChanged != null)
+				onEquipmentChanged.Invoke(newItem, oldItem);
+			
+			currentWeapons[(int) wep.side][(int) wep.style].Add(wep);
+		}
+		else if (newItem is Accessory)
+		{
+			if (accessories.Count >= currentCockpit.accessoryCount) {
+				oldItem = currentAccessories[0];
+				inventory.Add(oldItem);
+				currentAccessories.RemoveAt(0);
+			}
+			
+			if (onEquipmentChanged != null)
+				onEquipmentChanged.Invoke(newItem, oldItem);
+			
+			currentAccessories.Add(newItem);	
 		}
 		
 		// If there was already an item in the slot
