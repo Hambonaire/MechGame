@@ -13,9 +13,9 @@ public class Cockpit : Item {
     public int rightUnderhandCount = 0;
     public int rightShoulderCount = 0;
 
-    public Dictionary<int, Dictonary<int, int>> weaponMap = new Dictionary<int, Dictionary<int, int>>() {
-        { 0, new Dictionary<int, int> { { 0, leftRegularCount }, { 1, leftUnderhandCount }, { 2, leftShoulderCount } } },
-        { 1, new Dictionary<int, int> { { 0, rightRegularCount }, { 1, rightUnderhandCount }, { 2, rightUnderhandCount } } }
+    public Dictionary<int, Dictionary<int, int>> weaponMap = new Dictionary<int, Dictionary<int, int>>() {
+        { 0, new Dictionary<int, int> { { 0, 1 }, { 1, 0 }, { 2, 0 } } },
+        { 1, new Dictionary<int, int> { { 0, 1 }, { 1, 0 }, { 2, 0 } } }
     };
 
     public int accessoryCount = 0;
@@ -27,4 +27,14 @@ public class Cockpit : Item {
 
     public float armDistanceX = 0;
     public float scaleFactor = 1;
+
+    private void Awake()
+    {
+        weaponMap[0][0] = leftRegularCount;
+        weaponMap[0][1] = leftUnderhandCount;
+        weaponMap[0][2] = leftShoulderCount;
+        weaponMap[1][0] = rightRegularCount;
+        weaponMap[1][1] = rightUnderhandCount;
+        weaponMap[1][2] = rightShoulderCount;
+    }
 }

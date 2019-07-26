@@ -6,7 +6,7 @@ public class EquipmentManager : MonoBehaviour {
 
 	Cockpit currentCockpit;
     Legs currentLegs;
-	/*
+    /*
 	List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>();
 		List<List<Weapon>> leftWeapons = new List<List<Weapon>>(); // 0
 			List<Weapon> WepLeftRegular = new List<Weapon>(); // 0,0
@@ -17,7 +17,7 @@ public class EquipmentManager : MonoBehaviour {
 			List<Weapon> WepRightUnderhand = new List<Weapon>(); // 1,1
 			List<Weapon> WepRightShoulder = new List<Weapon>(); //1,2
 	*/
-	var currentWeapons = new List<List<List<Weapon>>>() {
+    List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>() {
 		new List<List<Weapon>>() {	// 0	Left
 			new List<Weapon>(),		// 0,0	Left Reg
 			new List<Weapon>(),		// 0,1	Left UH
@@ -142,7 +142,7 @@ public class EquipmentManager : MonoBehaviour {
 			if (onEquipmentChanged != null)
 				onEquipmentChanged.Invoke(newItem, oldItem);
 			
-			currentLegs = newItem;
+			currentLegs = newItem as Legs;
 			
 			// REBUILD MECH
 		}

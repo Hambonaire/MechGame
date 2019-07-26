@@ -13,7 +13,7 @@ public class Weapon : Item {
     public GameObject rightPrefab;
     public GameObject leftPrefab;
 
-    public Side side = Side.Both;
+    public Side side = Side.Left;
     public WeaponStyle style = WeaponStyle.Regular;
     public FireType fireMode = FireType.Regular;
     public float chargeTimeIfChargeType;
