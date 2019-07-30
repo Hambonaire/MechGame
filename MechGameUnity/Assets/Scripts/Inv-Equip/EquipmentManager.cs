@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour {
 
+	// Slot nums (use % to get 1st digit)
+	// 0
+	// 1
+	// 20 - 29 L
+	// 30 - 39
+	// 40 - 49
+	// 50 - 59 R
+	// 60 - 69
+	// 70 - 79
+	// 80 - 89 A
+	
 	Cockpit currentCockpit;
     Legs currentLegs;
    
@@ -64,8 +75,7 @@ public class EquipmentManager : MonoBehaviour {
 				currentWeapons[(int) wep.side][(int) wep.style].Add(wep);
 			}
 			// Add to inventory if no room
-			else
-			{
+			else {
 				inventory.Add(wep);
 			}
 		}
@@ -78,8 +88,7 @@ public class EquipmentManager : MonoBehaviour {
 				currentAccessories.Add(it);
 			}
 			// Add to inventory if no room
-			else
-			{
+			else {
 				inventory.Add(it);
 			}
 		}
@@ -91,8 +100,29 @@ public class EquipmentManager : MonoBehaviour {
 	//	return currentEquipment [(int)slot];
 	//}
 	
-	public Item GetEquipment()
+	public Item GetEquipment(EquipmentSlot slot)
 	{
+		int num = slot.index % 10;
+		
+		if (slot.index >= 80) 
+			return currentAccessories[num];
+		else if (slot.index >= 70)
+			return currentWeapons[1][2][num];
+		else if (slot.index >= 60)
+			return currentWeapons[1][1][num];
+		else if (slot.index >= 50)
+			return currentWeapons[1][0][num];
+		else if (slot.index >= 40)
+			return currentWeapons[0][2][num];
+		else if (slot.index >= 30)
+			return currentWeapons[0][1][num];
+		else if (slot.index >= 20)
+			return currentWeapons[0][0][num];
+		else if (slot.index == 1)
+			return currentLegs;
+		else if (slot.index >= 0)
+			return currentCockpit;
+		
 		return null;
 	}
 
@@ -180,6 +210,8 @@ public class EquipmentManager : MonoBehaviour {
 			currentAccessories.Add(newItem);	
 		}
 		
+		Rebuild();
+		
 		// If there was already an item in the slot
 		// make sure to put it back in the inventory
 		//if (currentEquipment[slotIndex] != null)
@@ -204,6 +236,62 @@ public class EquipmentManager : MonoBehaviour {
 	}
 
 	void Unequip(int slotIndex) {
+		
+		int num = slot.index % 10;
+		
+		Item oldItem;
+		
+		if (slot.index >= 80) {
+			oldItem = currentAccessories[num];
+			inventory.Add(oldItem);
+			currentAccessories.RemoveAt(num);
+		}
+		else if (slot.index >= 70) {
+			oldItem = currentWeapons[1][2][num];
+			inventory.Add(oldItem);
+			currentWeapons[1][2].RemoveAt(num);
+		}
+		else if (slot.index >= 60) {
+			oldItem = currentWeapons[1][1][num];
+			inventory.Add(oldItem);
+			currentWeapons[1][1].RemoveAt(num);
+		}
+		else if (slot.index >= 50) {
+			oldItem = currentWeapons[1][0][num];
+			inventory.Add(oldItem);
+			currentWeapons[1][0].RemoveAt(num);
+		}
+		else if (slot.index >= 40) {
+			oldItem = currentWeapons[0][2][num];
+			inventory.Add(oldItem);
+			currentWeapons[0][2].RemoveAt(num);
+		}
+		else if (slot.index >= 30) {
+			oldItem = currentWeapons[0][1][num];
+			inventory.Add(oldItem);
+			currentWeapons[0][1].RemoveAt(num);
+		}
+		else if (slot.index >= 20) {
+			oldItem = currentWeapons[0][0][num];
+			inventory.Add(oldItem);
+			currentWeapons[0][0].RemoveAt(num);
+		}
+		else if (slot.index == 1) {
+			oldItem = currentLegs;
+			inventory.Add(oldItem);
+			currentLegs = null;
+		}
+		else if (slot.index >= 0) {
+			oldItem = currentCockpit;
+			inventory.Add(oldItem);
+			currentCockpit = null;
+		}
+		
+		if (onEquipmentChanged != null)
+			onEquipmentChanged.Invoke(null, oldItem);
+		
+		Rebuild();
+		
 		//if (currentEquipment[slotIndex] != null)
 		//{
 		//	Equipment oldItem = currentEquipment [slotIndex];
@@ -219,8 +307,12 @@ public class EquipmentManager : MonoBehaviour {
 			//	onEquipmentChanged.Invoke(null, oldItem);
 			
 		//}
-
-	
 	}
 
+	void Rebuild() {
+		// Have this be called from some other script?
+		// Maybe not since this should only apply to player character
+		// But, this script only does stuff in shop/hangar, so it amybe needs to pass equipment to another script 
+		// that exists on each seperate level... meaning this script only exists in the shop/hangar scene
+	}
 }
