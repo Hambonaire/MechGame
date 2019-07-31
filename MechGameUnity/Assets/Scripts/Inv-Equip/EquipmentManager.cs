@@ -148,7 +148,7 @@ public class EquipmentManager : MonoBehaviour {
 					for (int j = 0; j < currentWeapons[i].Count; j++) {
 						for (int k = 0; k < currentWeapons[i][j].Count; k++) {
 							Weapon wep = currentWeapons[i][j][k];
-							if (currentCockpit.weaponMap[(int) wep.side][(int) wep.style] < k) {
+							if (currentCockpit.weaponMap[(int) wep.side][(int) wep.style] > k) {
 								currentWeapons[(int) wep.side][(int) wep.style] = wep;
 							} 
 							else {
@@ -158,7 +158,15 @@ public class EquipmentManager : MonoBehaviour {
 					}
 				}
 				
-				// DO THE SAME ^^^ FOR ACCESSORY
+				for (int i = 0; i < currentAccessories.Count; i++) {
+					Item it = currentAccessories[i];
+					if (currentCockpit.accessoryCount > k) {
+						currentAccessories.Add(it);
+					}
+					else {
+						inventory.Add(it);
+					}
+				}
 			}	
 			
 			if (onEquipmentChanged != null)
@@ -198,7 +206,7 @@ public class EquipmentManager : MonoBehaviour {
 		}
 		else if (newItem is Accessory)
 		{
-			if (accessories.Count >= currentCockpit.accessoryCount) {
+			if (currentAccessories.Count >= currentCockpit.accessoryCount) {
 				oldItem = currentAccessories[0];
 				inventory.Add(oldItem);
 				currentAccessories.RemoveAt(0);
@@ -285,6 +293,22 @@ public class EquipmentManager : MonoBehaviour {
 			oldItem = currentCockpit;
 			inventory.Add(oldItem);
 			currentCockpit = null;
+			
+			for (int i = 0; i < currentWeapons.Count; i++) {
+				for (int j = 0; j < currentWeapons[i].Count; j++) {
+					for (int k = 0; k < currentWeapons[i][j].Count; k++) {
+						Weapon wep = currentWeapons[i][j][k];
+						inventory.Add(wep);
+						currentWeapons[i][j].RemoveAt(k);
+					}
+				}
+			}
+			
+			for (int i = 0; i < currentAccessories.Count; i++) {
+				Item it = currentAccessories[i];
+				inventory.Add(it);
+				currentWeapons.RemoveAt(i);
+			}
 		}
 		
 		if (onEquipmentChanged != null)
