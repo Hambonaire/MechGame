@@ -54,6 +54,8 @@ public class Stats : MonoBehaviour
 
         currentShield = currentMaxShield;
         if (shieldRef != null) shieldRef.value = currentMaxShield;
+        
+        EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
     }
 
     void Update()
@@ -63,6 +65,31 @@ public class Stats : MonoBehaviour
             RegenShield();
         }
     }
+
+    void OnEquipmentChanged(Item newItem, Item oldItem)
+	{
+		if (newItem != null) {
+			//armor.AddModifier (newItem.armorModifier);
+			//damage.AddModifier (newItem.damageModifier);
+            AddHealthMax(newItem.health);
+            AddShieldMax(newItem.shield);
+            AddShieldRegen(newItem.shieldRegen);
+            AddBallisticArmor(newItem.ballisticArmor);
+            AddEnergyArmor(newItem.energyArmor);
+		}
+
+		if (oldItem != null)
+		{
+			//armor.RemoveModifier(oldItem.armorModifier);
+			//damage.RemoveModifier(oldItem.armorModifier);
+            AddHealthMax(-oldItem.health);
+            AddShieldMax(-oldItem.shield);
+            AddShieldRegen(-oldItem.shieldRegen);
+            AddBallisticArmor(-oldItem.ballisticArmor);
+            AddEnergyArmor(-oldItem.energyArmor);
+		}
+
+	}
 
     public void TakeDamage(float ballisticDam, float energyDam)
     {
@@ -120,7 +147,7 @@ public class Stats : MonoBehaviour
         if (healthRef != null) healthRef.value = currentHealth;
     }
 
-    public void HealSheild(float add)
+    public void HealShield(float add)
     {
         currentShield += add;
         Mathf.Clamp(currentShield, 0, currentMaxShield);
@@ -139,35 +166,35 @@ public class Stats : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
-            this.enabled = false;
+            this.GameObject.enabled = false;
         }
     }
 
-    public void SetHealthMax(float add)
+    public void AddHealthMax(float add)
     {
-        currentMaxHealth = baseMaxHealth + add;
+        currentMaxHealth += add;
         if (healthRef != null) healthRef.value = currentMaxHealth;
     }
 
-    public void SetShieldMax(float add)
+    public void AddShieldMax(float add)
     {
-        currentMaxShield = baseMaxShield + add;
+        currentMaxShield += add;
         if (shieldRef != null) shieldRef.value = currentMaxShield;
     }
 
-    public void SetShieldRegen(float add)
+    public void AddShieldRegen(float add)
     {
-        currentShieldRegen = baseShieldRegen + add;
+        currentShieldRegen += add;
     }
 
-    public void SetBallisticArmor(float add)
+    public void AddBallisticArmor(float add)
     {
-        currentBallisticArmor = baseBallisticArmor + add;
+        currentBallisticArmor += add;
     }
 
-    public void SetEnergyArmor(float add)
+    public void AddEnergyArmor(float add)
     {
-        currentEnergyArmor = baseEnergyArmor + add;
+        currentEnergyArmor += add;
     }
 
     public float GetCurrentHealth()
