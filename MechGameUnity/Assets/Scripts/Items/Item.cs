@@ -1,13 +1,29 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+//public enum Rarity {Common, Rare, Epic, Legendary}
+public enum Rarity {Junk, Shoddy, Inferior, Generic, Calibrated, Flawless, Limited, Unique}
 
 public class Item : ScriptableObject
 {
     new public string name = "New Item";
     public Sprite icon = null;
     public int idNum = 0;
-
+    public int price = 1000;
+    
+    public float ballisticArmor = 0;
+    public float energyArmor = 0;
+    public float health = 0;
+    public float shield = 0;
+    public float shieldRegen = 0;
+    
+    #region flavor
+    public Rarity rarity;
+    public string description;
+    public string manufacturer;
+    #endregion
+    
     // Called when the item is pressed in the inventory
     public virtual void Use()
     {
@@ -20,4 +36,5 @@ public class Item : ScriptableObject
     {
         InventoryManager.instance.Remove(this);
     }
+    
 }
