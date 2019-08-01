@@ -6,9 +6,6 @@ using UnityEngine;
 public class Legs : Item {
 
     public GameObject prefab;
-    public float ballisticArmor;
-    public float energyArmor;
-    public float health;
 
     public float walkSpeed;
     public float runSpeed;
