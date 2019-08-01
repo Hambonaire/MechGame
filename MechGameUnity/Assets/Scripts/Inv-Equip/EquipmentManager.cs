@@ -16,7 +16,7 @@ public class EquipmentManager : MonoBehaviour {
 	// 80 - 89 A
 	
 	Cockpit currentCockpit;
-    Legs currentLegs;
+	Legs currentLegs;
    
     List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>() {
 		new List<List<Weapon>>() {	// 0	Left
@@ -150,9 +150,13 @@ public class EquipmentManager : MonoBehaviour {
 							Weapon wep = currentWeapons[i][j][k];
 							if (currentCockpit.weaponMap[(int) wep.side][(int) wep.style] > k) {
 								currentWeapons[(int) wep.side][(int) wep.style] = wep;
+								
+								if (onEquipmentChanged != null) onEquipmentChanged.Invoke(wep, null);
 							} 
 							else {
 								inventory.Add(wep);
+								
+								if (onEquipmentChanged != null) onEquipmentChanged.Invoke(null, wep);
 							}
 						}
 					}
@@ -162,9 +166,11 @@ public class EquipmentManager : MonoBehaviour {
 					Item it = currentAccessories[i];
 					if (currentCockpit.accessoryCount > k) {
 						currentAccessories.Add(it);
+						if (onEquipmentChanged != null) onEquipmentChanged.Invoke(it, null);
 					}
 					else {
 						inventory.Add(it);
+						if (onEquipmentChanged != null) onEquipmentChanged.Invoke(null, it);
 					}
 				}
 			}	
@@ -172,8 +178,7 @@ public class EquipmentManager : MonoBehaviour {
 			if (onEquipmentChanged != null)
 				onEquipmentChanged.Invoke(newItem, oldItem);
 			
-			currentCockpit = newItem as Cockpit;
-			
+			currentCockpit = newItem as Cockpit;			
 		}
 		else if (newItem is Legs)
 		{
@@ -186,8 +191,6 @@ public class EquipmentManager : MonoBehaviour {
 				onEquipmentChanged.Invoke(newItem, oldItem);
 			
 			currentLegs = newItem as Legs;
-			
-			// REBUILD MECH
 		}
 		else if (newItem is Weapon)
 		{
@@ -300,6 +303,7 @@ public class EquipmentManager : MonoBehaviour {
 						Weapon wep = currentWeapons[i][j][k];
 						inventory.Add(wep);
 						currentWeapons[i][j].RemoveAt(k);
+						if (onEquipmentChanged != null) onEquipmentChanged.Invoke(null, wep);
 					}
 				}
 			}
@@ -308,6 +312,7 @@ public class EquipmentManager : MonoBehaviour {
 				Item it = currentAccessories[i];
 				inventory.Add(it);
 				currentWeapons.RemoveAt(i);
+				if (onEquipmentChanged != null) onEquipmentChanged.Invoke(null, it);
 			}
 		}
 		
