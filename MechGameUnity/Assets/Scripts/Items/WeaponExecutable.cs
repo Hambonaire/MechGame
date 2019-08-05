@@ -6,7 +6,7 @@ using UnityEngine;
 //public enum WeaponStyle { Regular, Underhand, Shoulder}
 //public enum FireType { Regular, Beam, Charge, Multi}
 
-public class Weapon : MonoBehaviour {
+public class WeaponExecutable : MonoBehaviour {
 
     void Start() {
     

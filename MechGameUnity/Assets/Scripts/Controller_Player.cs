@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechController_Player : MonoBehaviour
+public class Controller_Player : MonoBehaviour
 {
     public Stats playerStats;
 
@@ -65,16 +65,16 @@ public class MechController_Player : MonoBehaviour
     public Weapon rightWeaponItem;
     public Weapon leftWeaponItem;
 
-    private GameObject legs;
-    private GameObject rightArmWeapon;
-    private GameObject leftArmWeapon;
-    private GameObject cockpit;
+    public GameObject legs;
+    public List<GameObject> rightArmWeapons;
+    public List<GameObject> leftArmWeapons;
+    public GameObject cockpit;
 
-    Transform legsBase;
-    Transform cockpitRotationCenter;
-    Transform torsoConnection;
-    Transform rightArmBarrel;
-    Transform leftArmBarrel;
+    public Transform legsBase;
+    public Transform cockpitRotationCenter;
+    public Transform torsoConnection;
+    public Transform rightArmBarrel;
+    public Transform leftArmBarrel;
 
     [SerializeField]
     int left_ammoCurr;
@@ -488,10 +488,11 @@ public class MechController_Player : MonoBehaviour
         }
         #endregion
 
+        /// NOW HANDLED IN EQUIPMENT MANAGER
         #region Stats
-        playerStats.SetBallisticArmor(cockpitItem.ballisticArmor + legsItem.ballisticArmor);
-        playerStats.SetEnergyArmor(cockpitItem.energyArmor + legsItem.energyArmor);
-        playerStats.SetHealthMax(cockpitItem.health + legsItem.health);
+        //playerStats.SetBallisticArmor(cockpitItem.ballisticArmor + legsItem.ballisticArmor);
+        //playerStats.SetEnergyArmor(cockpitItem.energyArmor + legsItem.energyArmor);
+        //playerStats.SetHealthMax(cockpitItem.health + legsItem.health);
 
         //Variables.PlayerHealth_Max = playerStats.GetMaxHealth();
         //Variables.PlayerHealth_Curr = playerStats.GetCurrentHealth();
