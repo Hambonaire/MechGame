@@ -16,10 +16,10 @@ public class Weapon : Item {
     public Side side = Side.Left;
     public WeaponStyle style = WeaponStyle.Regular;
     public FireType fireMode = FireType.Regular;
-    public float chargeTimeIfChargeType;
-    public int projectilesCountIfMultiType;
-    public float beamTimeIfBeamType;
-    public float beamCooldownIfBeamType;
+    public float chargeTime;
+    public int projectileCount;
+    public float beamTime;
+    public float cooldown;
 
     public bool autoTarget;
 
