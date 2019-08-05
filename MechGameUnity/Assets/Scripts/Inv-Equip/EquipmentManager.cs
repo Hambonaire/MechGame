@@ -352,21 +352,15 @@ public class EquipmentManager : MonoBehaviour {
 			
 		//}
 	}
-
-	void Rebuild() {
-		// Have this be called from some other script?
-		// Maybe not since this should only apply to player character
-		// But, this script only does stuff in shop/hangar, so it amybe needs to pass equipment to another script 
-		// that exists on each seperate level... meaning this script only exists in the shop/hangar scene
-	}
-
-    public void Initialize()
-    {
-        #region Beforehand Calculations
-        //overallScaleFactor = currentCockpit.scaleFactor;
-        #endregion
-
+	
+	// Have this be called from some other script?
+	// Maybe not since this should only apply to player character
+	// But, this script only does stuff in shop/hangar, so it amybe needs to pass equipment to another script 
+	// that exists on each seperate level... meaning this script only exists in the shop/hangar scene
+	public void Rebuild() {
+		
         #region Remove Current Items
+			
         if (controller_player.cockpit != null)
         {
             Destroy(controller_player.cockpit);
@@ -374,154 +368,59 @@ public class EquipmentManager : MonoBehaviour {
         if (controller_player.legs != null)
         {
             Destroy(controller_player.legs);
-        }
-        if (controller_player.rightArmWeapons.Count != 0)
-        {
-            foreach(GameObject wep in controller_player.rightArmWeapons) {
-                Destroy(wep);
-            }
-        }
-        if (controller_player.leftArmWeapons.Count != 0)
-        {
-            foreach (GameObject wep in controller_player.leftArmWeapons)
-            {
-                Destroy(wep);
-            }
-        }
+        }	
+		for (int i = 0; i < controller_player.weapons.Count; i++) 
+		{
+			for (int j = 0; j < controller_player.weapon[i].Count; j++)
+			{
+				for (int k = 0; k < controller_player.weapon[i][j].Count; k++)
+				{
+					Destroy(controller_player.weapons[i][j][k]);
+					controller_player.weapons[i][j].Remove(k);
+					Destroy(controller_player.barrels[i][j][k]);
+					controller_player.barrels[i][j].Remove(k);
+				}
+				controller_player.weaponExecutables[i][j].Clear();
+			}
+		}
+		
         #endregion
-
-        // TODO: Dont use Find("")
-        #region Part Variables
-        controller_player.legs = Instantiate(currentLegs.prefab, controller_player.legsRoot.transform.position, transform.rotation);
+		
+		#region Create New Items
+		
+		controller_player.legs = Instantiate(currentLegs.prefab, controller_player.legsRoot.transform.position, transform.rotation);
         controller_player.legs.transform.parent = controller_player.legsRoot.transform;
-        // Scaling
         controller_player.legs.transform.localScale = new Vector3(currentCockpit.scaleFactor, currentCockpit.scaleFactor, currentCockpit.scaleFactor);
 
         controller_player.torsoRoot.transform.position = controller_player.legs.transform.Find("TorsoConnection").position;
 
         controller_player.cockpit = Instantiate(currentCockpit.prefab, controller_player.torsoRoot.transform.position, controller_player.torsoRoot.transform.rotation);
         controller_player.cockpit.transform.parent = controller_player.torsoRoot.transform;
-        // Scaling
-        //cockpit.transform.localScale = new Vector3(torsoScaleFactor, torsoScaleFactor, torsoScaleFactor);
 
-        controller_player.cockpitRotationCenter = controller_player.cockpit.transform.Find("RotationAxis");
-        #endregion
+        controller_player.cockpitRotationCenter = controller_player.cockpit.transform.Find("RotationAxis");	
+			
+		for (int i = 0; i < currentWeapons.Count; i++) 
+		{
+			for (int j = 0; j < currentWeapons[i].Count; j++)
+			{
+				for (int k = 0; k < currentWeapons[i][j].Count; k++)
+				{
+					controller_player.weapons[i][j][k] = Instantiate(currentWeapons[i][j][k].rightPrefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k), controller_player.cockpit.transform.rotation) as GameObject;
+					controller_player.weapons[i][j][k].transform.parent = controller_player.cockpitRotationCenter.transform;
+					controller_player.barrels[i][j][k] = controller_player.weapons[i][j][k].transform.Find("Barrel");
+					
+					controller_player.weaponExecutables[i][j][k] = new WeaponExecutable(controller_player.weapons[i][j][k], controller_player.barrels[i][j][k]);
+				}
+			}
+		}
+		
+		// TODO: Do UI passing stuff here? (ammo, reloading, etc.) Loop thru Executables or just plug in the existing loop^^^
+		// TODO: Reminder: make sure stats references scriptableFloats, etc. for UI passing
+	    #endregion
 
-        /*
-        #region Weapon Variables
-        if (rightWeaponItem.rightPrefab != null)
-        {
-            right_bullet = rightWeaponItem.bullet;
-            right_ROF = rightWeaponItem.rateOfFire;
-            right_maxAmmo = rightWeaponItem.maxAmmo;
-            right_reloadTime = rightWeaponItem.reloadTime;
-            right_spread = rightWeaponItem.bulletSpray;
-            right_bulletSpeed = rightWeaponItem.bulletSpeed;
-            right_bulletLife = rightWeaponItem.bulletLife;
-
-            right_autoTrack = rightWeaponItem.autoTarget;
-
-            right_fireType = rightWeaponItem.fireMode;
-
-            if (right_fireType == FireType.Charge)
-            {
-                right_chargeTime = rightWeaponItem.chargeTimeIfChargeType;
-            }
-            else if (right_fireType == FireType.Multi)
-            {
-                right_projectileCount = rightWeaponItem.projectilesCountIfMultiType;
-            }
-            else if (right_fireType == FireType.Beam)
-            {
-                right_beamTime = rightWeaponItem.beamTimeIfBeamType;
-            }
-            else
-            {
-                right_beamTime = 0;
-                left_chargeTime = 0;
-            }
-
-            rightArmWeapon = Instantiate(rightWeaponItem.rightPrefab, cockpit.transform.Find("RightArmConnection").position, cockpit.transform.rotation) as GameObject;
-            rightArmWeapon.transform.parent = cockpitRotationCenter.transform;
-
-            rightArmBarrel = rightArmWeapon.transform.Find("Barrel");
-        }
-        */
-
-        // TODO: Do all the data stuff up there ^^^ in lists 
-        for (int i = 0; i < currentWeapons[0].Count; i++)
-        {
-            for(int j = 0; j < currentWeapons[0][i].Count; j++)
-            {
-                // TODO: Dont use find(""), set up a list in Cockpit items (prob)
-                controller_player.rightArmWeapons[j] = Instantiate(currentWeapons[0][i][j].rightPrefab, controller_player.cockpit.transform.Find("RightArmConnection").position, controller_player.cockpit.transform.rotation) as GameObject;
-                controller_player.rightArmWeapons[j].transform.parent = controller_player.cockpitRotationCenter.transform;
-                
-                // TODO: Make a list of barrels etc...^^^
-                //rightArmBarrel = rightArmWeapon.transform.Find("Barrel");
-            }
-        }
-
-
-        if (leftWeaponItem.leftPrefab != null)
-        {
-            left_bullet = leftWeaponItem.bullet;
-            left_ROF = leftWeaponItem.rateOfFire;
-            left_maxAmmo = leftWeaponItem.maxAmmo;
-            left_reloadTime = leftWeaponItem.reloadTime;
-            left_Spread = leftWeaponItem.bulletSpray;
-            left_bulletSpeed = leftWeaponItem.bulletSpeed;
-            left_bulletLife = leftWeaponItem.bulletLife;
-
-            left_FireType = leftWeaponItem.fireMode;
-
-            left_autoTrack = leftWeaponItem.autoTarget;
-
-            if (left_FireType == FireType.Charge)
-            {
-                left_chargeTime = leftWeaponItem.chargeTimeIfChargeType;
-            }
-            else if (left_FireType == FireType.Multi)
-            {
-                left_projectileCount = leftWeaponItem.projectilesCountIfMultiType;
-            }
-            else if (left_FireType == FireType.Beam)
-            {
-                left_beamTime = leftWeaponItem.beamTimeIfBeamType;
-            }
-            else
-            {
-                left_beamTime = 0;
-                left_chargeTime = 0;
-            }
-
-            leftArmWeapon = Instantiate(leftWeaponItem.leftPrefab, cockpit.transform.Find("LeftArmConnection").position, cockpit.transform.rotation) as GameObject;
-            leftArmWeapon.transform.parent = cockpitRotationCenter.transform;
-
-            leftArmBarrel = leftArmWeapon.transform.Find("Barrel");
-        }
-
-        //Variables.PlayerPrimaryAmmo_Max = right_maxAmmo;
-        //Variables.PlayerSecondaryAmmo_Max = left_maxAmmo;      
-        //Variables.PlayerSecondaryAmmo_Curr = Variables.PlayerSecondaryAmmo_Max;
-        //Variables.PlayerPrimaryAmmo_Curr = Variables.PlayerPrimaryAmmo_Max;
-
-        playerRightAmmoCurrent.value = right_ammoCurr;
-        playerRightAmmoMax.value = right_maxAmmo;
-        playerLeftAmmoCurrent.value = left_ammoCurr;
-        playerLeftAmmoMax.value = left_maxAmmo;
-
-        //Variables.PrimaryReloading = false;
-        //Variables.SecondaryReloading = false;
-
-        playerRightReloading.value = false;
-        playerLeftReloading.value = false;
-
-        right_isReloading = false;
-        left_isReloading = false;
-        #endregion
-
+		// TODO: All the animation stuff here, prob need to do loop stuff, Find(), etc. Calling the animators takes place in Fire & OnCooldown
         #region Animators
+		/*
         if (legs.transform.Find("AnimatorHolder") != null)
         {
             legsAnimator = legs.transform.Find("AnimatorHolder").GetComponent<Animator>();
@@ -536,31 +435,17 @@ public class EquipmentManager : MonoBehaviour {
         {
             leftWeaponAnimator = leftArmWeapon.transform.Find("AnimatorHolder").GetComponent<Animator>();
         }
-        #endregion
-
-        /// NOW HANDLED IN EQUIPMENT MANAGER
-        #region Stats
-        //playerStats.SetBallisticArmor(cockpitItem.ballisticArmor + legsItem.ballisticArmor);
-        //playerStats.SetEnergyArmor(cockpitItem.energyArmor + legsItem.energyArmor);
-        //playerStats.SetHealthMax(cockpitItem.health + legsItem.health);
-
-        //Variables.PlayerHealth_Max = playerStats.GetMaxHealth();
-        //Variables.PlayerHealth_Curr = playerStats.GetCurrentHealth();
-        //Variables.PlayerBallisticArmor = playerStats.GetBallisticArmor();
-        //Variables.PlayerEnergyArmor = playerStats.GetEnergyArmor();
-
-        //playerHealthMax.value = playerStats.GetMaxHealth();
-        //playerHealthCurrent.value = playerStats.GetCurrentHealth();
+		*/
         #endregion
 
         #region Misc.
-        walkSpeed = legsItem.walkSpeed * overallScaleFactor;
-        runSpeed = legsItem.runSpeed * overallScaleFactor;
-        hitBox.radius = baseHitBoxRadius * overallScaleFactor;
-        hitBox.height = baseHitBoxHeight * overallScaleFactor;
-        hitBox.center = new Vector3(0, hitBox.height / 2 + .05f, hitBox.center.z);
+        controller_player.walkSpeed = legsItem.walkSpeed * currentCockpit.scaleFactor;
+        controller_player.runSpeed = legsItem.runSpeed * currentCockpit.scaleFactor;
+        controller_player.hitBox.radius = baseHitBoxRadius * currentCockpit.scaleFactor;
+        controller_player.hitBox.height = baseHitBoxHeight * currentCockpit.scaleFactor;
+        controller_player.hitBox.center = new Vector3(0, hitBox.height / 2 + .05f, hitBox.center.z);
         #endregion
 
-        cockpit.transform.localScale = new Vector3(overallScaleFactor, overallScaleFactor, overallScaleFactor);
+        controller_player.cockpit.transform.localScale = new Vector3(currentCockpit.scaleFactor, currentCockpit.scaleFactor, currentCockpit.scaleFactor);
     }
 }
