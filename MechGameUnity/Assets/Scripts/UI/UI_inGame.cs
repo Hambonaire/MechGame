@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UI_inGame : MonoBehaviour
 {
+    public Controller_Player controller_player;
+    
     int primaryAmmo;
     int secondaryAmmo;
 
@@ -24,8 +26,19 @@ public class UI_inGame : MonoBehaviour
     public GameObject pauseUI;
     public GameObject playerHUD;
 
-    public Text primaryAmmoText;
-    public Text secondaryAmmoText;
+    //public Text primaryAmmoText;
+    //public Text secondaryAmmoText;
+    public AmmoUIText[5] ammoLR = new AmmoUIText[];
+    public AmmoUIText[5] ammoLU = new AmmoUIText[];
+    public AmmoUIText[5] ammoLS = new AmmoUIText[];
+    public AmmoUIText[5] ammoRR = new AmmoUIText[];
+    public AmmoUIText[5] ammoRU = new AmmoUIText[];
+    public AmmoUIText[5] ammoRS = new AmmoUIText[];
+    
+    public List<List<AmmoUIText[]>> ammoTexts = new List<List<AmmoUIText[]>>() {
+        new List<AmmoUIText[]>(),
+        new List<AmmoUIText[]>()
+    };
 
     public Image primaryChargeBar;
     public Image secondaryChargeBar;
@@ -43,6 +56,16 @@ public class UI_inGame : MonoBehaviour
 
     Color cautionColor;
     //Color alphaWave;
+
+    void Awake ()
+    {
+        ammoTexts[0][0] = ammoLR;
+        ammoTexts[0][1] = ammoLR;
+        ammoTexts[0][2] = ammoLR;
+        ammoTexts[1][0] = ammoLR;
+        ammoTexts[1][1] = ammoLR;
+        ammoTexts[1][2] = ammoLR;
+    }
 
     void Start()
     {
@@ -87,7 +110,6 @@ public class UI_inGame : MonoBehaviour
         myTime += Time.deltaTime;
 
         if (myTime > 10) myTime = 0;
-
         const float frequency = .8f; // Frequency in Hz
         float amplitude = 0.5f * (1 + Mathf.Sin(2 * Mathf.PI * frequency * myTime));
 
@@ -101,6 +123,12 @@ public class UI_inGame : MonoBehaviour
 
         //Debug.Log(cautionPrimary.color.a);
 
+        if (controller_player.weaponExecutables[0][0][0])
+        {
+        
+        }
+
+        /*
         if (playerRightReloading.value)
         {
             primaryAmmoText.text = "RELOADING    " + playerRightAmmoCurrent.value + " / " + playerRightAmmoMax.value;
@@ -128,7 +156,8 @@ public class UI_inGame : MonoBehaviour
 
             cautionSecondary.enabled = false;
         }
-
+       */
+    
         healthBar.fillAmount = playerHealthCurrent.value / playerHealthMax.value;
         //Debug.Log(Variables.PlayerHealth_Curr + " OF " + Variables.PlayerHealth_Max);
     }
@@ -183,6 +212,29 @@ public class UI_inGame : MonoBehaviour
     public void Options()
     {
 
+    }
+    
+    public void Rebuild()
+    {
+        for (int i = 0; i < player_controller.weaponExecutables.Count; i++) {
+            for (int j = 0; j < player_controller.weaponExecutables[i].Count; j++) {
+                for (int k = 0; k < player_controller.weaponExecutables[i][j].Count; k++) {
+                    player_controller.weaponExecutables[i][j][k].maxAmmo;
+                    player_controller.weaponExecutables[i][j][k].currentAmmo; 
+                }
+            }
+        }
+    }
+    
+    public void UpdateAmmo ()
+    {
+        //foreach () // ?
+        //ammoSlots[] = GetComponentsInChildren<AmmoUISlot>() //??
+        
+        for (int i = 0; i < ammoSlots.Length)
+        {
+               
+        }
     }
 }
  
