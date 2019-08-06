@@ -41,13 +41,13 @@ public class MechManager : MonoBehaviour {
         {
             i = Random.Range(0, weaponItems.Length);
             k = Random.Range(0, weaponItems.Length);
-            player.GetComponent<MechController_Player>().SetNewWeapons(weaponItems[i], weaponItems[k]);
+            //player.GetComponent<Controller_Player>().SetNewWeapons(weaponItems[i], weaponItems[k]);
 
             i = Random.Range(0, cockpits.Length);
-            player.GetComponent<MechController_Player>().SetNewCockpit(cockpits[i]);
+            //player.GetComponent<Controller_Player>().SetNewCockpit(cockpits[i]);
 
             i = Random.Range(0, legs.Length);
-            player.GetComponent<MechController_Player>().SetNewLegs(legs[i]);
+            //player.GetComponent<Controller_Player>().SetNewLegs(legs[i]);
         }
 
         if (playerTarget.value != null) //&& Variables.HasTarget)

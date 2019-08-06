@@ -371,14 +371,14 @@ public class EquipmentManager : MonoBehaviour {
         }	
 		for (int i = 0; i < controller_player.weapons.Count; i++) 
 		{
-			for (int j = 0; j < controller_player.weapon[i].Count; j++)
+			for (int j = 0; j < controller_player.weapons[i].Count; j++)
 			{
-				for (int k = 0; k < controller_player.weapon[i][j].Count; k++)
+				for (int k = 0; k < controller_player.weapons[i][j].Count; k++)
 				{
 					Destroy(controller_player.weapons[i][j][k]);
-					controller_player.weapons[i][j].Remove(k);
+					controller_player.weapons[i][j].RemoveAt(k);
 					Destroy(controller_player.barrels[i][j][k]);
-					controller_player.barrels[i][j].Remove(k);
+					controller_player.barrels[i][j].RemoveAt(k);
 				}
 				controller_player.weaponExecutables[i][j].Clear();
 			}
@@ -405,11 +405,11 @@ public class EquipmentManager : MonoBehaviour {
 			{
 				for (int k = 0; k < currentWeapons[i][j].Count; k++)
 				{
-					controller_player.weapons[i][j][k] = Instantiate(currentWeapons[i][j][k].rightPrefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k), controller_player.cockpit.transform.rotation) as GameObject;
+					controller_player.weapons[i][j][k] = Instantiate(currentWeapons[i][j][k].prefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k).position, controller_player.cockpit.transform.rotation) as GameObject;
 					controller_player.weapons[i][j][k].transform.parent = controller_player.cockpitRotationCenter.transform;
 					controller_player.barrels[i][j][k] = controller_player.weapons[i][j][k].transform.Find("Barrel");
 					
-					controller_player.weaponExecutables[i][j][k] = new WeaponExecutable(controller_player.weapons[i][j][k], controller_player.barrels[i][j][k]);
+					controller_player.weaponExecutables[i][j][k] = new WeaponExecutable(currentWeapons[i][j][k], controller_player.barrels[i][j][k]);
 				}
 			}
 		}
@@ -439,11 +439,11 @@ public class EquipmentManager : MonoBehaviour {
         #endregion
 
         #region Misc.
-        controller_player.walkSpeed = legsItem.walkSpeed * currentCockpit.scaleFactor;
-        controller_player.runSpeed = legsItem.runSpeed * currentCockpit.scaleFactor;
-        controller_player.hitBox.radius = baseHitBoxRadius * currentCockpit.scaleFactor;
-        controller_player.hitBox.height = baseHitBoxHeight * currentCockpit.scaleFactor;
-        controller_player.hitBox.center = new Vector3(0, hitBox.height / 2 + .05f, hitBox.center.z);
+        controller_player.walkSpeed = currentLegs.walkSpeed * currentCockpit.scaleFactor;
+        controller_player.runSpeed = currentLegs.runSpeed * currentCockpit.scaleFactor;
+        controller_player.hitBox.radius = controller_player.baseHitBoxRadius * currentCockpit.scaleFactor;
+        controller_player.hitBox.height = controller_player.baseHitBoxHeight * currentCockpit.scaleFactor;
+        controller_player.hitBox.center = new Vector3(0, controller_player.hitBox.height / 2 + .05f, controller_player.hitBox.center.z);
         #endregion
 
         controller_player.cockpit.transform.localScale = new Vector3(currentCockpit.scaleFactor, currentCockpit.scaleFactor, currentCockpit.scaleFactor);

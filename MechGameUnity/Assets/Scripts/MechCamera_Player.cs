@@ -118,10 +118,10 @@ public class MechCamera_Player : MonoBehaviour
     {
         transform.position =
             //For height
-            (target.position + new Vector3(0, (target.gameObject.GetComponent<MechController_Player>().GetScaleFactor() - 1) * 3, 0))
+            (target.position + new Vector3(0, (target.gameObject.GetComponent<Controller_Player>().overallScaleFactor - 1) * 3, 0))
             -
             // For distance behind
-            (transform.forward * (camZoom + Mathf.Pow(target.gameObject.GetComponent<MechController_Player>().GetScaleFactor() - 1, 2f)))
+            (transform.forward * (camZoom + Mathf.Pow(target.gameObject.GetComponent<Controller_Player>().overallScaleFactor - 1, 2f)))
             +
             (transform.up * camVerticalOffset);
     }

@@ -10,8 +10,7 @@ public enum FireType { Regular, Beam, Charge, Multi}
 public class Weapon : Item {
 
     //public GameObject animatorHolder;
-    public GameObject rightPrefab;
-    public GameObject leftPrefab;
+    public GameObject prefab;
 
     public Side side = Side.Left;
     public WeaponStyle style = WeaponStyle.Regular;
@@ -32,7 +31,7 @@ public class Weapon : Item {
     public float rateOfFire;
     public float reloadTime;
     [Range(0, 500)]
-    public float bulletSpray;
+    public float bulletSpread;
     public float bulletSpeed;
     public float bulletLife;
 

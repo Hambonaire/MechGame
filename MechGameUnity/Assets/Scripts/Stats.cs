@@ -166,7 +166,7 @@ public class Stats : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
-            this.GameObject.enabled = false;
+            this.enabled = false;
         }
     }
 

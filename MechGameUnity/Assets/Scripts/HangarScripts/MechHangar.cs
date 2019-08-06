@@ -89,15 +89,15 @@ public class MechHangar : MonoBehaviour
         #endregion
 
         #region Weapon Variables
-        if (rightWeaponItem.rightPrefab != null)
+        if (rightWeaponItem.prefab != null)
         {
-            rightArmWeapon = Instantiate(rightWeaponItem.rightPrefab, cockpit.transform.Find("RightArmConnection").position, cockpit.transform.rotation) as GameObject;
+            rightArmWeapon = Instantiate(rightWeaponItem.prefab, cockpit.transform.Find("RightArmConnection").position, cockpit.transform.rotation) as GameObject;
             rightArmWeapon.transform.parent = cockpitRotationCenter.transform;
         }
 
-        if (leftWeaponItem.leftPrefab != null)
+        if (leftWeaponItem.prefab != null)
         {
-            leftArmWeapon = Instantiate(leftWeaponItem.leftPrefab, cockpit.transform.Find("LeftArmConnection").position, cockpit.transform.rotation) as GameObject;
+            leftArmWeapon = Instantiate(leftWeaponItem.prefab, cockpit.transform.Find("LeftArmConnection").position, cockpit.transform.rotation) as GameObject;
             leftArmWeapon.transform.parent = cockpitRotationCenter.transform;
         }
         #endregion

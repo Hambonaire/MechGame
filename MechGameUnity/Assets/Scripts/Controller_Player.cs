@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Controller_Player : MonoBehaviour
 {
+    public struct WeaponMapStruct {
+        public int a;
+        public int b;
+        public int c;
+    }
+
     public Stats playerStats;
 
     public GameObject mechManager;
@@ -54,14 +60,14 @@ public class Controller_Player : MonoBehaviour
 
     private Vector3 forward;
 
-    private float firingAngle;
+    public float firingAngle;
 
     public GameObject cam;
     public GameObject torsoRoot;
     public GameObject legsRoot;
     public CharacterController characterController;
 
-    float overallScaleFactor = 1;
+    public float overallScaleFactor = 1;
 
     Animator legsAnimator;              // TODO: Look into Cockpit bobbing thru transform movement, not animations? Think u can "animate" movement in Unity... check into that
     //Animator rightWeaponAnimator;
@@ -77,13 +83,16 @@ public class Controller_Player : MonoBehaviour
     public Transform torsoConnection;
     public List<List<List<Transform>>> barrels;
 
+    public List<WeaponMapStruct> reloadStructs = new List<WeaponMapStruct>();
+    //public List<WeaponMapStruct> cooldownStructs = new List<WeaponMapStruct>();
+
     List<List<List<int>>> testmap0 = new List<List<List<int>>>() {
-        { new List<List> { new List<int> { 1 } }, new List<List> { new List<int> { 1 } }, new List<List> { new List<int> { 1 } } },
-        { new List<List> { new List<int> { 0 } }, new List<List> { new List<int> { 0 } }, new List<List> { new List<int> { 0 } } }
+        new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } },
+        new List<List<int>> { new List<int> { 0 } }, new List<List<int>> { new List<int> { 0 } }, new List<List<int>> { new List<int> { 0 } }
     };
     List<List<List<int>>> testmap1 = new List<List<List<int>>>() {
-        { new List<List> { new List<int> { 0 } }, new List<List> { new List<int> { 0 } }, new List<List> { new List<int> { 0 } } },
-        { new List<List> { new List<int> { 1 } }, new List<List> { new List<int> { 1 } }, new List<List> { new List<int> { 1 } } }
+        new List<List<int>> { new List<int> { 0 } }, new List<List<int>> { new List<int> { 0 } }, new List<List<int>> { new List<int> { 0 } },
+        new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }
     };
 
     public Vector3 enemyCenterMass;
@@ -93,6 +102,8 @@ public class Controller_Player : MonoBehaviour
     {
         playerStats = GetComponent<Stats>();
         //Variables.PlayerHealth_Max = playerStats.GetMaxHealth();
+
+        InvokeRepeating("ReloadRepeating", 0, .2f);
     }
 
     private void Update()
@@ -147,6 +158,8 @@ public class Controller_Player : MonoBehaviour
 
         Move();
 
+        // TODO: Weapon UI stuff here
+        /*
         if (right_fireType == FireType.Charge)
         {
             //Variables.PlayerPrimaryChargeVal
@@ -176,6 +189,7 @@ public class Controller_Player : MonoBehaviour
         {
             playerLeftFillBar.value = 0;
         }
+        */
 
         //Handled by Stats script
         //Variables.PlayerHealth_Curr = playerStats.GetCurrentHealth();
@@ -195,6 +209,7 @@ public class Controller_Player : MonoBehaviour
                     for (int k = 0; k < weaponExecutables[i][k].Count; k++)
                     {
                         weaponExecutables[i][j][k].Reload();
+                        reloadStructs.Add(new WeaponMapStruct { a=i, b=j, c=k });
                     }
                 }
             }
@@ -277,7 +292,7 @@ public class Controller_Player : MonoBehaviour
             {
                 for (int k = 0; k < fireMap[i][k].Count; k++)
                 {
-                    if (fireMap[i][j][k] = 1) weaponExecutables[i][j][k].Fire();
+                    if (fireMap[i][j][k] == 1) weaponExecutables[i][j][k].Fire();
                 }
             }
         }
@@ -291,8 +306,24 @@ public class Controller_Player : MonoBehaviour
             {
                 for (int k = 0; k < fireMap[i][k].Count; k++)
                 {
-                    if (fireMap[i][j][k] = 1) weaponExecutables[i][j][k].OnCooldown();
+                    if (fireMap[i][j][k] == 1) weaponExecutables[i][j][k].OnCooldown();
                 }
+            }
+        }
+    }
+
+    void ReloadRepeating()
+    {
+        foreach(WeaponMapStruct str in reloadStructs)
+        {
+            weaponExecutables[str.a][str.b][str.c].Reload();
+            if (weaponExecutables[str.a][str.b][str.c].isReloading)
+            {
+
+            }
+            else
+            {
+                reloadStructs.Remove(str);
             }
         }
     }

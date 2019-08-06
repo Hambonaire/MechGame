@@ -12,7 +12,9 @@ public class WeaponExecutable {
     
     public ScriptableGameObject playerTarget;
 
-    float isFiring = false;
+    Animator animator;
+
+    public bool isFiring = false;
     
     float ballisticDamage;
     float energyDamage;
@@ -21,7 +23,7 @@ public class WeaponExecutable {
     float nextFire;
     float reloadTime;
     float nextReloadEnd;
-    bool isReloading = false;
+    public bool isReloading = false;
     
     int maxAmmo;
     int currentAmmo;
@@ -39,6 +41,8 @@ public class WeaponExecutable {
     
     bool autoTrack;
     float trackDistance;        // TODO: Implement this? Make it common to weapon class instead of unique?
+    float targetDistance;
+    float firingAngle;
 
     // Constructor, pass in Weapon
     public WeaponExecutable(Weapon wep, Transform barrel_)
@@ -57,7 +61,7 @@ public class WeaponExecutable {
         projectileCount = wep.projectileCount;
         beamTime = wep.beamTime;
         cooldown = wep.cooldown;         
-        autoTrack = wep.autoTrack;
+        //autoTrack = wep.autoTrack;
         barrel = barrel_;
         
         currentAmmo = maxAmmo;
@@ -65,7 +69,7 @@ public class WeaponExecutable {
         beamCurr = 0;
     }
     
-    void Fire()
+    public void Fire()
     {
         isFiring = true;
         
@@ -84,7 +88,7 @@ public class WeaponExecutable {
                     float randZ = Random.Range(-spread / 50, spread / 50);
 
                     // Create the Bullet from the Bullet Prefab
-                    var bullet = (GameObject)Instantiate(bulletPrefab, barrel.position, barrel.rotation);
+                    var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
                     if (autoTrack && playerTarget.value != null)
                     {
@@ -104,7 +108,7 @@ public class WeaponExecutable {
                     bullet.GetComponent<Bullet>().SetFaction(0);
 
                     // Destroy the bullet after _ seconds
-                    Destroy(bullet, bulletLife);
+                    GameObject.Destroy(bullet, bulletLife);
                 }
                 else if (fireType == FireType.Charge)
                 {
@@ -125,7 +129,7 @@ public class WeaponExecutable {
                         float randZ = Random.Range(-spread / 50, spread / 50);
 
                         // Create the Bullet from the Bullet Prefab
-                        var bullet = (GameObject)Instantiate(bulletPrefab, barrel.position, barrel.rotation);
+                        var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
                         if (autoTrack && playerTarget.value != null)
                         {
@@ -145,7 +149,7 @@ public class WeaponExecutable {
                         bullet.GetComponent<Bullet>().SetFaction(0);
 
                         // Destroy the bullet after _ seconds
-                        Destroy(bullet, bulletLife);
+                        GameObject.Destroy(bullet, bulletLife);
 
                         chargeCurr = 0;
                     }
@@ -163,7 +167,7 @@ public class WeaponExecutable {
                         float randZ = Random.Range(-spread / 50, spread / 50);
 
                         // Create the Bullet from the Bullet Prefab
-                        var bullet = (GameObject)Instantiate(bulletPrefab, barrel.position, barrel.rotation);
+                        var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
                         if (autoTrack && playerTarget.value != null)
                         {
@@ -183,12 +187,12 @@ public class WeaponExecutable {
                         bullet.GetComponent<Bullet>().SetFaction(0);
                         
                         // Destroy the bullet after _ seconds
-                        Destroy(bullet, bulletLife);
+                        GameObject.Destroy(bullet, bulletLife);
                     }
                 }
-                else if (right_fireType == FireType.Beam)
+                else if (fireType == FireType.Beam)
                 {
-                    if (right_beamCurr >= right_beamTime)
+                    if (beamCurr >= beamTime)
                     {
                         beamCurr = Mathf.Clamp(beamCurr, 0, beamTime);
                         Reload();
@@ -206,9 +210,9 @@ public class WeaponExecutable {
                         float randZ = Random.Range(-spread / 50, spread / 50);
 
                         // Create the Bullet from the Bullet Prefab
-                        var bullet = (GameObject)Instantiate(bulletPrefab, barrel.position, barrel.rotation);
+                        var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
-                        if (right_autoTrack && playerTarget.value != null)
+                        if (autoTrack && playerTarget.value != null)
                         {
                             bullet.transform.LookAt(playerTarget.value.transform);
                             bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
@@ -226,7 +230,7 @@ public class WeaponExecutable {
                         bullet.GetComponent<Bullet>().SetFaction(0);
                         
                         // Destroy the bullet after _ seconds
-                        Destroy(bullet, bulletLife);
+                        GameObject.Destroy(bullet, bulletLife);
                     }
                 }
             }
@@ -250,14 +254,16 @@ public class WeaponExecutable {
         }
     }
     
-    void Reload ()
+    // Returns a time to recall this function
+    // Or maybe invoke repeating until a time
+    public void Reload ()
     {
         isFiring = false;
         if (currentAmmo < maxAmmo && !isReloading)
         {
             isReloading = true;
             if (animator != null) animator.SetBool("firing", false);
-            Invoke("Reload", reloadTime);
+            //Invoke("Reload", reloadTime);
             nextReloadEnd = Time.time + reloadTime;
         }
         else if (isReloading && Time.time >= (nextReloadEnd - 0.1f))
@@ -265,26 +271,27 @@ public class WeaponExecutable {
             currentAmmo = maxAmmo;
             isReloading = false;
         }
+
     }
     
-    void OnCooldown()
+    public void OnCooldown()
     {
         isFiring = false;
         
         if (animator != null)
         {
-            leftWeaponAnimator.SetBool("firing", false);
+            animator.SetBool("firing", false);
         }
 
         if (fireType == FireType.Charge)
         {
             chargeCurr -= Time.deltaTime;
-            chargeCurr = Mathf.Clamp(left_chargeCurr, 0, Mathf.Infinity);
+            chargeCurr = Mathf.Clamp(chargeCurr, 0, Mathf.Infinity);
         }
         else if (fireType == FireType.Beam)
         {
             beamCurr -= Time.deltaTime;
-            beamCurr = Mathf.Clamp(left_beamCurr, 0, left_beamTime);
+            beamCurr = Mathf.Clamp(beamCurr, 0, beamTime);
         }
     }
 }

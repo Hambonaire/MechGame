@@ -277,17 +277,17 @@ public class EnemyController : MonoBehaviour
         #endregion
 
         #region Weapon Variables 
-        if (rightWeaponItem.rightPrefab != null)
+        if (rightWeaponItem.prefab != null)
         {
             primary_bullet = rightWeaponItem.bullet;
             primary_ROF = rightWeaponItem.rateOfFire;
             primary_maxAmmo = rightWeaponItem.maxAmmo;
             primary_reloadTime = rightWeaponItem.reloadTime;
-            primary_spread = rightWeaponItem.bulletSpray;
+            primary_spread = rightWeaponItem.bulletSpread;
             primary_bulletSpeed = rightWeaponItem.bulletSpeed;
             primary_bulletLife = rightWeaponItem.bulletLife;
 
-            rightArmWeapon = Instantiate(rightWeaponItem.rightPrefab, cockpit.transform.Find("RightArmConnection").position, cockpit.transform.rotation) as GameObject;
+            rightArmWeapon = Instantiate(rightWeaponItem.prefab, cockpit.transform.Find("RightArmConnection").position, cockpit.transform.rotation) as GameObject;
             rightArmWeapon.transform.parent = cockpitRotationCenter.transform;
             // Scaling
            // rightArmWeapon.transform.localScale = new Vector3(torsoScaleFactor, torsoScaleFactor, torsoScaleFactor);
@@ -295,17 +295,17 @@ public class EnemyController : MonoBehaviour
             rightArmBarrel = rightArmWeapon.transform.Find("Barrel");
         }
 
-        if (leftWeaponItem.leftPrefab != null)
+        if (leftWeaponItem.prefab != null)
         {
             secondary_bullet = leftWeaponItem.bullet;
             secondary_ROF = leftWeaponItem.rateOfFire;
             secondary_maxAmmo = leftWeaponItem.maxAmmo;
             secondary_reloadTime = leftWeaponItem.reloadTime;
-            secondary_Spread = leftWeaponItem.bulletSpray;
+            secondary_Spread = leftWeaponItem.bulletSpread;
             secondary_bulletSpeed = leftWeaponItem.bulletSpeed;
             secondary_bulletLife = leftWeaponItem.bulletLife;
 
-            leftArmWeapon = Instantiate(leftWeaponItem.leftPrefab, cockpit.transform.Find("LeftArmConnection").position, cockpit.transform.rotation) as GameObject;
+            leftArmWeapon = Instantiate(leftWeaponItem.prefab, cockpit.transform.Find("LeftArmConnection").position, cockpit.transform.rotation) as GameObject;
             leftArmWeapon.transform.parent = cockpitRotationCenter.transform;
             // Scaling
             //leftArmWeapon.transform.localScale = new Vector3(torsoScaleFactor, torsoScaleFactor, torsoScaleFactor);
@@ -335,9 +335,9 @@ public class EnemyController : MonoBehaviour
         #endregion
 
         #region Stats
-        GetComponent<Stats>().SetBallisticArmor(cockpitItem.ballisticArmor + legsItem.ballisticArmor);
-        GetComponent<Stats>().SetEnergyArmor(cockpitItem.energyArmor + legsItem.energyArmor);
-        GetComponent<Stats>().SetHealthMax(cockpitItem.health + legsItem.health);
+        GetComponent<Stats>().AddBallisticArmor(cockpitItem.ballisticArmor + legsItem.ballisticArmor);
+        GetComponent<Stats>().AddEnergyArmor(cockpitItem.energyArmor + legsItem.energyArmor);
+        GetComponent<Stats>().AddHealthMax(cockpitItem.health + legsItem.health);
         #endregion
 
         #region Misc.
