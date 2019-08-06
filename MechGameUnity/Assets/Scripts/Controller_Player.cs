@@ -73,15 +73,48 @@ public class Controller_Player : MonoBehaviour
     //Animator rightWeaponAnimator;
     //Animator leftWeaponAnimator;
 
-    public GameObject legs;
-    public List<List<List<GameObject>>> weapons = new List<List<List<GameObject>>>();
-    public List<List<List<WeaponExecutable>>> weaponExecutables = new List<List<List<WeaponExecutable>>>();
     public GameObject cockpit;
+    public GameObject legs;
+    public List<List<List<GameObject>>> weapons = new List<List<List<GameObject>>>() {
+        new List<List<GameObject>>() {
+            new List<GameObject>(),
+            new List<GameObject>(), 
+            new List<GameObject>()
+        },
+        new List<List<GameObject>>() {
+            new List<GameObject>(),
+            new List<GameObject>(),
+            new List<GameObject>()
+        }
+    };
+    public List<List<List<WeaponExecutable>>> weaponExecutables = new List<List<List<WeaponExecutable>>>() {
+        new List<List<WeaponExecutable>>() {
+            new List<WeaponExecutable>(),
+            new List<WeaponExecutable>(),
+            new List<WeaponExecutable>()
+        },
+        new List<List<WeaponExecutable>>() {
+            new List<WeaponExecutable>(),
+            new List<WeaponExecutable>(),
+            new List<WeaponExecutable>()
+        }
+    };
 
     public Transform legsBase;
     public Transform cockpitRotationCenter;
     public Transform torsoConnection;
-    public List<List<List<Transform>>> barrels;
+    public List<List<List<Transform>>> barrels = new List<List<List<Transform>>>() {
+        new List<List<Transform>>() {
+            new List<Transform>(),
+            new List<Transform>(),
+            new List<Transform>()
+        },
+        new List<List<Transform>>() {
+            new List<Transform>(),
+            new List<Transform>(),
+            new List<Transform>()
+        }
+    };
 
     public List<WeaponMapStruct> reloadStructs = new List<WeaponMapStruct>();
     //public List<WeaponMapStruct> cooldownStructs = new List<WeaponMapStruct>();
