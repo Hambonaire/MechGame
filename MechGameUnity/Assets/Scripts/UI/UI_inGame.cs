@@ -28,16 +28,16 @@ public class UI_inGame : MonoBehaviour
 
     //public Text primaryAmmoText;
     //public Text secondaryAmmoText;
-    public AmmoUIText[5] ammoLR = new AmmoUIText[];
-    public AmmoUIText[5] ammoLU = new AmmoUIText[];
-    public AmmoUIText[5] ammoLS = new AmmoUIText[];
-    public AmmoUIText[5] ammoRR = new AmmoUIText[];
-    public AmmoUIText[5] ammoRU = new AmmoUIText[];
-    public AmmoUIText[5] ammoRS = new AmmoUIText[];
+    public AmmoTextUI[5] ammoLR = new AmmoTextUI[];
+    public AmmoTextUI[5] ammoLU = new AmmoTextUI[];
+    public AmmoTextUI[5] ammoLS = new AmmoTextUI[];
+    public AmmoTextUI[5] ammoRR = new AmmoTextUI[];
+    public AmmoTextUI[5] ammoRU = new AmmoTextUI[];
+    public AmmoTextUI[5] ammoRS = new AmmoTextUI[];
     
-    public List<List<AmmoUIText[]>> ammoTexts = new List<List<AmmoUIText[]>>() {
-        new List<AmmoUIText[]>(),
-        new List<AmmoUIText[]>()
+    public List<List<AmmoTextUI[]>> ammoTexts = new List<List<AmmoTextUI[]>>() {
+        new List<AmmoTextUI[]>(),
+        new List<AmmoTextUI[]>()
     };
 
     public Image primaryChargeBar;
@@ -89,12 +89,7 @@ public class UI_inGame : MonoBehaviour
 
         cautionColor = cautionPrimary.color;
     }
-
-    void Awake()
-    {
-        // Play HUD animation
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -117,18 +112,15 @@ public class UI_inGame : MonoBehaviour
 
         //Debug.Log("Fill amount: " + Variables.PlayerPrimaryChargeVal);
 
-        primaryChargeBar.fillAmount = playerRightFillBar.value;
+        //primaryChargeBar.fillAmount = playerRightFillBar.value;
 
-        secondaryChargeBar.fillAmount = playerLeftFillBar.value;
+        //secondaryChargeBar.fillAmount = playerLeftFillBar.value;
 
         //Debug.Log(cautionPrimary.color.a);
 
-        if (controller_player.weaponExecutables[0][0][0])
-        {
-        
-        }
+        UpdateAmmo();
 
-        /*
+/*
         if (playerRightReloading.value)
         {
             primaryAmmoText.text = "RELOADING    " + playerRightAmmoCurrent.value + " / " + playerRightAmmoMax.value;
@@ -215,26 +207,67 @@ public class UI_inGame : MonoBehaviour
     }
     
     public void Rebuild()
-    {
-        for (int i = 0; i < player_controller.weaponExecutables.Count; i++) {
-            for (int j = 0; j < player_controller.weaponExecutables[i].Count; j++) {
-                for (int k = 0; k < player_controller.weaponExecutables[i][j].Count; k++) {
-                    player_controller.weaponExecutables[i][j][k].maxAmmo;
-                    player_controller.weaponExecutables[i][j][k].currentAmmo; 
+    {    
+        /*
+        for (int i = 0; i < controller_player.weapon_data.Count; i++) {
+            for (int j = 0; i < controller_player.weapon_data[i].Count; j++) {
+                ammoTexts[i][j].Clear();
+                for (int k = 0; i < controller_player.weapon_data.[i][j]Count; k++) {
+                    ammoTexts[i][j][k].max = controller_player.weapon_data[i][j][k].executable.maxAmmo;
+                    ammoTexts[i][j][k].current = ammoTexts[i][j][k].max;
+                    ammoTextx[i][j][k].icon = EquipmentManager.Instance.currentWeapons[i][j][k].ammoIcon.
                 }
             }
         }
+        */
+        
+        for (int i = 0; i < controller_player.weapon_data.Count; i++) {
+            for (int j = 0; i < controller_player.weapon_data[i].Count; j++) {
+                for (int k = 0; i < controller_player.weapon_data.[i][j]Count; k++) {
+                    ammoTexts[i][j][k].data_ref = controller_player.weapon_data[i][j][k];
+                    // Do other stuff inside ammoTexts script itself with ref?
+                }
+            }
+        }
+        
     }
     
+    // Each thing should take care of this on their own, dont use this... hopefully
+    
+    /*
     public void UpdateAmmo ()
     {
         //foreach () // ?
         //ammoSlots[] = GetComponentsInChildren<AmmoUISlot>() //??
         
-        for (int i = 0; i < ammoSlots.Length)
-        {
-               
+        for (int i = 0; i < controller_player.weapon_data.Count; i++) {
+            for (int j = 0; i < controller_player.weapon_data[i].Count; j++) {
+                for (int k = 0; i < controller_player.weapon_data.[i][j]Count; k++) {
+                    if (controller_player.weapon_data[i][j][k].executable.isReloading) {
+                        ammoTexts[i][j][k].reloadImage.enabled = true; // Do stuff here for showing reloading is happening
+                    }
+                    else {
+                        ammoTextx[i][j][k].current = controller_player.weapon_data[i][j][k].executable.currentAmmo;
+                    }
+                }
+            }
         }
+        
+        
+        for (int i = 0; i < ammoTexts.Count; i++) {
+            for (int j = 0; j < ammoTexts[i].Count; j++) {
+                for (int k = 0; k < ammoTexts[i][j].Length; k++) {
+                    if (ammoTexts[i][j][k].data_ref.isReloading) {
+                        ammoTexts[i][j][k].reloadImage.enabled = true;
+                    } 
+                    else {
+                        ammotTexts[i][j][k].current = ammoTexts[i][j][k].data_ref.currentAmmo;
+                    }
+                }
+            }
+        }
+        
     }
+    */
 }
  
