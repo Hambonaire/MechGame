@@ -8,4 +8,10 @@ public class Datatype_Weapon
     public GameObject barrel;
     public WeaponExecutable executable;
     //public Weapon data;
+    
+    public void Delete () {
+        GameObject.Destroy(weapon_object);
+        GameObject.Destroy(barrel);
+        // GC should handle WeaponExecutable and this object overall...
+    }
 }
