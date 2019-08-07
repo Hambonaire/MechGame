@@ -19,7 +19,8 @@ public class EquipmentManager : MonoBehaviour {
 
 	Cockpit currentCockpit;
 	Legs currentLegs;  
-    List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>() {
+	List<Item> currentAccessories = new List<Item>();
+	List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>() {
 		new List<List<Weapon>>() {	// 0	Left
 			new List<Weapon>(),		// 0,0	Left Reg
 			new List<Weapon>(),		// 0,1	Left UH
@@ -31,8 +32,7 @@ public class EquipmentManager : MonoBehaviour {
 			new List<Weapon>()		// 1,2	Right Shld
 		}
 	};
-	List<Item> currentAccessories = new List<Item>();
-
+	
 	// Callback for when an item is equipped
 	public delegate void OnEquipmentChanged(Item newItem, Item oldItem);
 	public event OnEquipmentChanged onEquipmentChanged;
@@ -222,28 +222,6 @@ public class EquipmentManager : MonoBehaviour {
 		}
 		
 		Rebuild();
-		
-		// If there was already an item in the slot
-		// make sure to put it back in the inventory
-		//if (currentEquipment[slotIndex] != null)
-		//{
-		//	oldItem = currentEquipment [slotIndex];
-
-		//	inventory.Add (oldItem);
-		//}
-
-		// An item has been equipped so we trigger the callback
-		//if (onEquipmentChanged != null)
-		//	onEquipmentChanged.Invoke(newItem, oldItem);
-
-		//currentEquipment [slotIndex] = newItem;
-		//Debug.Log(newItem.name + " equipped!");
-
-		//if (newItem.prefab) {
-		//	AttachToMesh (newItem.prefab, slotIndex);
-		//}
-		//equippedItems [itemIndex] = newMesh.gameObject;
-
 	}
 
 	void Unequip(int slotIndex) {
@@ -335,22 +313,6 @@ public class EquipmentManager : MonoBehaviour {
         }
 		
 		Rebuild();
-		
-		//if (currentEquipment[slotIndex] != null)
-		//{
-		//	Equipment oldItem = currentEquipment [slotIndex];
-		//	inventory.Add(oldItem);
-				
-		//	currentEquipment [slotIndex] = null;
-			//if (currentMeshes [slotIndex] != null) {
-			//	Destroy (currentMeshes [slotIndex].gameObject);
-			//}
-
-			// Equipment has been removed so we trigger the callback
-			//if (onEquipmentChanged != null)
-			//	onEquipmentChanged.Invoke(null, oldItem);
-			
-		//}
 	}
 	
 	// Have this be called from some other script?
@@ -369,6 +331,19 @@ public class EquipmentManager : MonoBehaviour {
         {
             Destroy(controller_player.legs);
         }	
+		for (int i = 0; i < controller_player.weapon_data.Count; i++) 
+		{
+			for (int j = 0; j < controller_player.weapon_data[i].Count; j++)
+			{
+				for (int k = 0; k < controller_player.weapon_data[i][j].Count; k++)
+				{
+					controller_player.weapon_data[i][j][k].Delete();
+					controller_player.weapon_data[i][i].RemoveAt(k);
+				}
+			}
+		}
+		
+		/*
 		for (int i = 0; i < controller_player.weapons.Count; i++) 
 		{
 			for (int j = 0; j < controller_player.weapons[i].Count; j++)
@@ -383,6 +358,7 @@ public class EquipmentManager : MonoBehaviour {
 				controller_player.weaponExecutables[i][j].Clear();
 			}
 		}
+		*/
 		
         #endregion
 		
@@ -405,11 +381,16 @@ public class EquipmentManager : MonoBehaviour {
 			{
 				for (int k = 0; k < currentWeapons[i][j].Count; k++)
 				{
-					controller_player.weapons[i][j][k] = Instantiate(currentWeapons[i][j][k].prefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k).position, controller_player.cockpit.transform.rotation) as GameObject;
-					controller_player.weapons[i][j][k].transform.parent = controller_player.cockpitRotationCenter.transform;
-					controller_player.barrels[i][j][k] = controller_player.weapons[i][j][k].transform.Find("Barrel");
+					data = new Datatype_Weapon();
+					data.weapon_object = Instantiate(currentWeapons[i][j][k].prefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k).position, controller_player.cockpit.transform.rotation) as GameObject;
+					data.weapon_object.transform.parent = controller_player.cockpitRotationCenter.transform;
+					data.executable = new WeaponExecutable(currentWeapons[i][j][k], controller_player.weapons[i][j][k].transform.Find("Barrel"));
+					controller_player.weapon_data[i][j].Add(data); 
 					
-					controller_player.weaponExecutables[i][j][k] = new WeaponExecutable(currentWeapons[i][j][k], controller_player.barrels[i][j][k]);
+					//controller_player.weapons[i][j][k] = Instantiate(currentWeapons[i][j][k].prefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k).position, controller_player.cockpit.transform.rotation) as GameObject;
+					//controller_player.weapons[i][j][k].transform.parent = controller_player.cockpitRotationCenter.transform;
+					//controller_player.barrels[i][j][k] = controller_player.weapons[i][j][k].transform.Find("Barrel");				
+					//controller_player.weaponExecutables[i][j][k] = new WeaponExecutable(currentWeapons[i][j][k], controller_player.barrels[i][j][k]);
 				}
 			}
 		}
