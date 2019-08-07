@@ -11,6 +11,7 @@ public class Weapon : Item {
 
     //public GameObject animatorHolder;
     public GameObject prefab;
+    public Image ammoIcon;
 
     public Side side = Side.Left;
     public WeaponStyle style = WeaponStyle.Regular;
