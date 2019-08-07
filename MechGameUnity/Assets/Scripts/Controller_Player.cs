@@ -14,17 +14,16 @@ public class Controller_Player : MonoBehaviour
 
     public GameObject mechManager;
 
-    public ScriptableFloat playerRightAmmoCurrent;
-    public ScriptableFloat playerRightAmmoMax;
-    public ScriptableFloat playerLeftAmmoCurrent;
-    public ScriptableFloat playerLeftAmmoMax;
-    public ScriptableFloat playerRightFillBar;
-    public ScriptableFloat playerLeftFillBar;
+	private Vector3 inputDirection;
+
     public ScriptableFloat playerHealthCurrent;
     public ScriptableFloat playerHealthMax;
-    public ScriptableBool playerRightReloading;
-    public ScriptableBool playerLeftReloading;
     public ScriptableGameObject playerTarget;
+	public Vector3 enemyCenterMass;
+    public float targetDistance;
+	public float firingAngle;
+	
+    private Vector3 forward;
 
     [HideInInspector]
     public float gravity = -9.8f;
@@ -43,11 +42,8 @@ public class Controller_Player : MonoBehaviour
 
     private float turnSmoothVelocity_Torso = 0;
     private float turnSmoothTime_Torso = .025f;
-
     private float turnSmoothVelocity_Legs = 0;
     private float turnSmoothTime_Legs = .2f;
-
-    private Vector3 inputDirection;
 
     [HideInInspector]
     public CapsuleCollider hitBox;
@@ -57,10 +53,6 @@ public class Controller_Player : MonoBehaviour
     public float baseHitBoxHeight = 3f;
     [HideInInspector]
     public float baseHitBoxCenter = 1.55f;
-
-    private Vector3 forward;
-
-    public float firingAngle;
 
     public GameObject cam;
     public GameObject torsoRoot;
@@ -73,32 +65,20 @@ public class Controller_Player : MonoBehaviour
     //Animator rightWeaponAnimator;
     //Animator leftWeaponAnimator;
 
+    public List<List<List<Datatype_Weapon>>> weapon_data = new List<List<List<Datatype_weapon>>>(){
+        new List<List<Datatype_Weapon>>() {
+            new List<Datatype_Weapon>(),
+            new List<Datatype_Weapon>(),
+            new List<Datatype_Weapon>()
+        },
+        new List<List<Datatype_Weapon>>() {
+            new List<Datatype_Weapon>(),
+            new List<Datatype_Weapon>(),
+            new List<Datatype_Weapon>()
+        }
+    };
     public GameObject cockpit;
     public GameObject legs;
-    public List<List<List<GameObject>>> weapons = new List<List<List<GameObject>>>() {
-        new List<List<GameObject>>() {
-            new List<GameObject>(),
-            new List<GameObject>(), 
-            new List<GameObject>()
-        },
-        new List<List<GameObject>>() {
-            new List<GameObject>(),
-            new List<GameObject>(),
-            new List<GameObject>()
-        }
-    };
-    public List<List<List<WeaponExecutable>>> weaponExecutables = new List<List<List<WeaponExecutable>>>() {
-        new List<List<WeaponExecutable>>() {
-            new List<WeaponExecutable>(),
-            new List<WeaponExecutable>(),
-            new List<WeaponExecutable>()
-        },
-        new List<List<WeaponExecutable>>() {
-            new List<WeaponExecutable>(),
-            new List<WeaponExecutable>(),
-            new List<WeaponExecutable>()
-        }
-    };
 
     public Transform legsBase;
     public Transform cockpitRotationCenter;
@@ -127,9 +107,6 @@ public class Controller_Player : MonoBehaviour
         new List<List<int>> { new List<int> { 0 } }, new List<List<int>> { new List<int> { 0 } }, new List<List<int>> { new List<int> { 0 } },
         new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }
     };
-
-    public Vector3 enemyCenterMass;
-    public float targetDistance;
 
     private void Start()
     {
@@ -235,13 +212,13 @@ public class Controller_Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            for (int i = 0; i < weaponExecutables.Count; i++)
+            for (int i = 0; i < weapon_data.Count; i++)
             {
-                for (int j = 0; j < weaponExecutables[i].Count; j++)
+                for (int j = 0; j < weapon_data[i].Count; j++)
                 {
-                    for (int k = 0; k < weaponExecutables[i][k].Count; k++)
+                    for (int k = 0; k < weapon_data[i][k].Count; k++)
                     {
-                        weaponExecutables[i][j][k].Reload();
+                        weapon_data[i][j][k].WeaponExecutable.Reload();
                         reloadStructs.Add(new WeaponMapStruct { a=i, b=j, c=k });
                     }
                 }
@@ -265,6 +242,9 @@ public class Controller_Player : MonoBehaviour
         {
             OnCooldown(testmap1);
         }
+		
+		// TODO: Make real input system using Unity inputs
+		// 		 Should become a foreach Input Axii if: Fire() -> else: OnCooldown()
     }
 
     public void Move()
@@ -325,7 +305,7 @@ public class Controller_Player : MonoBehaviour
             {
                 for (int k = 0; k < fireMap[i][k].Count; k++)
                 {
-                    if (fireMap[i][j][k] == 1) weaponExecutables[i][j][k].Fire();
+                    if (fireMap[i][j][k] == 1) weapon_data[i][j][k].executable.Fire();
                 }
             }
         }
@@ -339,7 +319,7 @@ public class Controller_Player : MonoBehaviour
             {
                 for (int k = 0; k < fireMap[i][k].Count; k++)
                 {
-                    if (fireMap[i][j][k] == 1) weaponExecutables[i][j][k].OnCooldown();
+                    if (fireMap[i][j][k] == 1) weapon_data[i][j][k].executable.OnCooldown();
                 }
             }
         }
