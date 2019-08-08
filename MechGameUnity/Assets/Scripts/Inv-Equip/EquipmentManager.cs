@@ -51,13 +51,13 @@ public class EquipmentManager : MonoBehaviour {
 		}
 	}
 	static EquipmentManager _instance;
-
+    
+	#endregion
+	
 	void Awake ()
 	{
 		_instance = this;
 	}
-
-    #endregion
 
 	void Start ()
 	{
