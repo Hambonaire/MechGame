@@ -22,6 +22,8 @@ public class InventoryManager : MonoBehaviour
 
     // Our current list of items in the inventory
     public List<Item> items = new List<Item>();
+    
+    public Database database;
 
     // Add a new item
     public void Add(Item item)
@@ -59,4 +61,16 @@ public class InventoryManager : MonoBehaviour
             onItemChangedCallback.Invoke();
     }
     
+    public void BuildFromSave()
+    { 
+        foreach (int i in save.inventory)
+        {
+            Item it = database.GetActual(i);
+            {
+                inventory.Add(it);
+            }
+        }
+
+    }
+
 }
