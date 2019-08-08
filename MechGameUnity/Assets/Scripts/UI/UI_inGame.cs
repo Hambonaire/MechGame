@@ -8,19 +8,21 @@ public class UI_inGame : MonoBehaviour
 {
     public Controller_Player controller_player;
     
-    int primaryAmmo;
-    int secondaryAmmo;
+    //int primaryAmmo;
+    //int secondaryAmmo;
 
-    public ScriptableFloat playerRightFillBar;
-    public ScriptableFloat playerLeftFillBar;
-    public ScriptableFloat playerRightAmmoCurrent;
-    public ScriptableFloat playerLeftAmmoCurrent;
-    public ScriptableFloat playerRightAmmoMax;
-    public ScriptableFloat playerLeftAmmoMax;
-    public ScriptableBool playerRightReloading;
-    public ScriptableBool playerLeftReloading;
+    //public ScriptableFloat playerRightFillBar;
+    //public ScriptableFloat playerLeftFillBar;
+    //public ScriptableFloat playerRightAmmoCurrent;
+    //public ScriptableFloat playerLeftAmmoCurrent;
+    //public ScriptableFloat playerRightAmmoMax;
+    //public ScriptableFloat playerLeftAmmoMax;
+    //public ScriptableBool playerRightReloading;
+    //public ScriptableBool playerLeftReloading;
     public ScriptableFloat playerHealthCurrent;
     public ScriptableFloat playerHealthMax;
+    public ScriptableFloat playerShieldCurrent;
+    public ScriptableFloat playerShieldMax;
 
     public GameObject levelEndUI;
     public GameObject pauseUI;
@@ -40,11 +42,11 @@ public class UI_inGame : MonoBehaviour
         new List<AmmoTextUI[]>()
     };
 
-    public Image primaryChargeBar;
-    public Image secondaryChargeBar;
+    //public Image primaryChargeBar;
+    //public Image secondaryChargeBar;
 
-    public Image cautionPrimary;
-    public Image cautionSecondary;
+    //public Image cautionPrimary;
+    //public Image cautionSecondary;
 
     public Image mainReticle;
 
