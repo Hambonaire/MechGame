@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //public enum Side { Left, Right }
 //public enum WeaponStyle { Regular, Underhand, Shoulder}
 //public enum FireType { Regular, Beam, Charge, Multi}
 
 public class WeaponExecutable {
+    public Image ammoIcon;
+
     Transform barrel;
     GameObject bulletPrefab;
     
@@ -22,24 +25,25 @@ public class WeaponExecutable {
     float ROF;
     float nextFire;
     float reloadTime;
-    float nextReloadEnd;
+    public float nextReloadStart;
+    public float nextReloadEnd;
     public bool isReloading = false;
     
-    int maxAmmo;
-    int currentAmmo;
+    public int maxAmmo;
+    public int currentAmmo;
     float spread;
     float bulletSpeed;
     float bulletLife;
     
-    FireType fireType;
-    float chargeTime;
-    float chargeCurr;
-    float beamTime;
-    float beamCurr;
+    public FireType fireType;
+    public float chargeTime;
+    public float chargeCurr;
+    public float beamTime;
+    public float beamCurr;
     float cooldown;             // TODO: Implement this?
     int projectileCount;
     
-    bool autoTrack;
+    public bool autoTrack;
     float trackDistance;        // TODO: Implement this? Make it common to weapon class instead of unique?
     float targetDistance;
     float firingAngle;
@@ -47,6 +51,7 @@ public class WeaponExecutable {
     // Constructor, pass in Weapon
     public WeaponExecutable(Weapon wep, Transform barrel_)
     {
+        ammoIcon = wep.ammoIcon;
         fireType = wep.fireMode;    
         bulletPrefab = wep.bullet;
         bulletSpeed = wep.bulletSpeed;
@@ -58,9 +63,9 @@ public class WeaponExecutable {
         maxAmmo = wep.maxAmmo;
         spread = wep.bulletSpread;
         chargeTime = wep.chargeTime;
-        projectileCount = wep.projectileCount;
         beamTime = wep.beamTime;
-        cooldown = wep.cooldown;         
+        projectileCount = wep.projectileCount;
+        //cooldown = wep.cooldown;         
         //autoTrack = wep.autoTrack;
         barrel = barrel_;
         
@@ -264,9 +269,10 @@ public class WeaponExecutable {
             isReloading = true;
             if (animator != null) animator.SetBool("firing", false);
             //Invoke("Reload", reloadTime);
+            nextReloadStart = Time.time;
             nextReloadEnd = Time.time + reloadTime;
         }
-        else if (isReloading && Time.time >= (nextReloadEnd - 0.1f))
+        else if (isReloading && Time.time >= nextReloadEnd)
         {
             currentAmmo = maxAmmo;
             isReloading = false;

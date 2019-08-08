@@ -37,8 +37,8 @@ public class EquipmentManager : MonoBehaviour {
 	public delegate void OnEquipmentChanged(Item newItem, Item oldItem);
 	public event OnEquipmentChanged onEquipmentChanged;
 
-	InventoryManager inventory;
-    Database database;
+	public InventoryManager inventory;
+    public Database database;
 	
 	#region Singleton
 
@@ -61,45 +61,58 @@ public class EquipmentManager : MonoBehaviour {
 
 	void Start ()
 	{
-		inventory = InventoryManager.instance;
-		SaveData save = SaveData.Load(); 
+        inventory = InventoryManager.instance;
+
+        BuildFromSave();
+    }
+
+    /// Needs to be implemented(?), for param might create enum for each type (?)
+    //public Item GetEquipment(EquipmentSlot slot) {
+    //	return currentEquipment [(int)slot];
+    //}
+
+    public void BuildFromSave()
+    {
+        SaveData save = SaveData.Load();
 
         currentLegs = database.GetActual(save.legs) as Legs;
         currentCockpit = database.GetActual(save.cockpit) as Cockpit;
-		
-		foreach (int i in save.weapons) {
-			Weapon wep = database.GetActual(i) as Weapon;
-			
-			// Add if room
-			if (currentWeapons[(int) wep.side][(int) wep.style].Count < currentCockpit.weaponMap[(int) wep.side][(int) wep.style]) {
-				currentWeapons[(int) wep.side][(int) wep.style].Add(wep);
-			}
-			// Add to inventory if no room
-			else {
-				inventory.Add(wep);
-			}
-		}
-		
-		foreach (int i in save.accessories) {
-			Item it = database.GetActual(i);
-			
-			// Add if room
-			if (currentAccessories.Count < currentCockpit.accessoryCount) {
-				currentAccessories.Add(it);
-			}
-			// Add to inventory if no room
-			else {
-				inventory.Add(it);
-			}
-		}
 
-	}
+        foreach (int i in save.weapons)
+        {
+            Weapon wep = database.GetActual(i) as Weapon;
 
-	/// Needs to be implemented(?), for param might create enum for each type (?)
-	//public Item GetEquipment(EquipmentSlot slot) {
-	//	return currentEquipment [(int)slot];
-	//}
-	
+            // Add if room
+            if (currentWeapons[(int)wep.side][(int)wep.style].Count < currentCockpit.weaponMap[(int)wep.side][(int)wep.style])
+            {
+                currentWeapons[(int)wep.side][(int)wep.style].Add(wep);
+            }
+            // Add to inventory if no room
+            else
+            {
+                inventory.Add(wep);
+            }
+        }
+
+        foreach (int i in save.accessories)
+        {
+            Item it = database.GetActual(i);
+
+            // Add if room
+            if (currentAccessories.Count < currentCockpit.accessoryCount)
+            {
+                currentAccessories.Add(it);
+            }
+            // Add to inventory if no room
+            else
+            {
+                inventory.Add(it);
+            }
+        }
+
+        Rebuild();
+    }
+
 	public Item GetEquipment(InventorySlot slot)
 	{
 		int num = slot.index % 10;
@@ -343,23 +356,6 @@ public class EquipmentManager : MonoBehaviour {
 			}
 		}
 		
-		/*
-		for (int i = 0; i < controller_player.weapons.Count; i++) 
-		{
-			for (int j = 0; j < controller_player.weapons[i].Count; j++)
-			{
-				for (int k = 0; k < controller_player.weapons[i][j].Count; k++)
-				{
-					Destroy(controller_player.weapons[i][j][k]);
-					controller_player.weapons[i][j].RemoveAt(k);
-					Destroy(controller_player.barrels[i][j][k]);
-					controller_player.barrels[i][j].RemoveAt(k);
-				}
-				controller_player.weaponExecutables[i][j].Clear();
-			}
-		}
-		*/
-		
         #endregion
 		
 		#region Create New Items
@@ -381,16 +377,11 @@ public class EquipmentManager : MonoBehaviour {
 			{
 				for (int k = 0; k < currentWeapons[i][j].Count; k++)
 				{
-					data = new Datatype_Weapon();
+                    Datatype_Weapon data = new Datatype_Weapon();
 					data.weapon_object = Instantiate(currentWeapons[i][j][k].prefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k).position, controller_player.cockpit.transform.rotation) as GameObject;
 					data.weapon_object.transform.parent = controller_player.cockpitRotationCenter.transform;
-					data.executable = new WeaponExecutable(currentWeapons[i][j][k], controller_player.weapons[i][j][k].transform.Find("Barrel"));
-					controller_player.weapon_data[i][j].Add(data); 
-					
-					//controller_player.weapons[i][j][k] = Instantiate(currentWeapons[i][j][k].prefab, controller_player.cockpit.transform.Find("Connection_" + i + j + k).position, controller_player.cockpit.transform.rotation) as GameObject;
-					//controller_player.weapons[i][j][k].transform.parent = controller_player.cockpitRotationCenter.transform;
-					//controller_player.barrels[i][j][k] = controller_player.weapons[i][j][k].transform.Find("Barrel");				
-					//controller_player.weaponExecutables[i][j][k] = new WeaponExecutable(currentWeapons[i][j][k], controller_player.barrels[i][j][k]);
+					data.executable = new WeaponExecutable(currentWeapons[i][j][k], data.weapon_object.transform.Find("Barrel"));
+					controller_player.weapon_data[i][j].Add(data); 				
 				}
 			}
 		}

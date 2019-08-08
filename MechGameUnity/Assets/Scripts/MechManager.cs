@@ -58,6 +58,7 @@ public class MechManager : MonoBehaviour {
 
 	}
 
+    // TODO: Might move to UI_inGame or AutoTargetUI... probably a better fit
     void GetEnemyToTarget()
     {
         //Debug.Log("Repeating");

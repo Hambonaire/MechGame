@@ -11,16 +11,16 @@ public class Stats : MonoBehaviour
     public float ShieldRegenDelay;
 
     #region Base Stats
-    float baseMaxHealth = 100;
-    float baseMaxShield = 0;
-    float baseBallisticArmor = 100;
-    float baseEnergyArmor = 50;
-    float baseShieldRegen = 10;
+    private float baseMaxHealth = 100;
+    private float baseMaxShield = 0;
+    private float baseBallisticArmor = 100;
+    private float baseEnergyArmor = 50;
+    private float baseShieldRegen = 10;
     #endregion
 
     #region Current Stats
-    ScriptableFloat healthRef;
-    ScriptableFloat shieldRef;
+    public ScriptableFloat healthRef;
+    public ScriptableFloat shieldRef;
     float currentMaxHealth;
     float currentMaxShield;
     float currentShieldRegen;

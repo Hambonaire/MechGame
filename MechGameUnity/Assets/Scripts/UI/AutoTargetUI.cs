@@ -16,9 +16,9 @@ public class AutoTargetUI : MonoBehaviour
 
     void Update()
     {
-        if (Obj != null)
+        if (target != null)
         {
-            Vector2 pos = RectTransformUtility.WorldToScreenPoint(mCamera, target.transform.position);
+            Vector2 pos = RectTransformUtility.WorldToScreenPoint(mCamera, target.value.transform.position);
             rt.position = pos;
         }
     }

@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class AmmoTextUI : MonoBehaviour
 {
     public Datatype_Weapon data_ref;
-    public Image fillBar;
+    public Image ammoFillBar;
+    public Image reloadFillBar;
     public Image reloadImage;
+    public Image ammoIcon;
     public Text text;
     public int current;
     public int max;
@@ -20,22 +22,26 @@ public class AmmoTextUI : MonoBehaviour
     
     void LateUpdate ()
     {
-        current = data_ref.currentAmmo;
+        current = data_ref.executable.currentAmmo;
+
+        text.text = current + "/" + max;
+
+        ammoFillBar.fillAmount = current/max;
         
-        fillBar.fillAmount = current/max;
-        
-        if (current == 0 || data_ref.isReloading) {
+        if (data_ref.executable.isReloading) {
             reloadImage.enabled = true;
             // TODO: Do more stuff here, make it spin or something
+
+            reloadFillBar.fillAmount = data_ref.executable.nextReloadStart/data_ref.executable.nextReloadEnd;
         }
         
-        current
+        
     }
     
     public void Rebuild () {
-        max = data_ref.maxAmmo;
+        max = data_ref.executable.maxAmmo;
         current = max;
-        
+        ammoIcon = data_ref.executable.ammoIcon;
     }
 }
  

@@ -28,12 +28,12 @@ public class UI_inGame : MonoBehaviour
 
     //public Text primaryAmmoText;
     //public Text secondaryAmmoText;
-    public AmmoTextUI[5] ammoLR = new AmmoTextUI[];
-    public AmmoTextUI[5] ammoLU = new AmmoTextUI[];
-    public AmmoTextUI[5] ammoLS = new AmmoTextUI[];
-    public AmmoTextUI[5] ammoRR = new AmmoTextUI[];
-    public AmmoTextUI[5] ammoRU = new AmmoTextUI[];
-    public AmmoTextUI[5] ammoRS = new AmmoTextUI[];
+    public AmmoTextUI[] ammoLR = new AmmoTextUI[5];
+    public AmmoTextUI[] ammoLU = new AmmoTextUI[5];
+    public AmmoTextUI[] ammoLS = new AmmoTextUI[5];
+    public AmmoTextUI[] ammoRR = new AmmoTextUI[5];
+    public AmmoTextUI[] ammoRU = new AmmoTextUI[5];
+    public AmmoTextUI[] ammoRS = new AmmoTextUI[5];
     
     public List<List<AmmoTextUI[]>> ammoTexts = new List<List<AmmoTextUI[]>>() {
         new List<AmmoTextUI[]>(),
@@ -118,7 +118,7 @@ public class UI_inGame : MonoBehaviour
 
         //Debug.Log(cautionPrimary.color.a);
 
-        UpdateAmmo();
+        //UpdateAmmo();
 
 /*
         if (playerRightReloading.value)
@@ -221,10 +221,14 @@ public class UI_inGame : MonoBehaviour
         }
         */
         
-        for (int i = 0; i < controller_player.weapon_data.Count; i++) {
-            for (int j = 0; i < controller_player.weapon_data[i].Count; j++) {
-                for (int k = 0; i < controller_player.weapon_data.[i][j]Count; k++) {
+        for (int i = 0; i < controller_player.weapon_data.Count; i++)
+        {
+            for (int j = 0; j < controller_player.weapon_data[i].Count; j++)
+            {
+                for (int k = 0; k < controller_player.weapon_data[i][j].Count; k++) 
+                {
                     ammoTexts[i][j][k].data_ref = controller_player.weapon_data[i][j][k];
+                    ammoTexts[i][j][k].Rebuild();
                     // Do other stuff inside ammoTexts script itself with ref?
                 }
             }
@@ -233,7 +237,6 @@ public class UI_inGame : MonoBehaviour
     }
     
     // Each thing should take care of this on their own, dont use this... hopefully
-    
     /*
     public void UpdateAmmo ()
     {

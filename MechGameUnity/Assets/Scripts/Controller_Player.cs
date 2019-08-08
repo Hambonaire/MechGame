@@ -65,7 +65,7 @@ public class Controller_Player : MonoBehaviour
     //Animator rightWeaponAnimator;
     //Animator leftWeaponAnimator;
 
-    public List<List<List<Datatype_Weapon>>> weapon_data = new List<List<List<Datatype_weapon>>>(){
+    public List<List<List<Datatype_Weapon>>> weapon_data = new List<List<List<Datatype_Weapon>>>(){
         new List<List<Datatype_Weapon>>() {
             new List<Datatype_Weapon>(),
             new List<Datatype_Weapon>(),
@@ -83,18 +83,6 @@ public class Controller_Player : MonoBehaviour
     public Transform legsBase;
     public Transform cockpitRotationCenter;
     public Transform torsoConnection;
-    public List<List<List<Transform>>> barrels = new List<List<List<Transform>>>() {
-        new List<List<Transform>>() {
-            new List<Transform>(),
-            new List<Transform>(),
-            new List<Transform>()
-        },
-        new List<List<Transform>>() {
-            new List<Transform>(),
-            new List<Transform>(),
-            new List<Transform>()
-        }
-    };
 
     public List<WeaponMapStruct> reloadStructs = new List<WeaponMapStruct>();
     //public List<WeaponMapStruct> cooldownStructs = new List<WeaponMapStruct>();
@@ -168,7 +156,7 @@ public class Controller_Player : MonoBehaviour
 
         Move();
 
-        // TODO: Weapon UI stuff here
+        // TODO: Weapon UI stuff, move to UI_inGame...
         /*
         if (right_fireType == FireType.Charge)
         {
@@ -218,7 +206,7 @@ public class Controller_Player : MonoBehaviour
                 {
                     for (int k = 0; k < weapon_data[i][k].Count; k++)
                     {
-                        weapon_data[i][j][k].WeaponExecutable.Reload();
+                        weapon_data[i][j][k].executable.Reload();
                         reloadStructs.Add(new WeaponMapStruct { a=i, b=j, c=k });
                     }
                 }
@@ -329,10 +317,10 @@ public class Controller_Player : MonoBehaviour
     {
         foreach(WeaponMapStruct str in reloadStructs)
         {
-            weaponExecutables[str.a][str.b][str.c].Reload();
-            if (weaponExecutables[str.a][str.b][str.c].isReloading)
+            weapon_data[str.a][str.b][str.c].executable.Reload();
+            if (weapon_data[str.a][str.b][str.c].executable.isReloading)
             {
-
+                // Maybe do someting here?
             }
             else
             {
