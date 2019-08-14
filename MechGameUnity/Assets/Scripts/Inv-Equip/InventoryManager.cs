@@ -60,17 +60,5 @@ public class InventoryManager : MonoBehaviour
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
-    
-    public void BuildFromSave()
-    { 
-        foreach (int i in save.inventory)
-        {
-            Item it = database.GetActual(i);
-            {
-                inventory.Add(it);
-            }
-        }
-
-    }
 
 }

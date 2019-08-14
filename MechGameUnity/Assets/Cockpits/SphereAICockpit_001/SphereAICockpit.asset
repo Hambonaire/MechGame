@@ -14,10 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: AI Sphere
   icon: {fileID: 0}
-  isDefaultItem: 0
-  prefab: {fileID: 1908422543252810, guid: 47ea113b2d8ec5546a8000eef33196f1, type: 3}
+  idNum: 5
+  price: 1000
   ballisticArmor: 35
   energyArmor: 35
   health: 150
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  leftRegularCount: 1
+  leftUnderhandCount: 0
+  leftShoulderCount: 0
+  rightRegularCount: 1
+  rightUnderhandCount: 0
+  rightShoulderCount: 0
+  accessoryCount: 0
+  prefab: {fileID: 1908422543252810, guid: 47ea113b2d8ec5546a8000eef33196f1, type: 3}
   armDistanceX: 0.45
   scaleFactor: 0.7

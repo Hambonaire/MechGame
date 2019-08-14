@@ -14,10 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Guardsman Harness
   icon: {fileID: 0}
-  isDefaultItem: 0
-  prefab: {fileID: 1034037733369274, guid: 26561d805ebb9854ca1feccdf73facca, type: 3}
+  idNum: 2
+  price: 1000
   ballisticArmor: 100
   energyArmor: 50
   health: 300
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  leftRegularCount: 1
+  leftUnderhandCount: 0
+  leftShoulderCount: 0
+  rightRegularCount: 1
+  rightUnderhandCount: 0
+  rightShoulderCount: 0
+  accessoryCount: 0
+  prefab: {fileID: 1034037733369274, guid: 26561d805ebb9854ca1feccdf73facca, type: 3}
   armDistanceX: 0.73
   scaleFactor: 1.1

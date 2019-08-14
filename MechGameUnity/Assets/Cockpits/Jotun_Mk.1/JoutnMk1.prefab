@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4542812705530278}
   m_Layer: 0
-  m_Name: LeftArmConnection
+  m_Name: Connection_000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4613820756704558}
   m_Layer: 0
-  m_Name: RightArmConnection
+  m_Name: Connection_100
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

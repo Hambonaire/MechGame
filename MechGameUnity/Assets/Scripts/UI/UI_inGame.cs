@@ -89,7 +89,7 @@ public class UI_inGame : MonoBehaviour
         pauseUI.SetActive(false);
         playerHUD.SetActive(true);
 
-        cautionColor = cautionPrimary.color;
+        //cautionColor = cautionPrimary.color;
     }
     
     // Update is called once per frame

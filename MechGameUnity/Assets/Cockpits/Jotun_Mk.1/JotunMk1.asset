@@ -14,10 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Jotun Mk.1
   icon: {fileID: 0}
-  isDefaultItem: 0
-  prefab: {fileID: 1944263594389406, guid: 5c7a1a411c0923745a541db93ffa7051, type: 3}
+  idNum: 3
+  price: 1000
   ballisticArmor: 150
   energyArmor: 150
   health: 200
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  leftRegularCount: 1
+  leftUnderhandCount: 0
+  leftShoulderCount: 0
+  rightRegularCount: 1
+  rightUnderhandCount: 0
+  rightShoulderCount: 0
+  accessoryCount: 0
+  prefab: {fileID: 1944263594389406, guid: 5c7a1a411c0923745a541db93ffa7051, type: 3}
   armDistanceX: 0.533
   scaleFactor: 1.25

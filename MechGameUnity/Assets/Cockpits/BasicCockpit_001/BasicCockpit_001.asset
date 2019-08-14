@@ -14,10 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Basic Cockpit_001
   icon: {fileID: 0}
-  isDefaultItem: 0
-  prefab: {fileID: 1957602864948730, guid: 886d6020c84d5804b80f4e7e0ee34b88, type: 3}
+  idNum: 1
+  price: 1000
   ballisticArmor: 25
   energyArmor: 5
   health: 100
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  leftRegularCount: 1
+  leftUnderhandCount: 0
+  leftShoulderCount: 0
+  rightRegularCount: 1
+  rightUnderhandCount: 0
+  rightShoulderCount: 0
+  accessoryCount: 0
+  prefab: {fileID: 1957602864948730, guid: 886d6020c84d5804b80f4e7e0ee34b88, type: 3}
   armDistanceX: 0.523
   scaleFactor: 1

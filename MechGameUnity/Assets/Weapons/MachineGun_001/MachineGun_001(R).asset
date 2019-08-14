@@ -10,26 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
-  m_Name: Slugger_001
+  m_Name: MachineGun_001(R)
   m_EditorClassIdentifier: 
-  name: Slugger
+  name: Machine Gun 001 R
   icon: {fileID: 0}
-  isDefaultItem: 0
-  rightPrefab: {fileID: 8613333242869467136, guid: e454ee4038d2c874d9ce0a8301aa6598,
-    type: 3}
-  leftPrefab: {fileID: 2244565050702058669, guid: d53f625e7b0af034fa22995a9f77bde4,
-    type: 3}
-  fireMode: 3
-  chargeTimeIfChargeType: 0
-  projectilesCountIfMultiType: 10
-  beamTimeIfBeamType: 0
+  idNum: 0
+  price: 1000
+  ballisticArmor: 0
+  energyArmor: 0
+  health: 0
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  prefab: {fileID: 1354367422494034, guid: 5bbe4dc8865a2bc4395e6a9dbe401095, type: 3}
+  ammoIcon: {fileID: 0}
+  side: 1
+  style: 0
+  fireMode: 1
+  chargeTime: 0
+  projectileCount: 0
+  beamTime: 0
+  cooldown: 0
   autoTarget: 0
-  maxAmmo: 20
+  maxAmmo: 100
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
-  ballisticDamage: 35
+  ballisticDamage: 8
   energyDamage: 0
-  rateOfFire: 0.55
-  reloadTime: 9
-  bulletSpray: 155
+  rateOfFire: 0.3
+  reloadTime: 6
+  bulletSpread: 0
   bulletSpeed: 300
-  bulletLife: 4
+  bulletLife: 3

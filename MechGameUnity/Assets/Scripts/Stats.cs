@@ -20,7 +20,7 @@ public class Stats : MonoBehaviour
 
     #region Current Stats
     public ScriptableFloat healthRef;
-    public ScriptableFloat shieldRef;
+    public   ScriptableFloat shieldRef;
     float currentMaxHealth;
     float currentMaxShield;
     float currentShieldRegen;

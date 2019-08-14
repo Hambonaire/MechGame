@@ -1501,7 +1501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1390942938}
   m_Layer: 0
-  m_Name: CanvasMaster
+  m_Name: Canvas Master
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1963,6 +1963,107 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1800339559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1800339560}
+  - component: {fileID: 1800339562}
+  - component: {fileID: 1800339561}
+  - component: {fileID: 1800339563}
+  m_Layer: 0
+  m_Name: Item Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1800339560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800339559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800339561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800339559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d480e97117c2b47b3a6e7b54c04e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  database: {fileID: 0}
+--- !u!114 &1800339562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800339559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03a10da565daa14f961a829f52bbbeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller_player: {fileID: 0}
+  hangar_mech: {fileID: 0}
+  inventory: {fileID: 0}
+  database: {fileID: 0}
+--- !u!114 &1800339563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800339559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc2f0772d632304f8cd0701610600d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1446815295027606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,8 +2092,9 @@ GameObject:
   - component: {fileID: 143431590064307752}
   - component: {fileID: 136204087438141884}
   - component: {fileID: 1448374993033425}
+  - component: {fileID: 1448374993033426}
   m_Layer: 9
-  m_Name: HangarMech
+  m_Name: Hangar Mech
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2010,13 +2112,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c5ac800b72b6645ad72625c7782f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterController: {fileID: 0}
   playerStats: {fileID: 0}
-  torsoRoot: {fileID: 1662457624787400}
-  legsRoot: {fileID: 1446815295027606}
-  legsItem: {fileID: 11400000, guid: c8349de254f87c9459f1576b32b02916, type: 2}
-  cockpitItem: {fileID: 11400000, guid: db2a193460099df46a3fd6c6184ac8a5, type: 2}
-  rightWeaponItem: {fileID: 11400000, guid: bcde00c529e009044aa8c6bf00747752, type: 2}
-  leftWeaponItem: {fileID: 11400000, guid: 901fd8ebec4dc6d43acb806696cb8080, type: 2}
+  mechManager: {fileID: 0}
+  playerHealthCurrent: {fileID: 11400000, guid: b3192c8111cf50f418cf609f9be20c89,
+    type: 2}
+  playerHealthMax: {fileID: 11400000, guid: 6f37743e1fdd43f49b3bb32e4c950c34, type: 2}
+  playerTarget: {fileID: 11400000, guid: d228af5fac14adb4e97d55fbee3d74eb, type: 2}
+  enemyCenterMass: {x: 0, y: 0, z: 0}
+  gravity: -9.8
+  walkSpeed: 0
+  runSpeed: 0
+  hitBox: {fileID: 0}
+  baseHitBoxRadius: 1
+  baseHitBoxHeight: 3
+  baseHitBoxCenter: 1.55
+  cam: {fileID: 0}
+  torsoRoot: {fileID: 0}
+  legsRoot: {fileID: 0}
+  cockpitRotationCenter: {fileID: 0}
+  torsoConnection: {fileID: 0}
+  overallScaleFactor: 1
+  cockpit: {fileID: 0}
+  legs: {fileID: 0}
+--- !u!114 &1448374993033426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448374993033424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beba99e2c76fdc5458dad00c517bd38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  lastDamageTime: 0
+  ShieldRegenDelay: 0
+  healthRef: {fileID: 11400000, guid: b3192c8111cf50f418cf609f9be20c89, type: 2}
+  shieldRef: {fileID: 11400000, guid: 918a5b2ba1177f44f870506cad99292a, type: 2}
+  currentShield: 0
+  currentHealth: 0
+  currentBallisticArmor: 0
+  currentEnergyArmor: 0
 --- !u!1 &1662457624787400
 GameObject:
   m_ObjectHideFlags: 0

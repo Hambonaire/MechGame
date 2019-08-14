@@ -10,6 +10,8 @@ public class Controller_Player : MonoBehaviour
         public int c;
     }
 
+    public CharacterController characterController;
+
     public Stats playerStats;
 
     public GameObject mechManager;
@@ -19,9 +21,10 @@ public class Controller_Player : MonoBehaviour
     public ScriptableFloat playerHealthCurrent;
     public ScriptableFloat playerHealthMax;
     public ScriptableGameObject playerTarget;
-	public Vector3 enemyCenterMass;
-    public float targetDistance;
-	public float firingAngle;
+    [HideInInspector]
+    public Vector3 enemyCenterMass;
+    float targetDistance;
+	float firingAngle;
 	
     private Vector3 forward;
 
@@ -55,10 +58,16 @@ public class Controller_Player : MonoBehaviour
     public float baseHitBoxCenter = 1.55f;
 
     public GameObject cam;
+    [HideInInspector]
     public GameObject torsoRoot;
+    [HideInInspector]
     public GameObject legsRoot;
-    public CharacterController characterController;
 
+    //public Transform legsBase;
+    public Transform cockpitRotationCenter;
+    public Transform torsoConnection;
+
+    [HideInInspector]
     public float overallScaleFactor = 1;
 
     Animator legsAnimator;              // TODO: Look into Cockpit bobbing thru transform movement, not animations? Think u can "animate" movement in Unity... check into that
@@ -77,12 +86,10 @@ public class Controller_Player : MonoBehaviour
             new List<Datatype_Weapon>()
         }
     };
+    [HideInInspector]
     public GameObject cockpit;
+    [HideInInspector]
     public GameObject legs;
-
-    public Transform legsBase;
-    public Transform cockpitRotationCenter;
-    public Transform torsoConnection;
 
     public List<WeaponMapStruct> reloadStructs = new List<WeaponMapStruct>();
     //public List<WeaponMapStruct> cooldownStructs = new List<WeaponMapStruct>();
@@ -327,5 +334,95 @@ public class Controller_Player : MonoBehaviour
                 reloadStructs.Remove(str);
             }
         }
+    }
+
+    public void Rebuild(Cockpit cockpit, Legs legs, List<List<List<Weapon>>> weps, List<Accessory> accs)
+    {
+        #region Remove Current Items
+			
+        if (cockpit != null)
+        {
+            Destroy(cockpit);
+        }
+        if (legs != null)
+        {
+            Destroy(legs);
+        }	
+		for (int i = 0; i < weapon_data.Count; i++) 
+		{
+			for (int j = 0; j < weapon_data[i].Count; j++)
+			{
+				for (int k = 0; k < weapon_data[i][j].Count; k++)
+				{
+					weapon_data[i][j][k].Delete();
+					weapon_data[i][i].RemoveAt(k);
+				}
+			}
+		}
+		
+        #endregion
+		
+		#region Create New Items
+		
+		this.legs = Instantiate(legs.prefab, legsRoot.transform.position, transform.rotation);
+        this.legs.transform.parent = legsRoot.transform;
+        this.legs.transform.localScale = Vector3.one * cockpit.scaleFactor; // new Vector3(cockpit.scaleFactor, cockpit.scaleFactor, cockpit.scaleFactor);
+
+        torsoRoot.transform.position = this.legs.transform.Find("TorsoConnection").position;
+
+        this.cockpit = Instantiate(cockpit.prefab, torsoRoot.transform.position, torsoRoot.transform.rotation);
+        this.cockpit.transform.parent = torsoRoot.transform;
+
+        cockpitRotationCenter = this.cockpit.transform.Find("RotationAxis");	
+			
+		for (int i = 0; i < weps.Count; i++) 
+		{
+			for (int j = 0; j < weps[i].Count; j++)
+			{
+				for (int k = 0; k < weps[i][j].Count; k++)
+				{
+                    Datatype_Weapon data = new Datatype_Weapon();
+					data.weapon_object = Instantiate(weps[i][j][k].prefab, this.cockpit.transform.Find("Connection_" + i + j + k).position, this.cockpit.transform.rotation) as GameObject;
+					data.weapon_object.transform.parent = cockpitRotationCenter.transform;
+					data.executable = new WeaponExecutable(weps[i][j][k], data.weapon_object.transform.Find("Barrel"));
+					weapon_data[i][j].Add(data); 				
+				}
+			}
+		}
+		
+		// TODO: Do UI passing stuff here? (ammo, reloading, etc.) Loop thru Executables or just plug in the existing loop^^^
+		// TODO: Reminder: make sure stats references scriptableFloats, etc. for UI passing
+	    #endregion
+
+		// TODO: All the animation stuff here, prob need to do loop stuff, Find(), etc. Calling the animators takes place in Fire & OnCooldown
+        #region Animators
+		/*
+        if (this.legs.transform.Find("AnimatorHolder") != null)
+        {
+            legsAnimator = this.legs.transform.Find("AnimatorHolder").GetComponent<Animator>();
+        }
+
+        if (rightArmWeapon.transform.Find("AnimatorHolder") != null && rightArmWeapon != null)
+        {
+            rightWeaponAnimator = rightArmWeapon.transform.Find("AnimatorHolder").GetComponent<Animator>();
+        }
+
+        if (leftArmWeapon.transform.Find("AnimatorHolder") != null && leftArmWeapon != null)
+        {
+            leftWeaponAnimator = leftArmWeapon.transform.Find("AnimatorHolder").GetComponent<Animator>();
+        }
+		*/
+        #endregion
+
+        #region Misc.
+        walkSpeed = legs.walkSpeed * legs.scaleFactor;
+        runSpeed = legs.runSpeed * cockpit.scaleFactor;
+        hitBox.radius = baseHitBoxRadius * cockpit.scaleFactor;
+        hitBox.height = baseHitBoxHeight * cockpit.scaleFactor;
+        hitBox.center = new Vector3(0, hitBox.height / 2 + .05f, hitBox.center.z);
+        #endregion
+
+        this.cockpit.transform.localScale = Vector3.one * cockpit.scaleFactor; // new Vector3(currentCockpit.scaleFactor, currentCockpit.scaleFactor, currentCockpit.scaleFactor);
+        
     }
 }

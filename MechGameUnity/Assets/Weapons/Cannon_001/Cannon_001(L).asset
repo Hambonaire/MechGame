@@ -10,18 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
-  m_Name: Cannon_001
+  m_Name: Cannon_001(L)
   m_EditorClassIdentifier: 
-  name: Cannon 001
+  name: Cannon 001 L
   icon: {fileID: 0}
-  isDefaultItem: 0
-  rightPrefab: {fileID: 1602271443732348, guid: 2c64079f33e5847419d75cf26096c790,
-    type: 3}
-  leftPrefab: {fileID: 1398840141341336, guid: fc73896c649a0774e9025e067ebc42f4, type: 3}
+  idNum: 9
+  price: 1000
+  ballisticArmor: 0
+  energyArmor: 0
+  health: 0
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  prefab: {fileID: 1398840141341336, guid: fc73896c649a0774e9025e067ebc42f4, type: 3}
+  ammoIcon: {fileID: 0}
+  side: 0
+  style: 0
   fireMode: 0
-  chargeTimeIfChargeType: 0.75
-  projectilesCountIfMultiType: 0
-  beamTimeIfBeamType: 0
+  chargeTime: 0
+  projectileCount: 0
+  beamTime: 0
+  cooldown: 0
   autoTarget: 1
   maxAmmo: 10
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
@@ -29,6 +40,6 @@ MonoBehaviour:
   energyDamage: 0
   rateOfFire: 1.08
   reloadTime: 6
-  bulletSpray: 0
+  bulletSpread: 0
   bulletSpeed: 380
   bulletLife: 3

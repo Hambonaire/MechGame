@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Guardsman Chassis
   icon: {fileID: 0}
-  isDefaultItem: 0
-  prefab: {fileID: 1179488171633848, guid: 6d5f1d339504be648b309e22f0cc03ac, type: 2}
+  idNum: 8
+  price: 1000
   ballisticArmor: 70
   energyArmor: 30
   health: 200
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  prefab: {fileID: 1179488171633848, guid: 6d5f1d339504be648b309e22f0cc03ac, type: 3}
   walkSpeed: 5
   runSpeed: 10
   scaleFactor: 1

@@ -16,10 +16,11 @@ public class EquipmentManager : MonoBehaviour {
 	// 80 - 89 A
 	
     public Controller_Player controller_player;
+    public MechHangar hangar_mech;
 
 	Cockpit currentCockpit;
 	Legs currentLegs;  
-	List<Item> currentAccessories = new List<Item>();
+	List<Accessory> currentAccessories = new List<Accessory>();
 	List<List<List<Weapon>>> currentWeapons = new List<List<List<Weapon>>>() {
 		new List<List<Weapon>>() {	// 0	Left
 			new List<Weapon>(),		// 0,0	Left Reg
@@ -96,7 +97,7 @@ public class EquipmentManager : MonoBehaviour {
 
         foreach (int i in save.accessories)
         {
-            Item it = database.GetActual(i);
+            Accessory it = database.GetActual(i) as Accessory;
 
             // Add if room
             if (currentAccessories.Count < currentCockpit.accessoryCount)
@@ -108,6 +109,13 @@ public class EquipmentManager : MonoBehaviour {
             {
                 inventory.Add(it);
             }
+        }
+
+        foreach (int i in save.inventoryItems)
+        {
+            Item it = database.GetActual(i);
+
+            inventory.Add(it);
         }
 
         Rebuild();
@@ -176,7 +184,7 @@ public class EquipmentManager : MonoBehaviour {
 				}
 				
 				for (int i = 0; i < currentAccessories.Count; i++) {
-					Item it = currentAccessories[i];
+					Accessory it = currentAccessories[i];
 					if (currentCockpit.accessoryCount > i) {
 						currentAccessories.Add(it);
 						if (onEquipmentChanged != null) onEquipmentChanged.Invoke(it, null);
@@ -222,6 +230,8 @@ public class EquipmentManager : MonoBehaviour {
 		}
 		else if (newItem is Accessory)
 		{
+            Accessory acc = newItem as Accessory;
+
 			if (currentAccessories.Count >= currentCockpit.accessoryCount) {
 				oldItem = currentAccessories[0];
 				inventory.Add(oldItem);
@@ -231,7 +241,7 @@ public class EquipmentManager : MonoBehaviour {
 			if (onEquipmentChanged != null)
 				onEquipmentChanged.Invoke(newItem, oldItem);
 			
-			currentAccessories.Add(newItem);	
+			currentAccessories.Add(acc);	
 		}
 		
 		Rebuild();
@@ -333,7 +343,7 @@ public class EquipmentManager : MonoBehaviour {
 	// But, this script only does stuff in shop/hangar, so it amybe needs to pass equipment to another script 
 	// that exists on each seperate level... meaning this script only exists in the shop/hangar scene
 	public void Rebuild() {
-		
+        /*
         #region Remove Current Items
 			
         if (controller_player.cockpit != null)
@@ -392,7 +402,7 @@ public class EquipmentManager : MonoBehaviour {
 
 		// TODO: All the animation stuff here, prob need to do loop stuff, Find(), etc. Calling the animators takes place in Fire & OnCooldown
         #region Animators
-		/*
+		
         if (legs.transform.Find("AnimatorHolder") != null)
         {
             legsAnimator = legs.transform.Find("AnimatorHolder").GetComponent<Animator>();
@@ -407,7 +417,7 @@ public class EquipmentManager : MonoBehaviour {
         {
             leftWeaponAnimator = leftArmWeapon.transform.Find("AnimatorHolder").GetComponent<Animator>();
         }
-		*/
+		
         #endregion
 
         #region Misc.
@@ -419,5 +429,12 @@ public class EquipmentManager : MonoBehaviour {
         #endregion
 
         controller_player.cockpit.transform.localScale = new Vector3(currentCockpit.scaleFactor, currentCockpit.scaleFactor, currentCockpit.scaleFactor);
+        */
+
+        if (controller_player != null)
+            controller_player.Rebuild(currentCockpit, currentLegs, currentWeapons, currentAccessories);
+
+        if (hangar_mech != null)
+            hangar_mech.Rebuild(currentCockpit, currentLegs, currentWeapons, currentAccessories);
     }
 }
