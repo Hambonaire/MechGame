@@ -58,14 +58,13 @@ public class Controller_Player : MonoBehaviour
     public float baseHitBoxCenter = 1.55f;
 
     public GameObject cam;
-    [HideInInspector]
     public GameObject torsoRoot;
-    [HideInInspector]
     public GameObject legsRoot;
 
     //public Transform legsBase;
+    [HideInInspector]
     public Transform cockpitRotationCenter;
-    public Transform torsoConnection;
+    //public Transform torsoConnection;
 
     [HideInInspector]
     public float overallScaleFactor = 1;
@@ -103,7 +102,7 @@ public class Controller_Player : MonoBehaviour
         new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }
     };
 
-    private void Start()
+    void Start()
     {
         playerStats = GetComponent<Stats>();
         //Variables.PlayerHealth_Max = playerStats.GetMaxHealth();
@@ -111,7 +110,7 @@ public class Controller_Player : MonoBehaviour
         InvokeRepeating("ReloadRepeating", 0, .2f);
     }
 
-    private void Update()
+    void Update()
     {
         // For Raycasting
         forward = cockpitRotationCenter.TransformDirection(Vector3.forward) * 20;

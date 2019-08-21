@@ -49,7 +49,6 @@ public class MechHangar : MonoBehaviour
     private float turnSmoothVelocity_Legs = 0;
     private float turnSmoothTime_Legs = .2f;
 
-    [HideInInspector]
     public CapsuleCollider hitBox;
     [HideInInspector]
     public float baseHitBoxRadius = 1f;
@@ -59,14 +58,14 @@ public class MechHangar : MonoBehaviour
     public float baseHitBoxCenter = 1.55f;
 
     public GameObject cam;
-    [HideInInspector]
     public GameObject torsoRoot;
-    [HideInInspector]
     public GameObject legsRoot;
 
     //public Transform legsBase;
+    [HideInInspector]
     public Transform cockpitRotationCenter;
-    public Transform torsoConnection;
+    //[HideInInspector]
+    //public Transform torsoConnection;
 
     [HideInInspector]
     public float overallScaleFactor = 1;
@@ -104,8 +103,9 @@ public class MechHangar : MonoBehaviour
         new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }, new List<List<int>> { new List<int> { 1 } }
     };
 
-    private void Start()
+    void Start()
     {
+        //legsRoot = this.transform.Find("LegsRoot").gameObject;
         playerStats = GetComponent<Stats>();
         //Variables.PlayerHealth_Max = playerStats.GetMaxHealth();
     }
@@ -116,11 +116,11 @@ public class MechHangar : MonoBehaviour
 
         if (cockpit != null)
         {
-            Destroy(cockpit);
+            Destroy(this.cockpit);
         }
         if (legs != null)
         {
-            Destroy(legs);
+            Destroy(this.legs);
         }
         for (int i = 0; i < weapon_data.Count; i++)
         {
@@ -156,8 +156,10 @@ public class MechHangar : MonoBehaviour
                 for (int k = 0; k < weps[i][j].Count; k++)
                 {
                     Datatype_Weapon data = new Datatype_Weapon();
-                    data.weapon_object = Instantiate(weps[i][j][k].prefab, this.cockpit.transform.Find("Connection_" + i + j + k).position, this.cockpit.transform.rotation) as GameObject;
-                    data.weapon_object.transform.parent = cockpitRotationCenter.transform;
+                    GameObject wepTemp = Instantiate(weps[i][j][k].prefab, this.cockpit.transform.Find("Connection_" + i + j + k).position, this.cockpit.transform.rotation) as GameObject;
+                    wepTemp.transform.parent = cockpitRotationCenter.transform;
+
+                    data.weapon_object = wepTemp;
                     data.executable = new WeaponExecutable(weps[i][j][k], data.weapon_object.transform.Find("Barrel"));
                     weapon_data[i][j].Add(data);
                 }
@@ -191,9 +193,9 @@ public class MechHangar : MonoBehaviour
         #region Misc.
         walkSpeed = legs.walkSpeed * legs.scaleFactor;
         runSpeed = legs.runSpeed * cockpit.scaleFactor;
-        hitBox.radius = baseHitBoxRadius * cockpit.scaleFactor;
-        hitBox.height = baseHitBoxHeight * cockpit.scaleFactor;
-        hitBox.center = new Vector3(0, hitBox.height / 2 + .05f, hitBox.center.z);
+        //hitBox.radius = baseHitBoxRadius * cockpit.scaleFactor;
+        //hitBox.height = baseHitBoxHeight * cockpit.scaleFactor;
+        //hitBox.center = new Vector3(0, hitBox.height / 2 + .05f, hitBox.center.z);
         #endregion
 
         this.cockpit.transform.localScale = Vector3.one * cockpit.scaleFactor; // new Vector3(currentCockpit.scaleFactor, currentCockpit.scaleFactor, currentCockpit.scaleFactor);

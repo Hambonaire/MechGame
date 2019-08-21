@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810dfeb0708fffa489b2cb7601d8886c, type: 3}
+  m_Name: GuardLegs_001
+  m_EditorClassIdentifier: 
+  name: Guardsman Chassis
+  icon: {fileID: 0}
+  idNum: 1001
+  price: 1000
+  ballisticArmor: 70
+  energyArmor: 30
+  health: 200
+  shield: 0
+  shieldRegen: 0
+  rarity: 0
+  description: 
+  manufacturer: 
+  prefab: {fileID: 1179488171633848, guid: 6d5f1d339504be648b309e22f0cc03ac, type: 3}
+  walkSpeed: 5
+  runSpeed: 10
+  scaleFactor: 1

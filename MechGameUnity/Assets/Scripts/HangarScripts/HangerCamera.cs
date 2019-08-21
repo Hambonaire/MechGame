@@ -4,75 +4,89 @@ using UnityEngine;
 
 public class HangerCamera : MonoBehaviour
 {
-    public Vector3 mainCameraAngle;
-    public Vector3 mainCameraPosition;
-    public int mainFOV;
+    public GameObject cameraTarget;
+    Camera thisCam;
 
-    public Vector3 rightArmCameraAngle;
-    public Vector3 rightArmCameraPosition;
-    public int rightArmFOV;
+    [Range(0, 100)]
+    public float sensitivity;
 
-    public Vector3 leftArmCameraAngle;
-    public Vector3 leftArmCameraPosition;
-    public int leftArmFOV;
+    float baseOrthographicSize = 1.5f;
+    float mechScale = 1;
+    float scalingFactor = (float)(1); // Something
 
-    public Vector3 cockpitCameraAngle;
-    public Vector3 cockpitCameraPosition;
-    public int cockpitFOV;
+    bool dragHover;
+    bool currentlyDragging;
 
-    public Vector3 legsCameraAngle;
-    public Vector3 legsCameraPosition;
-    public int legsFOV;
-
-    Vector3 currentRotation;
+    public Vector3 basePosition;
+    float camZoom;
+    float zoomVelocity;
+    float minSize = 1.5f;
+    float maxSize = 3.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.position = mainCameraPosition;
-        this.transform.rotation = Quaternion.Euler(mainCameraAngle);
-        this.GetComponent<Camera>().fieldOfView = mainFOV;
+        thisCam = GetComponent<Camera>();
+        thisCam.orthographicSize = baseOrthographicSize;
+        camZoom = minSize;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
-        //this.transform.eulerAngles = currentRotation;
+        thisCam.orthographicSize = mechScale * scalingFactor * baseOrthographicSize;
+
+        float rotateHorizontal = Input.GetAxis("Mouse X");
+        float rotateVertical = Input.GetAxis("Mouse Y");
+
+        if (currentlyDragging && Input.GetMouseButton(0))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            //transform.RotateAround(cameraTarget.transform.position, -Vector3.up, rotateHorizontal * sensitivity);
+            //transform.RotateAround(cameraTarget.transform.position, transform.right, rotateVertical * sensitivity);
+            if (rotateHorizontal != 0 && Mathf.Abs(rotateHorizontal) > Mathf.Abs(rotateVertical))
+            {
+                cameraTarget.transform.Rotate(rotateHorizontal * sensitivity * Vector3.down);
+
+            }
+            else
+            {
+                this.transform.Translate(rotateVertical * Vector3.down * 0.25f);
+                var pos = transform.position;
+                pos.y = Mathf.Clamp(transform.position.y, 1.5f, 3.0f);
+                pos.z = -5.25f;
+                this.transform.position = pos;
+
+                var rot = transform.rotation;
+                rot.x = (pos.y - 1.5f) * 6f;
+                Debug.Log(rot);
+                this.transform.eulerAngles = new Vector3(rot.x, rot.y, rot.z);
+
+            }
+
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        if (dragHover)
+        {
+            currentlyDragging = Input.GetMouseButton(0);
+        }
     }
 
-    public void ToCockpit()
+    public void DragHoverTrue()
     {
-        this.transform.position = cockpitCameraPosition;
-        this.transform.rotation = Quaternion.Euler(cockpitCameraAngle);
-        this.GetComponent<Camera>().fieldOfView = cockpitFOV;
+        dragHover = true;
     }
 
-    public void ToLegs()
+    public void DragHoverFalse()
     {
-        this.transform.position = legsCameraPosition;
-        this.transform.rotation = Quaternion.Euler(legsCameraAngle);
-        this.GetComponent<Camera>().fieldOfView = legsFOV;
+        dragHover = false;
     }
 
-    public void ToRightArm()
-    {
-        this.transform.position = rightArmCameraPosition;
-        this.transform.rotation = Quaternion.Euler(rightArmCameraAngle);
-        this.GetComponent<Camera>().fieldOfView = rightArmFOV;
-    }
-
-    public void ToLeftArm()
-    {
-        this.transform.position = leftArmCameraPosition;
-        this.transform.rotation = Quaternion.Euler(leftArmCameraAngle);
-        this.GetComponent<Camera>().fieldOfView = leftArmFOV;
-    }
-
-    public void ToMain()
-    {
-        this.transform.position = mainCameraPosition;
-        this.transform.rotation = Quaternion.Euler(mainCameraAngle);
-        this.GetComponent<Camera>().fieldOfView = mainFOV;
-    }
 }

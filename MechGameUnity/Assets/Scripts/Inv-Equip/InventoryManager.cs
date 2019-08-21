@@ -4,26 +4,67 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    #region Singleton
-
-    public static InventoryManager instance;
-    
-    void Awake()
-    {
-        instance = this;
-
-        //onItemChangedCallback += Save;
-    }
-
-    #endregion
-
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
     // Our current list of items in the inventory
+    [HideInInspector]
     public List<Item> items = new List<Item>();
     
     public Database database;
+
+    public Item DEFAULT_TEST;
+
+    #region Singleton
+
+    public static InventoryManager instance {
+        get {
+            if (_instance == null) {
+                _instance = FindObjectOfType<InventoryManager>();
+            }
+            return _instance;
+        }
+    }
+    static InventoryManager _instance;
+
+    #endregion
+
+    void Awake()
+    {
+        if (!_instance)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+           Destroy(this);
+        }
+
+        //onItemChangedCallback += Save;
+    }
+
+    void Start()
+    {
+        //BuildFromSave();
+
+        Add(DEFAULT_TEST);
+    }
+
+    public void BuildFromSave()
+    {
+        SaveData save = SaveService.instance.Load();//= SaveData.Load();
+
+        foreach (int i in save.inventoryItems)
+        {
+            Item it = database.GetActual(i);
+
+            Add(it);
+        }
+
+        //Rebuild();
+    }
+
 
     // Add a new item
     public void Add(Item item)

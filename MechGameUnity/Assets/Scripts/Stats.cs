@@ -56,11 +56,13 @@ public class Stats : MonoBehaviour
         if (shieldRef != null) shieldRef.value = currentMaxShield;
         
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
+
+        Debug.Log(currentMaxShield);
     }
 
     void Update()
     {
-        if (Time.time >= lastDamageTime + ShieldRegenDelay)
+        if (Time.time >= lastDamageTime + ShieldRegenDelay && currentMaxShield > 0 && currentShield < currentMaxShield)
         {
             RegenShield();
         }

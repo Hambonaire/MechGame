@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Size { Small, Medium, Large}
+
 [CreateAssetMenu(fileName = "New Cockpit", menuName = "Mecha/Cockpit")]
 public class Cockpit : Item {
     
