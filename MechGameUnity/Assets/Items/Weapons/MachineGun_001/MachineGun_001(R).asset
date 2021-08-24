@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Machine Gun 001 R
   icon: {fileID: 0}
-  idNum: 3008
+  idNum: 3003
   price: 1000
   ballisticArmor: 0
   energyArmor: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 1354367422494034, guid: 5bbe4dc8865a2bc4395e6a9dbe401095, type: 3}
   ammoIcon: {fileID: 0}
-  side: 1
+  slot: 1
   style: 0
   fireMode: 1
   chargeTime: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 0
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 100
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
   ballisticDamage: 8
   energyDamage: 0
   rateOfFire: 0.3
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 6
   bulletSpread: 0
   bulletSpeed: 300

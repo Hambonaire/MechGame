@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Laser Gatling_L
   icon: {fileID: 0}
-  idNum: 3005
+  idNum: 2002
   price: 1000
   ballisticArmor: 0
   energyArmor: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 0
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 1000
   bullet: {fileID: 3123661855471947661, guid: 50d9952e68268d345bd023ffa47a6bfc, type: 3}
   ballisticDamage: 0
   energyDamage: 4
   rateOfFire: 0.17
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 1
   bulletSpread: 0
   bulletSpeed: 275

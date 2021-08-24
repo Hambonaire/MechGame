@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Cannon 001 R
   icon: {fileID: 21300000, guid: 4500ba46380b11749b9c2c5accdda067, type: 3}
-  idNum: 3001
+  idNum: 3000
   price: 1000
   ballisticArmor: 0
   energyArmor: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 1602271443732348, guid: 2c64079f33e5847419d75cf26096c790, type: 3}
   ammoIcon: {fileID: 0}
-  side: 1
+  slot: 1
   style: 0
   fireMode: 0
   chargeTime: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 1
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 10
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
   ballisticDamage: 60
   energyDamage: 0
   rateOfFire: 1.08
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 6
   bulletSpread: 0
   bulletSpeed: 380

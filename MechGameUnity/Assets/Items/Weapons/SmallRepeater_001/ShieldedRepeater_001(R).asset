@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shielded Repeater
   icon: {fileID: 0}
-  idNum: 3014
+  idNum: 3006
   price: 1000
   ballisticArmor: 0
   energyArmor: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 1296277045301124, guid: 8e4dd33b2fb76154083f324d21804641, type: 3}
   ammoIcon: {fileID: 0}
-  side: 1
+  slot: 1
   style: 0
   fireMode: 0
   chargeTime: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 0
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 30
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
   ballisticDamage: 6
   energyDamage: 1
   rateOfFire: 0.2
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 4.5
   bulletSpread: 0
   bulletSpeed: 200

@@ -62,6 +62,13 @@ MonoBehaviour:
   legs:
   - {fileID: 11400000, guid: c8349de254f87c9459f1576b32b02916, type: 2}
   - {fileID: 11400000, guid: 5dd0e93eecfbab943b9cf1e9376d74a6, type: 2}
-  enemyList:
-  - {fileID: 0}
+  enemyArray: []
+  enemyList: []
   player: {fileID: 0}
+  autoTarget: {fileID: 11400000, guid: 1e50980e71bbdca499201e6f0ec83650, type: 2}
+  targetMaxDistance: {fileID: 11400000, guid: 7e4d28b417eefd744a76640958454995, type: 2}
+  playerTarget: {fileID: 11400000, guid: d228af5fac14adb4e97d55fbee3d74eb, type: 2}
+  playerTargetDistance: {fileID: 11400000, guid: a009fbaf467005a4295930b003123a79,
+    type: 2}
+  playerTargetTransform: {fileID: 11400000, guid: 0f1106fcced04a44eade735d1d20931b,
+    type: 2}

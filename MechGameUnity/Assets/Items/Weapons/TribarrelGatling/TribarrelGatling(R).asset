@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Tribarrel Gatling
   icon: {fileID: 21300000, guid: de819a13744ba7346b18d7fa1059fa17, type: 3}
-  idNum: 3016
+  idNum: 3007
   price: 1000
   ballisticArmor: 0
   energyArmor: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 1387429092933220, guid: 52b6ed20812b75244a454ca6574c4e05, type: 3}
   ammoIcon: {fileID: 0}
-  side: 1
+  slot: 1
   style: 0
   fireMode: 0
   chargeTime: 0
@@ -34,12 +34,16 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 1
-  maxAmmo: 400
+  needTarget: 0
+  maxTrackDistance: 300
+  maxAmmo: 300
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
   ballisticDamage: 4
   energyDamage: 0
   rateOfFire: 0.033
+  rpm: 3000
+  secBetweenFire: 0.02
   reloadTime: 6
-  bulletSpread: 0
+  bulletSpread: 50
   bulletSpeed: 300
   bulletLife: 1.5

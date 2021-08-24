@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Valkyrie VLK-01 R
   icon: {fileID: 0}
-  idNum: 3010
-  price: 3010
+  idNum: 3004
+  price: 1000
   ballisticArmor: 0
   energyArmor: 0
   health: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 1618754641527456, guid: 2aabe856ea89da247b8ba7b0241109f0, type: 3}
   ammoIcon: {fileID: 0}
-  side: 1
+  slot: 1
   style: 0
   fireMode: 0
   chargeTime: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 0
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 24
   bullet: {fileID: 1893817608812382, guid: ce590b6d64327bb41a029b08af022c0b, type: 3}
   ballisticDamage: 30
   energyDamage: 10
   rateOfFire: 0.2
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 15
   bulletSpread: 0
   bulletSpeed: 80

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5a1584b1ed12f4684cd61e7f1b7676, type: 3}
+  m_Name: Test Base
+  m_EditorClassIdentifier: 
+  baseName: Test Base
+  basePrefab: {fileID: 6168261378854728456, guid: f9239e64333338a46bb04749a7313629,
+    type: 3}
+  headSlots: 1
+  torsoSlots: 1
+  legSlots: 1
+  leftArmSlots: 1
+  rightArmSlots: 1
+  leftShoulderSlots: 1
+  rightShoulderSlots: 1

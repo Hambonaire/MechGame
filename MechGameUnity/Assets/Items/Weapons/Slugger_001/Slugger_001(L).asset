@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Slugger L
   icon: {fileID: 0}
-  idNum: 3011
-  price: 3011
+  idNum: 2005
+  price: 1000
   ballisticArmor: 0
   energyArmor: 0
   health: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 0
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 20
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
   ballisticDamage: 35
   energyDamage: 0
   rateOfFire: 0.55
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 9
   bulletSpread: 0
   bulletSpeed: 300

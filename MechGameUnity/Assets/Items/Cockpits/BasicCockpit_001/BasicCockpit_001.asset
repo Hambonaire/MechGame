@@ -30,7 +30,7 @@ MonoBehaviour:
   rightRegularCount: 1
   rightUnderhandCount: 0
   rightShoulderCount: 0
-  accessoryCount: 0
+  accessoryCount: 2
   prefab: {fileID: 1957602864948730, guid: 886d6020c84d5804b80f4e7e0ee34b88, type: 3}
   armDistanceX: 0.523
   scaleFactor: 1

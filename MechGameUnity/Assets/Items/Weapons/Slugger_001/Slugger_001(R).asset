@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Slugger R
   icon: {fileID: 0}
-  idNum: 3012
-  price: 3012
+  idNum: 3005
+  price: 1000
   ballisticArmor: 0
   energyArmor: 0
   health: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 8613333242869467136, guid: e454ee4038d2c874d9ce0a8301aa6598, type: 3}
   ammoIcon: {fileID: 0}
-  side: 1
+  slot: 1
   style: 0
   fireMode: 3
   chargeTime: 0
@@ -34,11 +34,15 @@ MonoBehaviour:
   beamTime: 0
   cooldown: 0
   autoTarget: 0
+  needTarget: 0
+  maxTrackDistance: 0
   maxAmmo: 20
   bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
   ballisticDamage: 35
   energyDamage: 0
   rateOfFire: 0.55
+  rpm: 0
+  secBetweenFire: Infinity
   reloadTime: 9
   bulletSpread: 0
   bulletSpeed: 300
