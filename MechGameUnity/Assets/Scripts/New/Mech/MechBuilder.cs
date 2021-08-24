@@ -23,9 +23,11 @@ public class MechBuilder
             /* Create a weapon for each subsection */
             for (int subIndex = 0; subIndex < mech.GetSubsectionCountByIndex(secIndex); subIndex++)
             {
-
                 if (mech.GetSectionItemsByIndex(secIndex)[subIndex] == null)
                     continue;
+                
+                if (links.GetSectionLinksByIndex(secIndex).Length < subIndex)
+                    break;
 
                 GameObject newWeapon = Object.Instantiate((mech.GetSectionItemsByIndex(secIndex)[subIndex] as Weapon).prefab, links.GetSectionLinksByIndex(secIndex)[subIndex]);
                 newWeapon.transform.localPosition = Vector3.zero;
