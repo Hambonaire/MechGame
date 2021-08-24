@@ -9,13 +9,23 @@ public class HangarUI : MonoBehaviour
     bool isDirty;
     bool[] dirtyFlags = new bool[4] { false, false, false, false };
 
+    [Header ("Mech Select Buttons")]
     /* List of buttons that select the mech to modify, send signal back to HangarManager */
     public List<GameObject> mechSelectButton = new List<GameObject>();
-    public GameObject mechSelectButtonParent;
-    public GameObject mechSelectButtonPrefab;
+    public GameObject mechSelBtnParent;
+    public GameObject mechSelBtnPrefab;
 
+    [Header("Mech Info Panel")]
     /* Mech info panel */
     public GameObject mechInfoPanel;
+
+    [Header("Item Info Panel")]
+    /* Mech info panel */
+    public GameObject itemInfoPanel;
+
+    [Header("Shop")]
+    /* Mech info panel */
+    public GameObject shopPanel;
 
     void Awake()
     {
@@ -88,21 +98,21 @@ public class HangarUI : MonoBehaviour
         /* Build the shop panel */
         if (dirtyFlags[2])
         {
-            BuildItemInfoPanel();
+            BuildShopPanel();
         }
     }
 
     /* Build the mech select buttons (top?) of the screen */
     void BuildMechSelectButtons()
     {
-        foreach (Transform child in mechSelectButtonParent.transform)
+        foreach (Transform child in mechSelBtnParent.transform)
         {
             Destroy(child.gameObject);
         }
 
         foreach (Mech mech in GameManager._instance.availableMechs)
         {
-            GameObject button = Instantiate(mechSelectButtonPrefab);
+            GameObject button = Instantiate(mechSelBtnPrefab);
         }
     }
 
@@ -117,4 +127,11 @@ public class HangarUI : MonoBehaviour
     {
 
     }
+
+    /* Build the shop panel */
+    void BuildShopPanel()
+    {
+
+    }
+
 }
