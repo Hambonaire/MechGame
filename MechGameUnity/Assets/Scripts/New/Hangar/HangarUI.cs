@@ -26,7 +26,14 @@ public class HangarUI : MonoBehaviour
     [Header("Shop")]
     /* Mech info panel */
     public GameObject shopPanel;
-
+    public GameObject shopItemBtnParent;
+    public GameObject shopItemBtnPrefab;
+    public GameObject shopTabBtnParent;
+    public GameObject shopTabBtnPrefab;
+    
+    public GameObject shopBuyBtn;
+    public GameObject shopSellBtn;
+    
     void Awake()
     {
         _instance = this;
@@ -96,7 +103,7 @@ public class HangarUI : MonoBehaviour
         }
 
         /* Build the shop panel */
-        if (dirtyFlags[2])
+        if (dirtyFlags[3])
         {
             BuildShopPanel();
         }
