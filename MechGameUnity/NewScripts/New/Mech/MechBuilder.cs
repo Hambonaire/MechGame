@@ -18,14 +18,15 @@ public class MechBuilder
         var mechManager = mechBase.GetComponent<MechManager>();
         
         /* Loop thru all sections */
-        for (int secIndex = 3; secIndex < 6; secIndex++)
+        for (int secIndex = 4; secIndex < 7; secIndex++)
         {
             /* Create a weapon for each subsection */
             for (int subIndex = 0; subIndex < mech.GetSubsectionCountByIndex(secIndex); subIndex++)
             {
+                /* No item in this slot */
                 if (mech.GetSectionItemsByIndex(secIndex)[subIndex] == null)
                     continue;
-
+                /* Subsection OOB of available links */
                 if (!(subIndex < links.GetSectionLinksByIndex(secIndex).Length))
                     break;
 
@@ -45,7 +46,7 @@ public class MechBuilder
     /*
      *  Modify the build mech obj to be ready for gameplay
      *      - Attach MechController to Parent
-     *      - Attach Stats to each piece
+     *      - 
      */
     public void modifyMechForGameplay(GameObject mech)
     {
