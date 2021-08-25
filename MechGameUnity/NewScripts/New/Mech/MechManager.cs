@@ -11,7 +11,12 @@ using UnityEngine;
  */
 public class MechManager : MonoBehaviour {
 
-    SectionManager mechSectionManager;
+    SectionManager sectionManager;
+
+    public bool torsoDestroyed = false;
+    public bool headDestroyed = false;
+    public bool leftLegDestroyed = false;
+    public bool rightLegDestroyed = false;
 
     List<GameObject> equippedLeftArmObj = new List<GameObject>();
     List<GameObject> equippedRightArmObj = new List<GameObject>();
@@ -35,5 +40,28 @@ public class MechManager : MonoBehaviour {
             return equippedRightShoulderObj;
         else
             return null;
+    }
+    
+    /* Use this to check for lethal damage etc */
+    public void CheckForDamage()
+    {
+        if (sectionManager.torsoStats == null || sectionManager.torsoStats.isDestroyed)
+        {
+            
+        }
+        
+        if (sectionManager.headStats == null || sectionManager.headStats.isDestroyed)
+        {
+            
+        }
+        
+        if (sectionManager.leftLegStats == null || sectionManager.leftLegStats.isDestroyed)
+        {
+            
+        }
+        if (sectionManager.rightLegStats == null || sectionManager.rightLegStats.isDestroyed)
+        {
+            
+        }
     }
 }
