@@ -19,11 +19,12 @@ public class Mech
      * -1: Nothing
      * 0: Torso
      * 1: Head
-     * 2: Legs
-     * 3: Left Arm
-     * 4: Right Arm
-     * 5: Left Shoulder
-     * 6: Right Shoulder 
+     * 2: Left Leg
+     * 3: Right Leg
+     * 4: Left Arm
+     * 5: Right Arm
+     * 6: Left Shoulder
+     * 7: Right Shoulder 
      */
 
     /* Mech Base scriptable object ref */
@@ -32,7 +33,8 @@ public class Mech
     /* Weapons/Items sriptable object refs */
     Item[] equippedTorsoItems;
     Item[] equippedHeadItems;
-    Item[] equippedLegItems;
+    Item[] equippedLeftLegItems;
+    Item[] equippedRightLegItems;
     [SerializeField]
     Item[] equippedLeftArmWeapons;
     [SerializeField]
@@ -44,7 +46,8 @@ public class Mech
     {
         equippedTorsoItems = new Item[1];
         equippedHeadItems = new Item[1];
-        equippedLegItems = new Item[1];
+        equippedLeftLegItems = new Item[1];
+        equippedRightLegItems = new Item[1];
         equippedLeftArmWeapons = new Item[1];
         equippedRightArmWeapons = new Item[1];
         equippedLeftShoulderWeapons = new Item[1];
@@ -57,7 +60,8 @@ public class Mech
 
         equippedTorsoItems = new Item[mechBaseRef.torsoSlots];
         equippedHeadItems = new Item[mechBaseRef.headSlots];
-        equippedLegItems = new Item[mechBaseRef.legSlots];
+        equippedLeftLegItems = new Item[mechBaseRef.leftLegSlots];
+        equippedRightLegItems = new Item[mechBaseRef.rightLegSlots];
         equippedLeftArmWeapons = new Item[mechBaseRef.leftArmSlots];
         equippedRightArmWeapons = new Item[mechBaseRef.rightArmSlots];
         equippedLeftShoulderWeapons = new Item[mechBaseRef.leftShoulderSlots];
@@ -71,14 +75,16 @@ public class Mech
         else if (index == 1)
             return equippedHeadItems;
         else if (index == 2)
-            return equippedLegItems;
+            return equippedLeftLegItems;
         else if (index == 3)
-            return equippedLeftArmWeapons;
+            return equippedRightLegItems;
         else if (index == 4)
-            return equippedRightArmWeapons;
+            return equippedLeftArmWeapons;
         else if (index == 5)
-            return equippedLeftShoulderWeapons;
+            return equippedRightArmWeapons;
         else if (index == 6)
+            return equippedLeftShoulderWeapons;
+        else if (index == 7)
             return equippedRightShoulderWeapons;
         else
             return null;
@@ -91,14 +97,16 @@ public class Mech
         else if (index == 1)
             return mechBaseRef.headSlots;
         else if (index == 2)
-            return mechBaseRef.legSlots;
+            return mechBaseRef.leftLegSlots;
         else if (index == 3)
-            return mechBaseRef.leftArmSlots;
+            return mechBaseRef.rightLegSlots;
         else if (index == 4)
-            return mechBaseRef.rightArmSlots;
+            return mechBaseRef.leftArmSlots;
         else if (index == 5)
-            return mechBaseRef.leftShoulderSlots;
+            return mechBaseRef.rightArmSlots;
         else if (index == 6)
+            return mechBaseRef.leftShoulderSlots;
+        else if (index == 7)
             return mechBaseRef.rightShoulderSlots;
         else
             return 0;
