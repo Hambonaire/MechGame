@@ -58,14 +58,36 @@ public class SectionManager : MonoBehaviour
 
     public Transform[] GetSectionLinksByIndex(int index)
     {
-        if (index == 3)
+        if (index == 4)
             return leftArmLinks;
-        else if (index == 4)
-            return rightArmLinks;
         else if (index == 5)
-            return leftShoulderLinks;
+            return rightArmLinks;
         else if (index == 6)
+            return leftShoulderLinks;
+        else if (index == 7)
             return rightShoulderLinks;
+        else
+            return null;
+    }
+    
+    public SectionStats GetSectionStatsByIndex(int index)
+    {
+        if (index == 0)
+            return torsoStats;
+        else if (index == 1)
+            return headStats;
+        else if (index == 2)
+            return leftLegStats;
+        else if (index == 3)
+            return rightLegStats;
+        else if (index == 4)
+            return leftArmStats;
+        else if (index == 5)
+            return rightArmStats;
+        else if (index == 6)
+            return leftShoulderStats;
+        else if (index == 7)
+            return rightShoulderStats;
         else
             return null;
     }
