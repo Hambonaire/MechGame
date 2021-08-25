@@ -9,11 +9,12 @@ using UnityEngine;
  *  Mech controller handles movement & weapon firing
  *  - Attaches to a mech's encapsulating GameObject
  *  - Should require MechManager & SectionManager to get their references
+ *  - Act like an interface so Enemy Controller & Player Controller can both control mechs through this script
  */
 public class MechController : MonoBehaviour
 {
-    //protected Stats myStats;
-    //protected MechManager manager;
+    protected MechManager mechManager;
+    protected SectionManager sectionManager;
 
     protected Vector3 forward;
 
@@ -45,23 +46,16 @@ public class MechController : MonoBehaviour
 
     //protected Datatype_Weapon[] weapon_data = new Datatype_Weapon[4];
 
-    protected GameObject cockpit;
-    protected GameObject legs;
-
-    public GameObject MyTarget
+    void Awake()
     {
-        get { return myTarget; }
-        set { myTarget = value; }
+    
     }
 
-    public GameObject TorsoRoot
+    void Start()
     {
-        get { return torsoRoot; }
+    
     }
+    
+    
 
-    public float OverallScaleFactor
-    {
-        get { return overallScaleFactor; }
-        set { overallScaleFactor = value; }
-    }
 }
