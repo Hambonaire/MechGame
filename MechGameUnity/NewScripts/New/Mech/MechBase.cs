@@ -21,7 +21,8 @@ public class MechBase : ScriptableObject
 
     public int torsoSlots = 1;
 
-    public int legSlots = 1;
+    public int leftLegSlots = 1;
+    public int rightLegSlots = 1;
 
     public int leftArmSlots = 1;
     public int rightArmSlots = 1;
