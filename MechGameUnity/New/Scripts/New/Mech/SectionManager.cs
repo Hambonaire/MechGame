@@ -30,21 +30,21 @@ public class SectionManager : MonoBehaviour
 
     [Header("Section Stats")]
     [SerializeField]
-    SectionStats torsoStats;
+    Section torsoSection;
     [SerializeField]
-    SectionStats headStats;
+    Section headSection;
     [SerializeField]
-    SectionStats leftLegStats;
+    Section leftLegSection;
     [SerializeField]
-    SectionStats rightLegStats;
+    Section rightLegSection;
     [SerializeField]
-    SectionStats leftArmStats;
+    Section leftArmSection;
     [SerializeField]
-    SectionStats rightArmStats;
+    Section rightArmSection;
     [SerializeField]
-    SectionStats leftShoulderStats;
+    Section leftShoulderSection;
     [SerializeField]
-    SectionStats rightShoulderStats;
+    Section rightShoulderSection;
 
     [Header ("Weapon Link Transforms")]
     [SerializeField]
@@ -55,6 +55,34 @@ public class SectionManager : MonoBehaviour
     Transform[] leftShoulderLinks;
     [SerializeField]
     Transform[] rightShoulderLinks;
+
+    void Start()
+    {
+        if (torsoSection != null)
+            torsoSection.isDestructible = false;
+
+        if (headSection != null)
+            headSection.isDestructible = true;
+
+        if (leftLegSection != null)
+            leftLegSection.isDestructible = false;
+
+        if (rightLegSection != null)
+            rightLegSection.isDestructible = false;
+
+        if (leftArmSection != null)
+            leftArmSection.isDestructible = true;
+
+        if (rightArmSection != null)
+            rightArmSection.isDestructible = true;
+
+        if (leftShoulderSection != null)
+            leftShoulderSection.isDestructible = true;
+
+        if (rightShoulderSection != null)
+            rightShoulderSection.isDestructible = true;
+
+    }
 
     public Transform[] GetSectionLinksByIndex(int index)
     {
@@ -70,24 +98,24 @@ public class SectionManager : MonoBehaviour
             return null;
     }
     
-    public SectionStats GetSectionStatsByIndex(int index)
+    public Section GetSectionByIndex(int index)
     {
         if (index == 0)
-            return torsoStats;
+            return torsoSection;
         else if (index == 1)
-            return headStats;
+            return headSection;
         else if (index == 2)
-            return leftLegStats;
+            return leftLegSection;
         else if (index == 3)
-            return rightLegStats;
+            return rightLegSection;
         else if (index == 4)
-            return leftArmStats;
+            return leftArmSection;
         else if (index == 5)
-            return rightArmStats;
+            return rightArmSection;
         else if (index == 6)
-            return leftShoulderStats;
+            return leftShoulderSection;
         else if (index == 7)
-            return rightShoulderStats;
+            return rightShoulderSection;
         else
             return null;
     }

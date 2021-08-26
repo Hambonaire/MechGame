@@ -8,12 +8,14 @@ public enum WeaponStyle { Regular, Underhand, Shoulder}
 public enum FireType { Regular, Beam, Charge, Multi}
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Mecha/Weapon")]
-public class Weapon : Item {
+public class WeaponItem : Item {
 
     //public GameObject animatorHolder;
     public GameObject prefab;
     public Image ammoIcon;
+    public GameObject bullet;
 
+    [Header("General")]
     public WeaponSlot slot = WeaponSlot.LeftHand;
     public WeaponStyle style = WeaponStyle.Regular;
     public FireType fireMode = FireType.Regular;
@@ -26,9 +28,8 @@ public class Weapon : Item {
     public bool needTarget;
     public float maxTrackDistance;
 
+    [Header("Weapon Stats")]
     public int maxAmmo;
-
-    public GameObject bullet;
 
     public float ballisticDamage;
     public float energyDamage;

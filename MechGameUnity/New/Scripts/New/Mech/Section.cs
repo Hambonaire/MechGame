@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SectionStats : MonoBehaviour
+[RequireComponent (typeof(HitRegister))]
+public class Section : MonoBehaviour
 {
+    [HideInInspector]
     public bool isDestroyed;
+    [HideInInspector]
+    public bool isDestructible;
 
+    [HideInInspector]
     public float lastDamageTime;
+    [HideInInspector]
     public float ShieldRegenDelay;
 
     #region Base Stats
@@ -56,6 +62,9 @@ public class SectionStats : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDestroyed)
+            return;
+
         float totalDamage = 0;
 
         if (currentArmor > 0)
@@ -85,10 +94,23 @@ public class SectionStats : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            if (!isDestroyed)
+            {
+                isDestroyed = true;
+                ExecuteDestroy();
+            }
         }
 
         lastDamageTime = Time.time;
+    }
+
+    /* Explode!!! */
+    void ExecuteDestroy()
+    {
+        if (isDestructible)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void HealHealth(float add)
@@ -107,16 +129,6 @@ public class SectionStats : MonoBehaviour
     {
         currentShield += currentShieldRegen * Time.deltaTime;
         Mathf.Clamp(currentShield, 0, maxShield);
-    }
-
-    void Die()
-    {
-        if (!isDestroyed)
-        {
-            isDestroyed = true;
-            Debug.Log("I Died");
-            //gameObject.SetActive(false);
-        }
     }
 
     public void AddHealthMax(float add)

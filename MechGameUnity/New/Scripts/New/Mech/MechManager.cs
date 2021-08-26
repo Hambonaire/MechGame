@@ -25,7 +25,15 @@ public class MechManager : MonoBehaviour {
 
     void Start()
     {
-        
+        sectionManager = GetComponent<SectionManager>();   
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //sectionManager.GetSectionByIndex((int) sectionIndex.leftArm).TakeDamage(10);
+        }
     }
 
     public List<GameObject> GetWeaponObjByIndex(int index)
@@ -45,21 +53,25 @@ public class MechManager : MonoBehaviour {
     /* Use this to check for lethal damage etc */
     public void CheckForDamage()
     {
-        if (sectionManager.torsoStats == null || sectionManager.torsoStats.isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)sectionIndex.torso) == null ||
+            sectionManager.GetSectionByIndex((int)sectionIndex.torso).isDestroyed)
         {
             
         }
         
-        if (sectionManager.headStats == null || sectionManager.headStats.isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)sectionIndex.head) == null ||
+            sectionManager.GetSectionByIndex((int)sectionIndex.head).isDestroyed)
         {
             
         }
         
-        if (sectionManager.leftLegStats == null || sectionManager.leftLegStats.isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)sectionIndex.leftLeg) == null ||
+            sectionManager.GetSectionByIndex((int)sectionIndex.leftLeg).isDestroyed)
         {
             
         }
-        if (sectionManager.rightLegStats == null || sectionManager.rightLegStats.isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)sectionIndex.rightLeg) == null ||
+            sectionManager.GetSectionByIndex((int)sectionIndex.rightLeg).isDestroyed)
         {
             
         }

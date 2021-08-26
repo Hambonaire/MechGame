@@ -12,6 +12,8 @@ using UnityEngine;
  *  
  */
 
+public enum sectionIndex { torso, head, leftLeg, rightLeg, leftArm, rightArm, leftShoulder, rightShoulder};
+
 [System.Serializable]
 public class Mech
 {

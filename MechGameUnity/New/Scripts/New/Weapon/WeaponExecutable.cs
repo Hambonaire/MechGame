@@ -56,7 +56,7 @@ public class WeaponExecutable {
         Debug.Log("Made Weapon Executable WITHOUT an Item!");
     }
 
-    public WeaponExecutable(Weapon wep, Transform barrel_, Animator anim, MechController controllerRef)
+    public WeaponExecutable(WeaponItem wep, Transform barrel_, Animator anim, MechController controllerRef)
     {
         ammoIcon = wep.ammoIcon;
         fireType = wep.fireMode;
@@ -95,7 +95,8 @@ public class WeaponExecutable {
 
     public void Fire()
     {
-        if (needTarget && (controller.MyTarget == null || 10 /*playerTargetDistance.value*/ > targetDistance))// && playerTargetInRange.value)
+        //if (needTarget && (controller.MyTarget == null || 10 /*playerTargetDistance.value*/ > targetDistance))// && playerTargetInRange.value)
+        if (false)  
             return;
 
         isFiring = true;
@@ -118,9 +119,9 @@ public class WeaponExecutable {
                     // Create the Bullet from the Bullet Prefab
                     var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
-                    if (autoTarget && controller.MyTarget != null)
+                    if (false)//(autoTarget && controller.MyTarget != null)
                     {
-                        bullet.transform.LookAt(controller.MyTarget.transform);
+                        //bullet.transform.LookAt(controller.MyTarget.transform);
                         bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
                         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
                     }
@@ -131,8 +132,8 @@ public class WeaponExecutable {
                     }
 
                     // Put stats on the bullet
-                    bullet.GetComponent<Bullet>().SetBallisticDamage(ballisticDamage);
-                    bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
+                    bullet.GetComponent<Bullet>().SetDamage(ballisticDamage);
+                    //bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
                     bullet.GetComponent<Bullet>().SetFaction(0);
 
                     // Destroy the bullet after _ seconds
@@ -159,9 +160,9 @@ public class WeaponExecutable {
                         // Create the Bullet from the Bullet Prefab
                         var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
-                        if (autoTarget && controller.MyTarget != null)
+                        if (false)//(autoTarget && controller.MyTarget != null)
                         {
-                            bullet.transform.LookAt(controller.MyTarget.transform);
+                            //bullet.transform.LookAt(controller.MyTarget.transform);
                             bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
                             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
                         }
@@ -172,8 +173,8 @@ public class WeaponExecutable {
                         }
 
                         // Put stats on the bullet
-                        bullet.GetComponent<Bullet>().SetBallisticDamage(ballisticDamage);
-                        bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
+                        bullet.GetComponent<Bullet>().SetDamage(ballisticDamage);
+                        //bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
                         bullet.GetComponent<Bullet>().SetFaction(0);
 
                         // Destroy the bullet after _ seconds
@@ -197,9 +198,9 @@ public class WeaponExecutable {
                         // Create the Bullet from the Bullet Prefab
                         var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
-                        if (autoTarget && controller.MyTarget != null)
+                        if (false)//(autoTarget && controller.MyTarget != null)
                         {
-                            bullet.transform.LookAt(controller.MyTarget.transform);
+                            //bullet.transform.LookAt(controller.MyTarget.transform);
                             bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
                             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
                         }
@@ -210,8 +211,8 @@ public class WeaponExecutable {
                         }
 
                         // Put stats on the bullet
-                        bullet.GetComponent<Bullet>().SetBallisticDamage(ballisticDamage);
-                        bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
+                        bullet.GetComponent<Bullet>().SetDamage(ballisticDamage);
+                        //bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
                         bullet.GetComponent<Bullet>().SetFaction(0);
                         
                         // Destroy the bullet after _ seconds
@@ -240,9 +241,9 @@ public class WeaponExecutable {
                         // Create the Bullet from the Bullet Prefab
                         var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
-                        if (autoTarget && controller.MyTarget != null)
+                        if (false)//(autoTarget && controller.MyTarget != null)
                         {
-                            bullet.transform.LookAt(controller.MyTarget.transform);
+                            //bullet.transform.LookAt(controller.MyTarget.transform);
                             bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
                             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
                         }
@@ -253,8 +254,8 @@ public class WeaponExecutable {
                         }
 
                         // Put stats on the bullet
-                        bullet.GetComponent<Bullet>().SetBallisticDamage(ballisticDamage);
-                        bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
+                        bullet.GetComponent<Bullet>().SetDamage(ballisticDamage);
+                        //bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
                         bullet.GetComponent<Bullet>().SetFaction(0);
                         
                         // Destroy the bullet after _ seconds
