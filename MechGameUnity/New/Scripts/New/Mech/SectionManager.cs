@@ -8,6 +8,7 @@ using UnityEngine;
  *  - Refs to a model's section transforms (for getting destroyed?)
  *  - Refs to each section's SectionStats
  */
+[RequiresComponent(typeof(MechManager))]
 public class SectionManager : MonoBehaviour
 {
     [Header ("Parent Transforms")]

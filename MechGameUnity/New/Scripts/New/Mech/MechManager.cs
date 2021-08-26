@@ -9,6 +9,7 @@ using UnityEngine;
  *  - Each section's SectionManager reference (assign manually?)
  *  - EquippedWeapon references (GameObject & WeaponExe script)
  */
+[RequiresComponent(typeof(SectionManager))]
 public class MechManager : MonoBehaviour {
 
     SectionManager sectionManager;
@@ -22,10 +23,17 @@ public class MechManager : MonoBehaviour {
     List<GameObject> equippedRightArmObj = new List<GameObject>();
     List<GameObject> equippedLeftShoulderObj = new List<GameObject>();
     List<GameObject> equippedRightShoulderObj = new List<GameObject>();
+	
+	List<WeaponExecutable> executableLeftArm = new List<WeaponExecutable>();
+	List<WeaponExecutable> executableRightArm = new List<WeaponExecutable>();
+	List<WeaponExecutable> executableLeftShoulder = new List<WeaponExecutable>();
+	List<WeaponExecutable> executableRightShoulder = new List<WeaponExecutable>();
 
     void Start()
     {
         sectionManager = GetComponent<SectionManager>();   
+		
+		BuildExecutables();
     }
 
     void Update()
@@ -38,14 +46,28 @@ public class MechManager : MonoBehaviour {
 
     public List<GameObject> GetWeaponObjByIndex(int index)
     {
-        if (index == 3)
+        if (index == sectionIndex.leftArm)
             return equippedLeftArmObj;
-        else if (index == 4)
+        else if (index == sectionIndex.rightArm)
             return equippedRightArmObj;
-        else if (index == 5)
+        else if (index == sectionIndex.leftShoulder)
             return equippedLeftShoulderObj;
-        else if (index == 6)
+        else if (index == sectionIndex.rightShoulder)
             return equippedRightShoulderObj;
+        else
+            return null;
+    }
+	
+	public List<WeaponExecutable> GetExecutableByIndex(int index)
+    {
+        if (index == sectionIndex.leftArm)
+            return executableLeftArm;
+        else if (index == sectionIndex.rightArm)
+            return executableRightArm;
+        else if (index == sectionIndex.leftShoulder)
+            return executableLeftShoulder;
+        else if (index == sectionIndex.rightShoulder)
+            return executableRightShoulder;
         else
             return null;
     }
@@ -76,4 +98,5 @@ public class MechManager : MonoBehaviour {
             
         }
     }
+	
 }

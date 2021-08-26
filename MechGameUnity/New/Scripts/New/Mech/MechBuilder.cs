@@ -8,7 +8,7 @@ public class MechBuilder
      *      - Attach accessories
      *  Get Weapons instantiate and attach
      */
-    public GameObject BuildFromMechObj(Mech mech)
+    public GameObject BuildFromMechObj(Mech mech, Vector3 location, bool modForGame = false, bool asPlayer = false, bool asEnemy = false)
     {
         /* Reset */
 
@@ -30,6 +30,7 @@ public class MechBuilder
                 if (!(subIndex < sectionManager.GetSectionLinksByIndex(secIndex).Length))
                     break;
 
+				/* Create the Wep */
                 GameObject newWeapon = Object.Instantiate((mech.GetSectionItemsByIndex(secIndex)[subIndex] as WeaponItem).prefab, sectionManager.GetSectionLinksByIndex(secIndex)[subIndex]);
                 newWeapon.transform.localPosition = Vector3.zero;
 
@@ -38,10 +39,18 @@ public class MechBuilder
 
                 /* Add the ref to the parent section to the weapon's script */
                 newWeapon.GetComponent<Weapon>().sectionParent = sectionManager.GetSectionByIndex(secIndex);
+				
+				// Move into modify???
+				/* Create an executable for the weapon and add it to MechManager ref */
+				mechManager.GetExecutableByIndex(secIndex).add(new WeaponExecutable(
+					newWeapon, 
+					mech.GetSectionItemsByIndex(secIndex)[subIndex] as WeaponItem,
+					newWeapon.GetComponent<Weapon>().bulSpwnLoc, 
+					newWeapon.GetComponent<Weapon>().wepAnim));
             }
         }
 
-        modifyMechForGameplay(mechBase);
+        modifyMechForGameplay(mechBase, modForGame, asPlayer, asEnemy);
 
         return mechBase;
     }
@@ -51,10 +60,20 @@ public class MechBuilder
      *      - Attach MechController to Parent
      *      - 
      */
-    public void modifyMechForGameplay(GameObject mech)
+    public void modifyMechForGameplay(GameObject mech, bool modForGame = false, bool asPlayer = false, bool asEnemy = false)
     {
-
-
-        
+		if (asPlayer)
+		{
+			mechBase.AddComponent<PlayerController>();
+		}
+		else if (asEnemy)
+		{
+			mechBase.AddComponent<EnemyController>();
+		}
+		else
+		{
+			mechBase.AddComponent<MechController>();
+		}
+        	
     }
 }

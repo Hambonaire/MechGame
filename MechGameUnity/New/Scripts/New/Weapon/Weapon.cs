@@ -14,7 +14,12 @@ public class Weapon : MonoBehaviour
     [HideInInspector]
     public Section sectionParent;
 
+    [HideInInspector]
     public WeaponExecutable myExecutable;
+	
+	public Transform bulSpwnLoc;
+	
+	public Animator wepAnim;
 
     // Start is called before the first frame update
     void Start()

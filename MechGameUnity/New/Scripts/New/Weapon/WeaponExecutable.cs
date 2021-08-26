@@ -10,22 +10,19 @@ using UnityEngine.UI;
 public class WeaponExecutable {
     public Image ammoIcon;
 
-    Transform barrel;
+    Transform bulletSpawn;
     GameObject bulletPrefab;
 
     public MechController controller;
 
-    //public ScriptableFloat playerTargetDistance;
-    //public ScriptableBool playerTargetInRange;
     bool autoTarget;
     bool needTarget;
 
     Animator animator;
 
-    float ballisticDamage;
-    float energyDamage;
+    float damage;
 
-    float ROF;
+    float rateOfFire;
     float nextFire;
     float reloadTime;
     public float nextReloadStart;
@@ -39,7 +36,7 @@ public class WeaponExecutable {
     float bulletSpeed;
     float bulletLife;
 
-    FireType fireType;
+    //FireType fireType;
     float chargeTime;
     float chargeCurr;
     float beamTime;
@@ -51,37 +48,26 @@ public class WeaponExecutable {
     float targetDistance;
     float firingAngle;
 
-    public WeaponExecutable()
+    public WeaponExecutable(GameObject obj, WeaponItem weapon, Transform barrel, Animator animator)
     {
-        Debug.Log("Made Weapon Executable WITHOUT an Item!");
-    }
+        ammoIcon = weapon.ammoIcon;
+        fireType = weapon.fireMode;
+        bulletPrefab = weapon.bullet;
+        bulletSpeed = weapon.bulletSpeed;
+        bulletLife = weapon.bulletLife;
+        ballisticDamage = weapon.ballisticDamage;
+        energyDamage = weapon.energyDamage;
 
-    public WeaponExecutable(WeaponItem wep, Transform barrel_, Animator anim, MechController controllerRef)
-    {
-        ammoIcon = wep.ammoIcon;
-        fireType = wep.fireMode;
-        bulletPrefab = wep.bullet;
-        bulletSpeed = wep.bulletSpeed;
-        bulletLife = wep.bulletLife;
-        ballisticDamage = wep.ballisticDamage;
-        energyDamage = wep.energyDamage;
+        rateOfFire = weapon.secBetweenFire;
 
-        //ROF = wep.rateOfFire;
-        ROF = wep.secBetweenFire;
-        //Debug.Log("RoF: " + wep.rateOfFire);
-        //Debug.Log("RPM: " + wep.rpm);
-        //Debug.Log("SBF: " + wep.secBetweenFire);
-        //Debug.Log("Actual SBF: " + (1 / (wep.rpm / 60)));
+        reloadTime = weapon.reloadTime;
+        maxAmmo = weapon.maxAmmo;
+        spread = weapon.bulletSpread;
+        chargeTime = weapon.chargeTime;
+        beamTime = weapon.beamTime;
+        projectileCount = weapon.projectileCount;
 
-        reloadTime = wep.reloadTime;
-        maxAmmo = wep.maxAmmo;
-        spread = wep.bulletSpread;
-        chargeTime = wep.chargeTime;
-        beamTime = wep.beamTime;
-        projectileCount = wep.projectileCount;
-        //cooldown = wep.cooldown;         
-        //autoTarget = wep.autoTarget;
-        barrel = barrel_;
+        bulletSpawn = barrel;
 
         currentAmmo = maxAmmo;
         chargeCurr = 0;
@@ -89,15 +75,13 @@ public class WeaponExecutable {
 
         controller = controllerRef;
 
-        //playerTargetDistance = targetDistanceRef;
         animator = anim;
     }
 
     public void Fire()
     {
         //if (needTarget && (controller.MyTarget == null || 10 /*playerTargetDistance.value*/ > targetDistance))// && playerTargetInRange.value)
-        if (false)  
-            return;
+        //    return;
 
         isFiring = true;
         
@@ -105,51 +89,43 @@ public class WeaponExecutable {
         {
             if (Time.time > nextFire && currentAmmo > 0 )
             {
-                // (needTarget && playerTarget != null) && playerTargetInRange.value
-                if (fireType == FireType.Regular)
-                {
-                    nextFire = Time.time + ROF;
-                    currentAmmo--;
+				nextFire = Time.time + rateOfFire;
+				currentAmmo--;
 
-                    // Random bullet spray
-                    float randX = Random.Range(-spread / 50, spread / 50);
-                    float randY = Random.Range(-spread / 50, spread / 50);
-                    float randZ = Random.Range(-spread / 50, spread / 50);
+				/* Random bullet spray */
+				float randX = Random.Range(-spread / 50, spread / 50);
+				float randY = Random.Range(-spread / 50, spread / 50);
+				float randZ = Random.Range(-spread / 50, spread / 50);
 
-                    // Create the Bullet from the Bullet Prefab
-                    var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
+				var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
 
-                    if (false)//(autoTarget && controller.MyTarget != null)
-                    {
-                        //bullet.transform.LookAt(controller.MyTarget.transform);
-                        bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
-                        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
-                    }
-                    else
-                    {
-                        bullet.transform.rotation *= Quaternion.Euler(92 + randX, (-firingAngle * 0.7f) + randY, randZ);
-                        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
-                    }
+				/* Auto targeting */
+				if (false)//(autoTarget && controller.MyTarget != null)
+				{
+					//bullet.transform.LookAt(controller.MyTarget.transform);
+					bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
+					bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
+				}
+				else
+				{
+					bullet.transform.rotation *= Quaternion.Euler(92 + randX, (-firingAngle * 0.7f) + randY, randZ);
+					bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
+				}
 
-                    // Put stats on the bullet
-                    bullet.GetComponent<Bullet>().SetDamage(ballisticDamage);
-                    //bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
-                    bullet.GetComponent<Bullet>().SetFaction(0);
+				bullet.GetComponent<Bullet>().SetDamage(damage);
 
-                    // Destroy the bullet after _ seconds
-                    GameObject.Destroy(bullet, bulletLife);
-                }
+				GameObject.Destroy(bullet, bulletLife);
+				
+				/*
                 else if (fireType == FireType.Charge)
                 {
                     if (chargeCurr < chargeTime)
                     {
                         chargeCurr += Time.deltaTime;
-
-                        //Debug.Log("Primary Charging: " + right_chargeCurr + " out of: " + right_chargeTime);
                     }
                     else if (chargeCurr >= chargeTime)
                     {
-                        nextFire = Time.time + ROF;
+                        nextFire = Time.time + rateOfFire;
                         currentAmmo--;
 
                         // Random bullet spray
@@ -162,7 +138,6 @@ public class WeaponExecutable {
 
                         if (false)//(autoTarget && controller.MyTarget != null)
                         {
-                            //bullet.transform.LookAt(controller.MyTarget.transform);
                             bullet.transform.rotation *= Quaternion.Euler(92 + randX, -.01f * targetDistance + randY, randZ);
                             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
                         }
@@ -172,12 +147,8 @@ public class WeaponExecutable {
                             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
                         }
 
-                        // Put stats on the bullet
-                        bullet.GetComponent<Bullet>().SetDamage(ballisticDamage);
-                        //bullet.GetComponent<Bullet>().SetEnergyDamage(energyDamage);
-                        bullet.GetComponent<Bullet>().SetFaction(0);
+                        bullet.GetComponent<Bullet>().SetDamage(damage);
 
-                        // Destroy the bullet after _ seconds
                         GameObject.Destroy(bullet, bulletLife);
 
                         chargeCurr = 0;
@@ -185,7 +156,7 @@ public class WeaponExecutable {
                 }
                 else if (fireType == FireType.Multi)
                 {
-                    nextFire = Time.time + ROF;
+                    nextFire = Time.time + rateOfFire;
                     currentAmmo--;
 
                     for (int i = 0; i < projectileCount; i++)
@@ -230,7 +201,7 @@ public class WeaponExecutable {
                     {
                         beamCurr += Time.deltaTime;
 
-                        nextFire = Time.time + ROF;
+                        nextFire = Time.time + rateOfFire;
                         currentAmmo--;
 
                         // Random bullet spray
@@ -262,6 +233,7 @@ public class WeaponExecutable {
                         GameObject.Destroy(bullet, bulletLife);
                     }
                 }
+				*/
             }
             else if (currentAmmo == 0 && !isReloading)
             {
@@ -283,16 +255,20 @@ public class WeaponExecutable {
         }
     }
     
-    // Returns a time to recall this function
-    // Or maybe invoke repeating until a time
+    /* 	
+	 *	Returns a time to recall this function
+	 *	Or maybe invoke repeating until a time
+     */ 
     public void Reload ()
     {
         isFiring = false;
         if (currentAmmo < maxAmmo && !isReloading)
         {
             isReloading = true;
-            if (animator != null) animator.SetBool("firing", false);
-            //Invoke("Reload", reloadTime);
+			
+            if (animator != null) 
+				animator.SetBool("firing", false);
+			
             nextReloadStart = Time.time;
             nextReloadEnd = Time.time + reloadTime;
         }
@@ -302,14 +278,5 @@ public class WeaponExecutable {
             isReloading = false;
         }
     }
-    
-    public void OnCooldown()
-    {
-        isFiring = false;
-        
-        if (animator != null)
-        {
-            animator.SetBool("firing", false);
-        }
-    }
+
 }

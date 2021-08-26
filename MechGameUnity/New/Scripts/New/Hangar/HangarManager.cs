@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  On hangar scene load build each mech from each Mech.cs script in the saved list (Put in GameManager...?)
+ *
+ *
+ */
 public class HangarManager : MonoBehaviour
 {
-    /*
-     *  On hangar scene load build each mech from each Mech.cs script in the saved list (Put in GameManager...?)
-     *
-     *
-     */
-
     public static HangarManager _instance;
 
     public int currentlySelectedMechIndex = 0;
@@ -30,6 +29,8 @@ public class HangarManager : MonoBehaviour
      */
     public int currentlySelectedSubsectionIndex = -1;
 
+	int spacing = 4;
+
     void Awake()
     {
         _instance = this;
@@ -39,8 +40,11 @@ public class HangarManager : MonoBehaviour
     {
 
         MechBuilder builder = new MechBuilder();
-
-        builder.BuildFromMechObj(GameManager._instance.availableMechs[0]);
+		
+		for (int mechIndex = 0; mechIndex < GameManager._instance.availableMechs.Count; mechIndex++)
+		{
+			builder.BuildFromMechObj(GameManager._instance.availableMechs[mechIndex], Vector3.right * mechIndex * spacing, false, false, false);
+		}
 
     }
 

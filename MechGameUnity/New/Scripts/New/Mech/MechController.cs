@@ -39,10 +39,9 @@ public class MechController : MonoBehaviour
     protected float baseHitBoxRadius = 1f;
     protected float baseHitBoxHeight = 3f;
     protected float baseHitBoxCenter = 1.55f;
-    public Transform cockpitRotationCenter;
-    public GameObject torsoRoot;
-    public GameObject legsRoot;
-    protected float overallScaleFactor = 1;
+    
+	public Transform cockpitRotationCenter;
+
 
     //protected Datatype_Weapon[] weapon_data = new Datatype_Weapon[4];
 
@@ -56,6 +55,46 @@ public class MechController : MonoBehaviour
     
     }
     
-    
+    void Update()
+	{
+		
+	}
 
+    void Fire()
+    {	
+        for (int secIndex = (int) sectionIndex.leftArm; secIndex < (int) sectionIndex.rightShoulder; secIndex++)
+        {
+			var execList = mechManager.GetExecutableByIndex(secIndex)
+
+			for (int subIndex = 0; secIndex < execList.Count; secIndex++)
+			{
+				execList[subIndex].Fire();
+			}
+        }
+    }
+	
+	Reload()
+	{
+		for (int secIndex = (int) sectionIndex.leftArm; secIndex < (int) sectionIndex.rightShoulder; secIndex++)
+        {
+			var execList = mechManager.GetExecutableByIndex(secIndex)
+
+			for (int subIndex = 0; secIndex < execList.Count; secIndex++)
+			{
+				execList[subIndex].Reload();
+			}
+        }
+	}
+	
+	// REMOVE???
+	void OnCooldown()
+    {
+        for (int i = 0; i < weapon_data.Length; i++)
+        {
+            if (weapon_data[i] != null)
+            {
+                weapon_data[i].executable.OnCooldown();
+            }
+        }
+    }
 }
