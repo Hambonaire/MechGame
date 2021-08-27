@@ -45,9 +45,4 @@ public class WeaponItem : Item {
     public float bulletSpeed;
     public float bulletLife;
 
-    public void OnEnable()
-    {
-        secBetweenFire = (1 / (rpm / 60));
-    }
-
 }

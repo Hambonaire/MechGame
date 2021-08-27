@@ -14,22 +14,23 @@ public class MechManager : MonoBehaviour {
 
     SectionManager sectionManager;
 
-    public bool torsoDestroyed = false;
-    public bool headDestroyed = false;
-    public bool leftLegDestroyed = false;
-    public bool rightLegDestroyed = false;
+    bool torsoDestroyed = false;
+    bool headDestroyed = false;
+    bool leftLegDestroyed = false;
+    bool rightLegDestroyed = false;
 
     List<GameObject> equippedLeftArmObj = new List<GameObject>();
     List<GameObject> equippedRightArmObj = new List<GameObject>();
     List<GameObject> equippedLeftShoulderObj = new List<GameObject>();
     List<GameObject> equippedRightShoulderObj = new List<GameObject>();
 	
-    [SerializeField]
 	List<WeaponExecutable> executableLeftArm = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableRightArm = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableLeftShoulder = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableRightShoulder = new List<WeaponExecutable>();
-
+	
+	public Vector3 controlCamOffset;
+	
     void Start()
     {
         sectionManager = GetComponent<SectionManager>();   
@@ -37,10 +38,7 @@ public class MechManager : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //sectionManager.GetSectionByIndex((int) sectionIndex.leftArm).TakeDamage(10);
-        }
+
     }
 
     public List<GameObject> GetWeaponObjByIndex(int index)

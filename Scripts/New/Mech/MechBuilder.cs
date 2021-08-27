@@ -15,7 +15,7 @@ public class MechBuilder
         var mechManager = mechBase.GetComponent<MechManager>();
         var sectionManager = mechBase.GetComponent<SectionManager>();
         
-        /* Loop thru all sections */
+        /* Attach weapons for each sections */
         for (int secIndex = (int) sectionIndex.leftArm; secIndex < (int) sectionIndex.rightShoulder; secIndex++)
         {
             /* Create a weapon for each subsection */
@@ -59,13 +59,14 @@ public class MechBuilder
      *      - Attach MechController to Parent
      *      - 
      */
-    public void modifyMechForGameplay(GameObject mech, bool asPlayer = false, bool asEnemy = false)
+    public void modifyMechForGameplay(Mech mech, GameObject mechObj, bool asPlayer = false, bool asEnemy = false)
     {
 		if (asPlayer)
 		{
-            mech.AddComponent<PlayerController>();
+            var pc = mechObj.AddComponent<PlayerController>();
+			pc.walkSpeed = mech.baseMoveSpeed;
 
-            mech.GetComponent<CharacterController>().enabled = true;
+            mechObj.GetComponent<CharacterController>().enabled = true;
 		}
 		else if (asEnemy)
 		{

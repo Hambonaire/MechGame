@@ -17,17 +17,16 @@ public class MechBase : ScriptableObject
     /* Object of legs, torso, head(?) */
     public GameObject basePrefab;
 
+	[Header("Slots")]
     public int headSlots = 1;
-
     public int torsoSlots = 1;
-
     public int leftLegSlots = 1;
     public int rightLegSlots = 1;
-
     public int leftArmSlots = 1;
     public int rightArmSlots = 1;
-
     public int leftShoulderSlots = 1;
     public int rightShoulderSlots = 1;
 
+	[Header("Stats")]
+	public float baseMoveSpeed = 5;
 }

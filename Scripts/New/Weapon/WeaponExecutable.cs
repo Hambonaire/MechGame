@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//public enum Side { Left, Right }
-//public enum WeaponStyle { Regular, Underhand, Shoulder}
-//public enum FireType { Regular, Beam, Charge, Multi}
-
 [System.Serializable]
 public class WeaponExecutable {
     public Image ammoIcon;

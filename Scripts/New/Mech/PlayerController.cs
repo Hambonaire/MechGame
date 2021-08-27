@@ -8,16 +8,7 @@ public class PlayerController : MechController
 
     private Vector3 inputDirection;
 
-    [HideInInspector]
-    public Vector3 enemyCenterMass;
-    float targetDistance;
-    float firingAngle;
-
     public Camera cam;
-
-    Animator legsAnimator;
-	//Animator rightWeaponAnimator;
-    //Animator leftWeaponAnimator;
 
     new void Start()
     {
@@ -25,8 +16,7 @@ public class PlayerController : MechController
 
         characterController = GetComponent<CharacterController>();
 
-        cam = FindObjectOfType<Camera>();
-        cam.gameObject.GetComponent<MechCamera_Player>().target = armRotAxis;
+		AttachCamera(FindObjectOfType<Camera>());
     }
 
      void Update()
@@ -34,94 +24,15 @@ public class PlayerController : MechController
         // For Raycasting
         forward = armRotAxis.TransformDirection(Vector3.forward) * 20;
 
-        /**
-            // For auto-correcting firing
-            RaycastHit hit;
-            Physics.SphereCast(torsoRoot.transform.position, 5f, forward, out hit, 150f);
-            if(hit.transform != null)
-            {
-
-                // CHANGE .25 TO GET FROM PREFAB (ARM DISTANCE)
-
-                firingAngle = 90 - (Mathf.Atan((hit.point - this.transform.position).magnitude / (cockpitItem.armDistanceX * overallScaleFactor)) * Mathf.Rad2Deg);
-
-                if (hit.transform.gameObject.tag == "Enemy")
-                {
-                    Variables.HasTarget = true;
-                    Variables.PlayerTargetTransform = hit.transform.gameObject.GetComponent<EnemyController>().getCenterMass();
-                    targetDistance = Vector3.Distance(this.transform.position, hit.transform.position);
-                    Debug.Log(hit.transform.gameObject.name);
-                }
-                else
-                {
-                    Variables.HasTarget = false;
-                }
-            }
-            else
-            {
-                Variables.HasTarget = false;
-                firingAngle = 0;
-            }
-			
-			//if (Variables.HasTarget)
-			if (myTarget != null)
-			{
-				//targetDistance = Vector3.Distance(this.transform.position, Variables.PlayerTargetTransform);
-				targetDistance = Vector3.Distance(this.transform.position, myTarget.transform.position);
-			}
-			else
-			{
-				firingAngle = 0;
-			}
-
-			firingAngle = Mathf.Clamp(firingAngle, 0f, 5f);
-        */
-		
         GetInput();
 
         Move();
-
-        // TODO: Weapon UI stuff, move to UI_inGame...
-        /**
-        if (right_fireType == FireType.Charge)
-        {
-            //Variables.PlayerPrimaryChargeVal
-            playerRightFillBar.value = (right_chargeCurr / right_chargeTime);
-        }
-        else if (right_fireType == FireType.Beam)
-        {
-            //Variables.PlayerPrimaryChargeVal 
-            playerRightFillBar.value = right_beamCurr / right_beamTime;
-        }
-        else
-        {
-            playerRightFillBar.value = 0;
-        }
-
-        if (left_FireType == FireType.Charge)
-        {
-            //Variables.PlayerSecondaryChargeVal 
-            playerLeftFillBar.value = Mathf.Clamp01(left_chargeCurr / left_chargeTime);
-        }
-        else if (left_FireType == FireType.Beam)
-        {
-            //Variables.PlayerSecondaryChargeVal 
-            playerLeftFillBar.value = Mathf.Clamp01(left_beamCurr / left_beamTime);
-        }
-        else
-        {
-            playerLeftFillBar.value = 0;
-        }
-        **/
-
-        //Handled by Stats script
-        //Variables.PlayerHealth_Curr = playerStats.GetCurrentHealth();
-        //playerHealthCurrent.value = playerStats.GetCurrentHealth();
     }
 
-    public void AttachCamera(Camera cam)
+    public void AttachCamera(Camera camera)
     {
-
+		cam = camera;
+        cam.gameObject.GetComponent<MechCamera_Player>().target = armRotAxis;
     }
 
     public void GetInput()
@@ -168,12 +79,12 @@ public class PlayerController : MechController
         //   0 if no movement buttons are pressed
         //   runSpeed if the player is running
         //   walkSpeed if the player is not running
-        float goalSpeed = (inputDirection.magnitude == 0 || !movementEnabled) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
+        float goalSpeed = (inputDirection.magnitude == 0 /*|| !movementEnabled*/) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
 
         // Runnning?
-        running = Input.GetKey(KeyCode.LeftShift);
+        //running = Input.GetKey(KeyCode.LeftShift);
         // Target Speed
-        targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDirection.magnitude;
+        targetSpeed = ((false) ? runSpeed : walkSpeed) * inputDirection.magnitude;
 
         // Movement
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref movementSmoothVelocity, movementSmoothTime);
@@ -183,7 +94,7 @@ public class PlayerController : MechController
         if (legsAnimator != null)
         {
             //legsAnimator.SetFloat("moveBlend", currentSpeed);
-            legsAnimator.SetFloat("moveBlend", ((running) ? 1 : .7f) * inputDirection.magnitude, movementSmoothTime, Time.deltaTime);
+            legsAnimator.SetFloat("moveBlend", ((true) ? 1 : .7f) * inputDirection.magnitude, movementSmoothTime, Time.deltaTime);
         }
 
         // Torso Turning (y only) for cockpit object itself

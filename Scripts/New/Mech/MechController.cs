@@ -11,45 +11,46 @@ using UnityEngine;
  *  - Should require MechManager & SectionManager to get their references
  *  - Act like an interface so Enemy Controller & Player Controller can both control mechs through this script
  */
+[RequireComponent(typeof(CharacterController))]
 public class MechController : MonoBehaviour
 {
     protected MechManager mechManager;
     protected SectionManager sectionManager;
 
+    protected Animator legsAnimator;
+	
+	protected Transform torsoRotAxis;
+    protected Transform armRotAxis;
+
+
     protected Vector3 forward;
 
     protected GameObject myTarget;
 
+
+
     protected float gravity = -9.8f;
-    [SerializeField]
     protected float walkSpeed = 5;
-    [SerializeField]
-    protected float runSpeed = 7;
+    //protected float runSpeed = 7;
+	
     protected Vector3 velocity = Vector3.zero;
     protected float currentSpeed = 0;
     protected float targetSpeed = 0;
     protected float movementSmoothVelocity = 0;
-    [SerializeField]
     protected float movementSmoothTime = 0.1f;
-    protected bool movementEnabled = true;
-    protected bool running;
+	
+    //protected bool movementEnabled = true;
+    //protected bool running;
+	
     protected float turnSmoothVelocity_Torso = 0;
-    [SerializeField]
     protected float turnSmoothTime_Torso = .25f;
     protected float turnSmoothVelocity_Legs = 0;
-    [SerializeField]
     protected float turnSmoothTime_Legs = .02f;
 
-    protected CapsuleCollider hitBox;
     protected float baseHitBoxRadius = 1f;
     protected float baseHitBoxHeight = 3f;
     protected float baseHitBoxCenter = 1.55f;
-    
-	protected Transform torsoRotAxis;
-    protected Transform armRotAxis;
-
-    //protected Datatype_Weapon[] weapon_data = new Datatype_Weapon[4];
-
+	
     void Awake()
     {
     
