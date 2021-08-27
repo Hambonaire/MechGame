@@ -29,7 +29,12 @@ public class HangarManager : MonoBehaviour
      */
     public int currentlySelectedSubsectionIndex = -1;
 
-	int spacing = 4;
+    [Header("Camera")]
+    Camera mainHangarCamera;
+    public GameObject lookAtTarget;
+    Vector3 cameraStartPos;
+
+	int mechSpacing = 6;
 
     void Awake()
     {
@@ -38,14 +43,19 @@ public class HangarManager : MonoBehaviour
 
     void Start()
     {
+        //mainHangarCamera = FindObjectOfType<Camera>();
+        //cameraStartPos = mainHangarCamera.transform.position;
+        lookAtTarget.transform.position = Vector3.up * 1.3f;
 
         MechBuilder builder = new MechBuilder();
 		
 		for (int mechIndex = 0; mechIndex < GameManager._instance.availableMechs.Count; mechIndex++)
 		{
-			builder.BuildFromMechObj(GameManager._instance.availableMechs[mechIndex], Vector3.right * mechIndex * spacing, false, false, false);
-		}
+            if (mechIndex > 3)
+                break;
 
+			builder.BuildFromMechObj(GameManager._instance.availableMechs[mechIndex], Vector3.right * mechIndex * mechSpacing, false, true, false);
+		}
     }
 
     void Update()
@@ -65,7 +75,7 @@ public class HangarManager : MonoBehaviour
         currentlySelectedMechIndex = index;
 
         // TODO: Remove/modify this if buttons use built-in color updates
-        HangarUI._instance.MakeDirty(true, true, true, false);
+        HangarUI._instance.MakeDirty(false, true, true, false);
 
         SwapMechView(index);
     }
@@ -100,6 +110,8 @@ public class HangarManager : MonoBehaviour
     public void SwapMechView(int index)
     {
 
+        lookAtTarget.transform.position = (Vector3.right * currentlySelectedMechIndex * mechSpacing) + Vector3.up * 1.3f;
+        
     }
 
     /*
@@ -130,8 +142,7 @@ public class HangarManager : MonoBehaviour
 
         /* Build */
         MechBuilder builder = new MechBuilder();
-        builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex]);
-
+        builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex], Vector3.right * currentlySelectedMechIndex * mechSpacing, false, false, false);
         HangarUI._instance.MakeDirty(false, true, false, false);
     }
 

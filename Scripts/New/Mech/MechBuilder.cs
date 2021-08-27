@@ -10,9 +10,7 @@ public class MechBuilder
      */
     public GameObject BuildFromMechObj(Mech mech, Vector3 location, bool modForGame = false, bool asPlayer = false, bool asEnemy = false)
     {
-        /* Reset */
-
-        GameObject mechBase = Object.Instantiate(mech.mechBaseRef.basePrefab);
+        GameObject mechBase = Object.Instantiate(mech.mechBaseRef.basePrefab, location, Quaternion.identity);
 
         var mechManager = mechBase.GetComponent<MechManager>();
         var sectionManager = mechBase.GetComponent<SectionManager>();
@@ -42,7 +40,7 @@ public class MechBuilder
 				
 				// Move into modify???
 				/* Create an executable for the weapon and add it to MechManager ref */
-				mechManager.GetExecutableByIndex(secIndex).add(new WeaponExecutable(
+				mechManager.GetExecutableByIndex(secIndex).Add(new WeaponExecutable(
 					newWeapon, 
 					mech.GetSectionItemsByIndex(secIndex)[subIndex] as WeaponItem,
 					newWeapon.GetComponent<Weapon>().bulSpwnLoc, 
@@ -50,7 +48,8 @@ public class MechBuilder
             }
         }
 
-        modifyMechForGameplay(mechBase, modForGame, asPlayer, asEnemy);
+        if (modForGame)
+            modifyMechForGameplay(mechBase, asPlayer, asEnemy);
 
         return mechBase;
     }
@@ -60,19 +59,21 @@ public class MechBuilder
      *      - Attach MechController to Parent
      *      - 
      */
-    public void modifyMechForGameplay(GameObject mech, bool modForGame = false, bool asPlayer = false, bool asEnemy = false)
+    public void modifyMechForGameplay(GameObject mech, bool asPlayer = false, bool asEnemy = false)
     {
 		if (asPlayer)
 		{
-			mechBase.AddComponent<PlayerController>();
+            mech.AddComponent<PlayerController>();
+
+            mech.GetComponent<CharacterController>().enabled = true;
 		}
 		else if (asEnemy)
 		{
-			mechBase.AddComponent<EnemyController>();
+            //mech.AddComponent<EnemyController>();
 		}
 		else
 		{
-			mechBase.AddComponent<MechController>();
+            mech.AddComponent<MechController>();
 		}
         	
     }

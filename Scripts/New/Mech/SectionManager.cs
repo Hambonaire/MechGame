@@ -8,9 +8,12 @@ using UnityEngine;
  *  - Refs to a model's section transforms (for getting destroyed?)
  *  - Refs to each section's SectionStats
  */
-[RequiresComponent(typeof(MechManager))]
+[RequireComponent(typeof(MechManager))]
 public class SectionManager : MonoBehaviour
 {
+    public Transform torsoRotAxis;
+    public Transform armRotAxis;
+
     [Header ("Parent Transforms")]
     [SerializeField]
     Transform torsoParent;

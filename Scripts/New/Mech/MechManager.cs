@@ -9,7 +9,7 @@ using UnityEngine;
  *  - Each section's SectionManager reference (assign manually?)
  *  - EquippedWeapon references (GameObject & WeaponExe script)
  */
-[RequiresComponent(typeof(SectionManager))]
+[RequireComponent(typeof(SectionManager))]
 public class MechManager : MonoBehaviour {
 
     SectionManager sectionManager;
@@ -24,6 +24,7 @@ public class MechManager : MonoBehaviour {
     List<GameObject> equippedLeftShoulderObj = new List<GameObject>();
     List<GameObject> equippedRightShoulderObj = new List<GameObject>();
 	
+    [SerializeField]
 	List<WeaponExecutable> executableLeftArm = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableRightArm = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableLeftShoulder = new List<WeaponExecutable>();
@@ -32,8 +33,6 @@ public class MechManager : MonoBehaviour {
     void Start()
     {
         sectionManager = GetComponent<SectionManager>();   
-		
-		BuildExecutables();
     }
 
     void Update()
@@ -46,13 +45,13 @@ public class MechManager : MonoBehaviour {
 
     public List<GameObject> GetWeaponObjByIndex(int index)
     {
-        if (index == sectionIndex.leftArm)
+        if (index == (int) sectionIndex.leftArm)
             return equippedLeftArmObj;
-        else if (index == sectionIndex.rightArm)
+        else if (index == (int) sectionIndex.rightArm)
             return equippedRightArmObj;
-        else if (index == sectionIndex.leftShoulder)
+        else if (index == (int) sectionIndex.leftShoulder)
             return equippedLeftShoulderObj;
-        else if (index == sectionIndex.rightShoulder)
+        else if (index == (int) sectionIndex.rightShoulder)
             return equippedRightShoulderObj;
         else
             return null;
@@ -60,13 +59,13 @@ public class MechManager : MonoBehaviour {
 	
 	public List<WeaponExecutable> GetExecutableByIndex(int index)
     {
-        if (index == sectionIndex.leftArm)
+        if (index == (int) sectionIndex.leftArm)
             return executableLeftArm;
-        else if (index == sectionIndex.rightArm)
+        else if (index == (int) sectionIndex.rightArm)
             return executableRightArm;
-        else if (index == sectionIndex.leftShoulder)
+        else if (index == (int) sectionIndex.leftShoulder)
             return executableLeftShoulder;
-        else if (index == sectionIndex.rightShoulder)
+        else if (index == (int) sectionIndex.rightShoulder)
             return executableRightShoulder;
         else
             return null;

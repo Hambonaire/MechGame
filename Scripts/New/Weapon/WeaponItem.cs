@@ -31,10 +31,10 @@ public class WeaponItem : Item {
     [Header("Weapon Stats")]
     public int maxAmmo;
 
-    public float ballisticDamage;
-    public float energyDamage;
+    public float damage;
+    //public float energyDamage;
 
-    public float rateOfFire;    //Deprecate eventually
+    //public float rateOfFire;    //Deprecate eventually
     public float rpm;
     [HideInInspector]
     public float secBetweenFire;

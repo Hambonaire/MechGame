@@ -7,11 +7,12 @@ using UnityEngine.UI;
 //public enum WeaponStyle { Regular, Underhand, Shoulder}
 //public enum FireType { Regular, Beam, Charge, Multi}
 
+[System.Serializable]
 public class WeaponExecutable {
     public Image ammoIcon;
 
-    Transform bulletSpawn;
-    GameObject bulletPrefab;
+    public Transform bulletSpawn;
+    public GameObject bulletPrefab;
 
     public MechController controller;
 
@@ -24,7 +25,7 @@ public class WeaponExecutable {
 
     float rateOfFire;
     float nextFire;
-    float reloadTime;
+    public float reloadTime;
     public float nextReloadStart;
     public float nextReloadEnd;
     public bool isFiring = false;
@@ -48,15 +49,14 @@ public class WeaponExecutable {
     float targetDistance;
     float firingAngle;
 
-    public WeaponExecutable(GameObject obj, WeaponItem weapon, Transform barrel, Animator animator)
+    public WeaponExecutable(GameObject obj, WeaponItem weapon, Transform barrel, Animator anim)
     {
         ammoIcon = weapon.ammoIcon;
-        fireType = weapon.fireMode;
+        //fireType = weapon.fireMode;
         bulletPrefab = weapon.bullet;
         bulletSpeed = weapon.bulletSpeed;
         bulletLife = weapon.bulletLife;
-        ballisticDamage = weapon.ballisticDamage;
-        energyDamage = weapon.energyDamage;
+        damage = weapon.damage;
 
         rateOfFire = weapon.secBetweenFire;
 
@@ -73,13 +73,13 @@ public class WeaponExecutable {
         chargeCurr = 0;
         beamCurr = 0;
 
-        controller = controllerRef;
-
         animator = anim;
     }
 
-    public void Fire()
+    public bool Fire()
     {
+        bool ret = false;
+
         //if (needTarget && (controller.MyTarget == null || 10 /*playerTargetDistance.value*/ > targetDistance))// && playerTargetInRange.value)
         //    return;
 
@@ -97,9 +97,10 @@ public class WeaponExecutable {
 				float randY = Random.Range(-spread / 50, spread / 50);
 				float randZ = Random.Range(-spread / 50, spread / 50);
 
-				var bullet = GameObject.Instantiate(bulletPrefab, barrel.position, barrel.rotation);
+				var bullet = GameObject.Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 
-				/* Auto targeting */
+                /* Auto targeting */
+                /*
 				if (false)//(autoTarget && controller.MyTarget != null)
 				{
 					//bullet.transform.LookAt(controller.MyTarget.transform);
@@ -111,12 +112,15 @@ public class WeaponExecutable {
 					bullet.transform.rotation *= Quaternion.Euler(92 + randX, (-firingAngle * 0.7f) + randY, randZ);
 					bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
 				}
+                */
 
-				bullet.GetComponent<Bullet>().SetDamage(damage);
+                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * bulletSpeed;
+
+                bullet.GetComponent<Bullet>().SetDamage(damage);
 
 				GameObject.Destroy(bullet, bulletLife);
 				
-				/*
+				/**
                 else if (fireType == FireType.Charge)
                 {
                     if (chargeCurr < chargeTime)
@@ -235,33 +239,34 @@ public class WeaponExecutable {
                 }
 				*/
             }
-            else if (currentAmmo == 0 && !isReloading)
-            {
-                Reload();
-                isFiring = false;
-            }
+            
             if (animator != null)
-            {
                 animator.SetBool("firing", true);
+
+            if (currentAmmo == 0 && !isReloading)
+            {
+                isFiring = false;
+                ret = Reload();
             }
         }
         else
         {
             isFiring = false;
             if (animator != null)
-            {
                 animator.SetBool("firing", false);
-            }
         }
+
+        return ret;
     }
-    
+
     /* 	
 	 *	Returns a time to recall this function
 	 *	Or maybe invoke repeating until a time
-     */ 
-    public void Reload ()
+     */
+    public bool Reload()
     {
         isFiring = false;
+
         if (currentAmmo < maxAmmo && !isReloading)
         {
             isReloading = true;
@@ -271,12 +276,20 @@ public class WeaponExecutable {
 			
             nextReloadStart = Time.time;
             nextReloadEnd = Time.time + reloadTime;
+
+            return true;
         }
         else if (isReloading && Time.time >= nextReloadEnd)
         {
             currentAmmo = maxAmmo;
             isReloading = false;
+
+            return false;
         }
+
+        return false;
     }
+
+
 
 }
