@@ -90,7 +90,7 @@ public class Section : MonoBehaviour
             currentShield -= totalDamage;
         }
 
-        Debug.Log("Took " + totalDamage + " Damage, Current Health: " + currentHealth);
+        Debug.Log(name + " took " + totalDamage + " Damage, Current Health: " + currentHealth);
 
         if (currentHealth <= 0)
         {

@@ -20,8 +20,6 @@ public class TestBuilletSpawner : MonoBehaviour
 
     void SB()
     {
-        Debug.Log("bullet");
-
         var bullet = Instantiate(prefab, transform.position, transform.rotation);
 
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * 10;

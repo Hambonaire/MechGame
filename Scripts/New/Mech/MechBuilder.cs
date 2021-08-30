@@ -10,13 +10,13 @@ public class MechBuilder
      */
     public GameObject BuildFromMechObj(Mech mech, Vector3 location, bool modForGame = false, bool asPlayer = false, bool asEnemy = false)
     {
-        GameObject mechBase = Object.Instantiate(mech.mechBaseRef.basePrefab, location, Quaternion.identity);
+        GameObject mechObj = Object.Instantiate(mech.mechBaseRef.basePrefab, location, Quaternion.identity);
 
-        var mechManager = mechBase.GetComponent<MechManager>();
-        var sectionManager = mechBase.GetComponent<SectionManager>();
+        var mechManager = mechObj.GetComponent<MechManager>();
+        var sectionManager = mechObj.GetComponent<SectionManager>();
         
         /* Attach weapons for each sections */
-        for (int secIndex = (int) sectionIndex.leftArm; secIndex < (int) sectionIndex.rightShoulder; secIndex++)
+        for (int secIndex = (int) SectionIndex.leftArm; secIndex < (int) SectionIndex.rightShoulder; secIndex++)
         {
             /* Create a weapon for each subsection */
             for (int subIndex = 0; subIndex < mech.GetSubsectionCountByIndex(secIndex); subIndex++)
@@ -48,34 +48,61 @@ public class MechBuilder
             }
         }
 
-        if (modForGame)
-            modifyMechForGameplay(mechBase, asPlayer, asEnemy);
+        /* Set relevant stats */
+        mechManager.baseMoveSpeed = mech.mechBaseRef.baseMoveSpeed;
 
-        return mechBase;
+        ModifyMechForGameplay(mech, mechObj, modForGame, asPlayer, asEnemy);
+
+        return mechObj;
     }
 
     /*
      *  Modify the build mech obj to be ready for gameplay
-     *      - Attach MechController to Parent
-     *      - 
+     *      - Attach:
+     *          - Mech, Player, Enemy Controllers scripts
+     *      - Enable
+     *          - CharacterController component
      */
-    public void modifyMechForGameplay(Mech mech, GameObject mechObj, bool asPlayer = false, bool asEnemy = false)
+    public void ModifyMechForGameplay(Mech mech, GameObject mechObj, bool modForGame, bool asPlayer, bool asEnemy)
     {
+        if (!modForGame)
+            return;
+
 		if (asPlayer)
 		{
-            var pc = mechObj.AddComponent<PlayerController>();
-			pc.walkSpeed = mech.baseMoveSpeed;
+            var PC = mechObj.AddComponent<PlayerController>();
+            PC.walkSpeed = mech.mechBaseRef.baseMoveSpeed;
 
             mechObj.GetComponent<CharacterController>().enabled = true;
+
+            mechObj.GetComponent<WeaponSystem>().enabled = true;
 		}
 		else if (asEnemy)
 		{
             //mech.AddComponent<EnemyController>();
-		}
-		else
+
+            mechObj.GetComponent<CharacterController>().enabled = true;
+            mechObj.GetComponent<WeaponSystem>().enabled = true;
+        }
+        else
 		{
-            mech.AddComponent<MechController>();
-		}
+            mechObj.AddComponent<MechController>();
+
+            mechObj.GetComponent<CharacterController>().enabled = true;
+            mechObj.GetComponent<WeaponSystem>().enabled = true;
+        }
         	
+    }
+
+    /* 
+     *  Build randomized mech from parameters
+     *  - Mech Tier
+     *  - Weapon Type Bias
+     *  - Range Bias
+     *  - Weapon Tier Bias
+     */
+    public void BuildRandomMech(MechTables table, int mechTier, int weaponTypeBias, int tierBias, bool modForGame, bool asPlayer, bool asEnemy)
+    {
+
     }
 }

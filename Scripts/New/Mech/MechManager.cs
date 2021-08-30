@@ -10,9 +10,11 @@ using UnityEngine;
  *  - EquippedWeapon references (GameObject & WeaponExe script)
  */
 [RequireComponent(typeof(SectionManager))]
+[RequireComponent(typeof(WeaponSystem))]
 public class MechManager : MonoBehaviour {
 
-    SectionManager sectionManager;
+    public SectionManager sectionManager;
+    public WeaponSystem weaponSystem;
 
     bool torsoDestroyed = false;
     bool headDestroyed = false;
@@ -29,11 +31,13 @@ public class MechManager : MonoBehaviour {
 	List<WeaponExecutable> executableLeftShoulder = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableRightShoulder = new List<WeaponExecutable>();
 	
-	public Vector3 controlCamOffset;
-	
+    [HideInInspector]
+    public float baseMoveSpeed = 5;
+
     void Start()
     {
-        sectionManager = GetComponent<SectionManager>();   
+        sectionManager = GetComponent<SectionManager>();
+        weaponSystem = GetComponent<WeaponSystem>();
     }
 
     void Update()
@@ -43,13 +47,13 @@ public class MechManager : MonoBehaviour {
 
     public List<GameObject> GetWeaponObjByIndex(int index)
     {
-        if (index == (int) sectionIndex.leftArm)
+        if (index == (int) SectionIndex.leftArm)
             return equippedLeftArmObj;
-        else if (index == (int) sectionIndex.rightArm)
+        else if (index == (int) SectionIndex.rightArm)
             return equippedRightArmObj;
-        else if (index == (int) sectionIndex.leftShoulder)
+        else if (index == (int) SectionIndex.leftShoulder)
             return equippedLeftShoulderObj;
-        else if (index == (int) sectionIndex.rightShoulder)
+        else if (index == (int) SectionIndex.rightShoulder)
             return equippedRightShoulderObj;
         else
             return null;
@@ -57,13 +61,13 @@ public class MechManager : MonoBehaviour {
 	
 	public List<WeaponExecutable> GetExecutableByIndex(int index)
     {
-        if (index == (int) sectionIndex.leftArm)
+        if (index == (int) SectionIndex.leftArm)
             return executableLeftArm;
-        else if (index == (int) sectionIndex.rightArm)
+        else if (index == (int) SectionIndex.rightArm)
             return executableRightArm;
-        else if (index == (int) sectionIndex.leftShoulder)
+        else if (index == (int) SectionIndex.leftShoulder)
             return executableLeftShoulder;
-        else if (index == (int) sectionIndex.rightShoulder)
+        else if (index == (int) SectionIndex.rightShoulder)
             return executableRightShoulder;
         else
             return null;
@@ -72,25 +76,25 @@ public class MechManager : MonoBehaviour {
     /* Use this to check for lethal damage etc */
     public void CheckForDamage()
     {
-        if (sectionManager.GetSectionByIndex((int)sectionIndex.torso) == null ||
-            sectionManager.GetSectionByIndex((int)sectionIndex.torso).isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)SectionIndex.torso) == null ||
+            sectionManager.GetSectionByIndex((int)SectionIndex.torso).isDestroyed)
         {
             
         }
         
-        if (sectionManager.GetSectionByIndex((int)sectionIndex.head) == null ||
-            sectionManager.GetSectionByIndex((int)sectionIndex.head).isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)SectionIndex.head) == null ||
+            sectionManager.GetSectionByIndex((int)SectionIndex.head).isDestroyed)
         {
             
         }
         
-        if (sectionManager.GetSectionByIndex((int)sectionIndex.leftLeg) == null ||
-            sectionManager.GetSectionByIndex((int)sectionIndex.leftLeg).isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)SectionIndex.leftLeg) == null ||
+            sectionManager.GetSectionByIndex((int)SectionIndex.leftLeg).isDestroyed)
         {
             
         }
-        if (sectionManager.GetSectionByIndex((int)sectionIndex.rightLeg) == null ||
-            sectionManager.GetSectionByIndex((int)sectionIndex.rightLeg).isDestroyed)
+        if (sectionManager.GetSectionByIndex((int)SectionIndex.rightLeg) == null ||
+            sectionManager.GetSectionByIndex((int)SectionIndex.rightLeg).isDestroyed)
         {
             
         }

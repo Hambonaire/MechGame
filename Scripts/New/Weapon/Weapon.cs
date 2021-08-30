@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
     [HideInInspector]
     public WeaponExecutable myExecutable;
 	
-	public Transform bulSpwnLoc;
+	public Transform[] bulSpwnLoc;
 	
 	public Animator wepAnim;
 

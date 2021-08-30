@@ -7,20 +7,23 @@ public enum Rarity {Junk, Shoddy, Inferior, Generic, Calibrated, Flawless, Limit
 
 public enum Type { }
 
+[System.Serializable]
 public class Item : ScriptableObject
 {
+    [Header("General")]
     new public string name = "New Item";
     public Sprite icon = null;
-    public int idNum = 0;
+    [Range(1, 5)]
+    public int tier = 1;
     public int price = 1000;
     
-    public float ballisticArmor = 0;
-    public float energyArmor = 0;
-    public float health = 0;
-    public float shield = 0;
-    public float shieldRegen = 0;
+    public float bonusArmor = 0;
+    public float bonusIntegrity = 0;
+    public float bonusShield = 0;
+    public float bonusShieldRegen = 0;
     
     #region Flavor
+    [Header("Flavor")]
     public Rarity rarity;
     public string description;
     public string manufacturer;
@@ -31,12 +34,14 @@ public class Item : ScriptableObject
     {
         // Use the item
         // Something may happen
+
     }
 
     // Call this method to remove the item from inventory
     public void RemoveFromInventory()
     {
         //InventoryManager.Instance.Remove(this);
+
     }
     
 }

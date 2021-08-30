@@ -11,26 +11,28 @@ using UnityEngine;
  *  - Should require MechManager & SectionManager to get their references
  *  - Act like an interface so Enemy Controller & Player Controller can both control mechs through this script
  */
+[RequireComponent(typeof(MechManager))]
 [RequireComponent(typeof(CharacterController))]
 public class MechController : MonoBehaviour
 {
     protected MechManager mechManager;
     protected SectionManager sectionManager;
 
-    protected Animator legsAnimator;
+    public Animator legsAnimator;
 	
 	protected Transform torsoRotAxis;
     protected Transform armRotAxis;
 
-
     protected Vector3 forward;
 
+    [SerializeField]
     protected GameObject myTarget;
 
+    protected Vector3 firingSolution = new Vector3();
 
 
     protected float gravity = -9.8f;
-    protected float walkSpeed = 5;
+    public float walkSpeed = 5;
     //protected float runSpeed = 7;
 	
     protected Vector3 velocity = Vector3.zero;
@@ -45,7 +47,7 @@ public class MechController : MonoBehaviour
     protected float turnSmoothVelocity_Torso = 0;
     protected float turnSmoothTime_Torso = .25f;
     protected float turnSmoothVelocity_Legs = 0;
-    protected float turnSmoothTime_Legs = .02f;
+    protected float turnSmoothTime_Legs = .25f;
 
     protected float baseHitBoxRadius = 1f;
     protected float baseHitBoxHeight = 3f;
@@ -63,6 +65,8 @@ public class MechController : MonoBehaviour
 
         torsoRotAxis = sectionManager.torsoRotAxis;
         armRotAxis = sectionManager.armRotAxis;
+
+        legsAnimator = sectionManager.legsAnimator;
     }
     
     void Update()
@@ -72,40 +76,40 @@ public class MechController : MonoBehaviour
 
     protected void Fire()
     {
-        for (int secIndex = (int) sectionIndex.leftArm; secIndex < (int) sectionIndex.rightShoulder; secIndex++)
+        mechManager.weaponSystem.FireBallisticExe(firingSolution);
+
+        mechManager.weaponSystem.FireMissileExe(myTarget);
+
+        /**
+        for (int secIndex = (int) SectionIndex.leftArm; secIndex < (int) SectionIndex.rightShoulder; secIndex++)
         {
             var execList = mechManager.GetExecutableByIndex(secIndex);
 
 			for (int subIndex = 0; subIndex < execList.Count; subIndex++)
 			{
-				if (execList[subIndex].Fire())
+				if (execList[subIndex].Fire(firingSolution))
                 {
                     StartCoroutine(ReloadCheckback(execList[subIndex], execList[subIndex].reloadTime));
                 }
             }
         }
+        */
     }
 
     protected void Reload()
-	{
-		for (int secIndex = (int) sectionIndex.leftArm; secIndex < (int) sectionIndex.rightShoulder; secIndex++)
-        {
-            var execList = mechManager.GetExecutableByIndex(secIndex);
-
-			for (int subIndex = 0; secIndex < execList.Count; secIndex++)
-			{
-				if (execList[subIndex].Reload());
-                {
-                    StartCoroutine(ReloadCheckback(execList[subIndex], execList[subIndex].reloadTime));
-                }
-			}
-        }
-	}
-
-    IEnumerator ReloadCheckback(WeaponExecutable exec, float time)
     {
-        yield return new WaitForSeconds(time + .01f);
+        mechManager.weaponSystem.Reload();
 
-        exec.Reload();
+    }
+
+    protected void OnCooldown()
+    {
+        mechManager.weaponSystem.OnCooldown();
+
+    }
+
+    public virtual void GetFiringSolutionPoint()
+    {
+
     }
 }

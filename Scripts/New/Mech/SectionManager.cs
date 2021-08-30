@@ -14,6 +14,10 @@ public class SectionManager : MonoBehaviour
     public Transform torsoRotAxis;
     public Transform armRotAxis;
 
+    public Animator legsAnimator;
+
+    public Vector3 cameraOffset;
+
     [Header ("Parent Transforms")]
     [SerializeField]
     Transform torsoParent;

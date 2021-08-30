@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a5a1584b1ed12f4684cd61e7f1b7676, type: 3}
-  m_Name: Test Base
+  m_Name: Heavy Base
   m_EditorClassIdentifier: 
-  baseName: Test Base
-  basePrefab: {fileID: 6168261378854728456, guid: f9239e64333338a46bb04749a7313629,
+  baseName: 
+  basePrefab: {fileID: 6532710844482988585, guid: cff3a1ae9610b1246b3630d4aab1a56f,
     type: 3}
   headSlots: 1
   torsoSlots: 1
@@ -23,4 +23,4 @@ MonoBehaviour:
   rightArmSlots: 1
   leftShoulderSlots: 1
   rightShoulderSlots: 1
-  baseMoveSpeed: 4
+  baseMoveSpeed: 5

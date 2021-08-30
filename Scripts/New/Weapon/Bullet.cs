@@ -23,9 +23,9 @@ public class Bullet : MonoBehaviour
 
         if (hits.Length > 0) 
         {
-            Debug.Log(hits[0].collider.gameObject.name);
+            //Debug.Log(hits[0].collider.gameObject.name);
 
-            hits[0].collider.gameObject.GetComponent<HitRegister>().RegisterHit(damage);
+            hits[0].collider.gameObject.GetComponent<HitRegister>()?.RegisterHit(damage);
 
             Destroy(gameObject);
         }

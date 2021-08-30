@@ -16,7 +16,7 @@ public class PlayerController : MechController
 
         characterController = GetComponent<CharacterController>();
 
-		AttachCamera(FindObjectOfType<Camera>());
+		AttachCamera(LevelManager._instance.playerCam);
     }
 
      void Update()
@@ -24,15 +24,23 @@ public class PlayerController : MechController
         // For Raycasting
         forward = armRotAxis.TransformDirection(Vector3.forward) * 20;
 
-        GetInput();
+        if (cam != null)
+            GetFiringSolutionPoint();
 
         Move();
+
+        GetInput();
     }
 
     public void AttachCamera(Camera camera)
     {
 		cam = camera;
-        cam.gameObject.GetComponent<MechCamera_Player>().target = armRotAxis;
+
+        camera.GetComponent<CamPlayerMech>().baseTarget = transform;
+
+        camera.GetComponent<CamPlayerMech>().target = armRotAxis;
+        
+        camera.GetComponent<CamPlayerMech>().camOffset = sectionManager.cameraOffset;
     }
 
     public void GetInput()
@@ -51,7 +59,7 @@ public class PlayerController : MechController
         }
         else
         {
-            //OnCooldown();
+            OnCooldown();
         }
 
     }
@@ -79,12 +87,14 @@ public class PlayerController : MechController
         //   0 if no movement buttons are pressed
         //   runSpeed if the player is running
         //   walkSpeed if the player is not running
-        float goalSpeed = (inputDirection.magnitude == 0 /*|| !movementEnabled*/) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
+        //float goalSpeed = (inputDirection.magnitude == 0 /*|| !movementEnabled*/) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
+        float goalSpeed = (inputDirection.magnitude == 0 /*|| !movementEnabled*/) ? 0 : walkSpeed;
 
         // Runnning?
         //running = Input.GetKey(KeyCode.LeftShift);
         // Target Speed
-        targetSpeed = ((false) ? runSpeed : walkSpeed) * inputDirection.magnitude;
+        //targetSpeed = ((false) ? runSpeed : walkSpeed) * inputDirection.magnitude;
+        targetSpeed = walkSpeed * inputDirection.magnitude;
 
         // Movement
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref movementSmoothVelocity, movementSmoothTime);
@@ -94,17 +104,24 @@ public class PlayerController : MechController
         if (legsAnimator != null)
         {
             //legsAnimator.SetFloat("moveBlend", currentSpeed);
-            legsAnimator.SetFloat("moveBlend", ((true) ? 1 : .7f) * inputDirection.magnitude, movementSmoothTime, Time.deltaTime);
+            legsAnimator.SetFloat("moveBlend", ((true) ? .75f : .7f) * inputDirection.magnitude, movementSmoothTime, Time.deltaTime);
         }
 
         // Torso Turning (y only) for cockpit object itself
-        Vector3 eulerRotationTorso = new Vector3(torsoRotAxis.transform.eulerAngles.x, cam.transform.eulerAngles.y, torsoRotAxis.transform.eulerAngles.z);
+        Vector3 eulerRotationTorso = new Vector3(torsoRotAxis.transform.eulerAngles.x, cam.transform.eulerAngles.y + 1, torsoRotAxis.transform.eulerAngles.z);
         torsoRotAxis.transform.rotation = Quaternion.Euler(eulerRotationTorso);
 
         // Arms turning (x only) for arms, connected to RotationAxis
-        Vector3 eulerRotationArms = new Vector3(cam.transform.eulerAngles.x - 3, armRotAxis.eulerAngles.y, armRotAxis.eulerAngles.z);
+        Vector3 eulerRotationArms = new Vector3(cam.transform.eulerAngles.x, armRotAxis.eulerAngles.y, armRotAxis.eulerAngles.z);
         armRotAxis.rotation = Quaternion.Euler(eulerRotationArms);
     }
 
-    
+    public override void GetFiringSolutionPoint()
+    {
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Physics.Raycast(ray, out RaycastHit hit);
+
+        firingSolution = hit.point;
+    }
 }
