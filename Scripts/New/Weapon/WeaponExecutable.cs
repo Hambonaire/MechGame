@@ -3,34 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class WeaponExecutable {
+public class WeaponExecutable : MonoBehaviour{
+
+    public bool fireTrigger;
 
     public WeaponItem weaponItemRef;
-    public WeaponType weaponType;
-
-    public GameObject weaponObj;
-
-    //public GameObject targetObject;
-
-    public Image ammoIcon;
-
-    public Transform[] bulletSpawn;
-    public GameObject bulletPrefab;
-
-
-    //public MechController controller;
-
-    bool autoTarget;
-    bool needTarget;
+    public Weapon weapon;
 
     Animator animator;
 
-    float damage;
-
-    float rateOfFire;
     float nextFire;
-    public float reloadTime;
     public float nextReloadStart;
     public float nextReloadEnd;
     public bool isFiring = false;
@@ -54,10 +36,9 @@ public class WeaponExecutable {
     float targetDistance;
     float firingAngle;
 
-    public WeaponExecutable(GameObject obj, WeaponItem weapon, Transform[] barrel, Animator anim)
+    /*
+    public void Initialize(WeaponItem weapon, Transform[] barrel, Animator anim)
     {
-        weaponObj = obj;
-
         weaponType = weapon.weaponType;
 
         ammoIcon = weapon.ammoIcon;
@@ -84,22 +65,53 @@ public class WeaponExecutable {
 
         animator = anim;
     }
+    */
 
-    public int Fire(Vector3 firingSolutionPoint = new Vector3(), GameObject targetobject = null)
+    void Update()
     {
-        if (weaponObj == null || weaponObj.activeSelf == false)
-            return 2;
 
-        if (weaponType == WeaponType.Ballistic)
+        Animate();
+
+    }
+
+    void Start()
+    {
+        weapon = GetComponent<Weapon>();
+
+        animator = weapon.wepAnim;
+
+        maxAmmo = weaponItemRef.maxAmmo;
+        currentAmmo = maxAmmo;
+
+        spread = weaponItemRef.bulletSpread;
+        bulletSpeed = weaponItemRef.bulletSpeed;
+        bulletLife = weaponItemRef.bulletLife;
+    }
+
+    void Animate()
+    {
+        if (animator != null)
         {
-            return FireBallistic(firingSolutionPoint);
-        }
-        else if (weaponType == WeaponType.Missile)
-        {
-            return FireMissileVolley(targetobject);
+            if (isFiring)
+                animator.SetBool("firing", true);
+            else
+                animator.SetBool("firing", false);
         }
 
-        return 2;
+        isFiring = false;
+
+    }
+
+    public void Fire(Vector3 firingSolutionPoint = new Vector3(), GameObject targetobject = null)
+    {
+        if (weaponItemRef.weaponType == WeaponType.Ballistic)
+        {
+            FireBallistic(firingSolutionPoint);
+        }
+        else if (weaponItemRef.weaponType == WeaponType.Missile)
+        {
+            FireMissileVolley(targetobject);
+        }
 
         /**
         bool ret = false;
@@ -285,17 +297,15 @@ public class WeaponExecutable {
         */
     }
 
-    public int FireBallistic(Vector3 firingSolutionPoint)
+    public void FireBallistic(Vector3 firingSolutionPoint)
     {
-        int ret = 0;
-
         isFiring = true;
 
         if (!isReloading)
         {
             if (Time.time > nextFire && currentAmmo > 0)
             {
-                nextFire = Time.time + rateOfFire;
+                nextFire = Time.time + weaponItemRef.secBetweenFire;
                 currentAmmo--;
 
                 /* Random bullet spray */
@@ -303,7 +313,7 @@ public class WeaponExecutable {
                 float randY = Random.Range(-spread / 50, spread / 50);
                 float randZ = Random.Range(-spread / 50, spread / 50);
 
-                var bullet = GameObject.Instantiate(bulletPrefab, bulletSpawn[0].position, bulletSpawn[0].rotation);
+                var bullet = GameObject.Instantiate(weaponItemRef.bullet, weapon.bulSpwnLoc[0].position, weapon.bulSpwnLoc[0].rotation);
 
                 if (firingSolutionPoint != Vector3.zero)
                     bullet.transform.LookAt(firingSolutionPoint);
@@ -312,42 +322,29 @@ public class WeaponExecutable {
 
                 bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
 
-                bullet.GetComponent<Bullet>().SetDamage(damage);
+                bullet.GetComponent<Bullet>().SetDamage(weaponItemRef.damage);
 
-                GameObject.Destroy(bullet, bulletLife);
+                Destroy(bullet, bulletLife);
             }
-
-            if (animator != null)
-                animator.SetBool("firing", true);
-
-            if (currentAmmo == 0 && !isReloading)
+            else if (currentAmmo <= 0)
             {
-                isFiring = false;
-                ret = Reload();
+                Reload();
             }
-        }
-        else
-        {
-            isFiring = false;
-            if (animator != null)
-                animator.SetBool("firing", false);
+
         }
 
-        return ret;
     }
 
     /* If this weapon is a  */
-    public int FireMissileVolley(GameObject targetObject)
+    public void FireMissileVolley(GameObject targetObject)
     {
-        int ret = 0;
-
         isFiring = true;
 
         if (!isReloading)
         {
             if (Time.time > nextFire && currentAmmo > 0)
             {
-                nextFire = Time.time + rateOfFire;
+                nextFire = Time.time + weaponItemRef.secBetweenFire;
                 currentAmmo--;
 
                 /* Random bullet spray */
@@ -355,48 +352,30 @@ public class WeaponExecutable {
                 //float randY = Random.Range(-spread / 50, spread / 50);
                 //float randZ = Random.Range(-spread / 50, spread / 50);
 
-                for (int locIndex = 0; locIndex < bulletSpawn.Length; locIndex++)
+                //bullet.transform.rotation *= Quaternion.Euler(randX, randY, randZ);
+
+                //TODO: if (targetObject != null) ;
+
+                for (int locIndex = 0; locIndex < weapon.bulSpwnLoc.Length; locIndex++)
                 {
-                    var bullet = GameObject.Instantiate(bulletPrefab, bulletSpawn[locIndex].position, bulletSpawn[locIndex].rotation);
-
-                    if (targetObject != null) ;
-                    //bullet.transform.LookAt(firingSolutionPoint);
-
-                    //bullet.transform.rotation *= Quaternion.Euler(randX, randY, randZ);
-
-                    //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 50;
-
-                    bullet.GetComponent<Missile>().target = targetObject.transform;
-
-                    //GameObject.Destroy(bullet, bulletLife);
+                    StartCoroutine(MissileSpawnDelay(weapon.bulSpwnLoc[locIndex], targetObject, 0.1f * locIndex));
                 }
 
             }
 
-            if (animator != null)
-                animator.SetBool("firing", true);
-
-            if (currentAmmo == 0 && !isReloading)
+            else if (currentAmmo == 0 && !isReloading)
             {
-                isFiring = false;
-                ret = Reload();
+                Reload();
             }
         }
-        else
-        {
-            isFiring = false;
-            if (animator != null)
-                animator.SetBool("firing", false);
-        }
 
-        return ret;
     }
 
     /* 	
 	 *	Returns a time to recall this function
 	 *	Or maybe invoke repeating until a time
      */
-    public int Reload()
+    public void Reload()
     {
         isFiring = false;
 
@@ -408,19 +387,15 @@ public class WeaponExecutable {
 				animator.SetBool("firing", false);
 			
             nextReloadStart = Time.time;
-            nextReloadEnd = Time.time + reloadTime;
+            nextReloadEnd = Time.time + weaponItemRef.reloadTime;
 
-            return 1;
+            Invoke("Reload", weaponItemRef.reloadTime);
         }
         else if (isReloading && Time.time >= nextReloadEnd)
         {
             currentAmmo = maxAmmo;
             isReloading = false;
-
-            return 0;
         }
-
-        return 1;
     }
 
     public void OnCooldown()
@@ -429,4 +404,14 @@ public class WeaponExecutable {
         if (animator != null)
             animator.SetBool("firing", false);
     }
+
+    IEnumerator MissileSpawnDelay(Transform location, GameObject target, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        var bullet = Instantiate(weaponItemRef.bullet, location.position, location.rotation);
+
+        bullet.GetComponent<Missile>().target = target.transform;
+    }
+
 }

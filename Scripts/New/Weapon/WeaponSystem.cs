@@ -33,9 +33,9 @@ public class WeaponSystem : MonoBehaviour
 
 			for (int subIndex = 0; subIndex < execList.Count; subIndex++)
 			{
-				if (execList[subIndex].weaponType == WeaponType.Ballistic)
+				if (execList[subIndex].weaponItemRef.weaponType == WeaponType.Ballistic)
 					ballisticExecutables.Add(execList[subIndex]);
-				else if (execList[subIndex].weaponType == WeaponType.Missile)
+				else if (execList[subIndex].weaponItemRef.weaponType == WeaponType.Missile)
 					missileExecutables.Add(execList[subIndex]);
 			}
 		}
@@ -52,10 +52,12 @@ public class WeaponSystem : MonoBehaviour
     {
 		for (int execIndex = 0; execIndex < ballisticExecutables.Count; execIndex++)
         {
-			if (ballisticExecutables[execIndex].Fire(firingSolution, default) == 1)
-			{
-				StartCoroutine(ReloadCheckback(ballisticExecutables[execIndex], ballisticExecutables[execIndex].reloadTime));
-			}
+			ballisticExecutables[execIndex].Fire(firingSolution, default);
+
+			//if ( == 1)
+			//{
+			//	StartCoroutine(ReloadCheckback(ballisticExecutables[execIndex], ballisticExecutables[execIndex].reloadTime));
+			//}
 		}
 	}
 
@@ -63,13 +65,16 @@ public class WeaponSystem : MonoBehaviour
     {
 		for (int execIndex = 0; execIndex < missileExecutables.Count; execIndex++)
 		{
-			if (missileExecutables[execIndex].Fire(default, targetObject) == 1)
-			{
-				StartCoroutine(ReloadCheckback(missileExecutables[execIndex], missileExecutables[execIndex].reloadTime));
-			}
+			missileExecutables[execIndex].Fire(default, targetObject);
+
+			//if ( == 1)
+			//{
+			//	StartCoroutine(ReloadCheckback(missileExecutables[execIndex], missileExecutables[execIndex].reloadTime));
+			//}
 		}
 	}
 
+	/**
 	public void OnCooldown()
 	{
 		for (int secIndex = (int)SectionIndex.leftArm; secIndex < (int)SectionIndex.rightShoulder; secIndex++)
@@ -91,20 +96,16 @@ public class WeaponSystem : MonoBehaviour
 
 			for (int subIndex = 0; secIndex < execList.Count; secIndex++)
 			{
-				if (execList[subIndex].Reload() == 1)
-				{
-					StartCoroutine(ReloadCheckback(execList[subIndex], execList[subIndex].reloadTime));
-				}
+
+
+				//if (execList[subIndex].Reload() == 1)
+				//{
+				//	StartCoroutine(ReloadCheckback(execList[subIndex], execList[subIndex].reloadTime));
+				//}
 			}
 		}
 	}
-
-	IEnumerator ReloadCheckback(WeaponExecutable exec, float time)
-	{
-		yield return new WaitForSeconds(time + .01f);
-
-		exec.Reload();
-	}
+	*/
 
 	/* Camera from this mech */
 	bool HasTargetInView(Camera mechCam)

@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public static GameManager _instance;
 
-    public MechBase testMechBase;
-
     /* List of mechs out of storage in the hangar */
     //[HideInInspector]
     public List<Mech> availableMechs = new List<Mech>();
@@ -29,10 +27,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        //Mech testMech = new Mech(testMechBase);
-
-        //availableMechs.Add(testMech);
     }
 
     // Update is called once per frame

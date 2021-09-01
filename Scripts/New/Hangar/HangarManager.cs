@@ -54,7 +54,8 @@ public class HangarManager : MonoBehaviour
             if (mechIndex > 3)
                 break;
 
-			builder.BuildFromMechObj(GameManager._instance.availableMechs[mechIndex], Vector3.right * mechIndex * mechSpacing, false, true, false);
+			var mech = builder.BuildFromMechObj(GameManager._instance.availableMechs[mechIndex], Vector3.right * mechIndex * mechSpacing, false, true, false);
+            mech.transform.rotation = Quaternion.Euler(0, 180, 0);
 		}
     }
 
@@ -74,8 +75,11 @@ public class HangarManager : MonoBehaviour
     {
         currentlySelectedMechIndex = index;
 
+        currentylSelectedSectionIndex = -1;
+        currentlySelectedSubsectionIndex = -1;
+
         // TODO: Remove/modify this if buttons use built-in color updates
-        HangarUI._instance.MakeDirty(false, true, true, false);
+        HangarUI._instance.MakeDirty(true, true ,true, true, false);
 
         SwapMechView(index);
     }
@@ -90,7 +94,7 @@ public class HangarManager : MonoBehaviour
     {
         currentylSelectedSectionIndex = index;
 
-        HangarUI._instance.MakeDirty(false, true, true, false);
+        HangarUI._instance.MakeDirty(false, true, true, true, false);
     }
 
     /*
@@ -103,7 +107,7 @@ public class HangarManager : MonoBehaviour
     {
         currentlySelectedSubsectionIndex = index;
 
-        HangarUI._instance.MakeDirty(false, true, true, true);
+        HangarUI._instance.MakeDirty(false, true, true, true, false);
     }
 
     /* Move the hangar view from current mech to the selected mech */
@@ -143,7 +147,8 @@ public class HangarManager : MonoBehaviour
         /* Build */
         MechBuilder builder = new MechBuilder();
         builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex], Vector3.right * currentlySelectedMechIndex * mechSpacing, false, false, false);
-        HangarUI._instance.MakeDirty(false, true, false, false);
+
+        HangarUI._instance.MakeDirty(false, true, true, false, false);
     }
 
     /*

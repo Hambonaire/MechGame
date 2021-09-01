@@ -37,14 +37,10 @@ public class MechBuilder
 
                 /* Add the ref to the parent section to the weapon's script */
                 newWeapon.GetComponent<Weapon>().sectionParent = sectionManager.GetSectionByIndex(secIndex);
-				
-				// Move into modify???
-				/* Create an executable for the weapon and add it to MechManager ref */
-				mechManager.GetExecutableByIndex(secIndex).Add(new WeaponExecutable(
-					newWeapon, 
-					mech.GetSectionItemsByIndex(secIndex)[subIndex] as WeaponItem,
-					newWeapon.GetComponent<Weapon>().bulSpwnLoc, 
-					newWeapon.GetComponent<Weapon>().wepAnim));
+
+                // Move into modify???
+                /* Create an executable for the weapon and add it to MechManager ref */
+                mechManager.GetExecutableByIndex(secIndex).Add(newWeapon.GetComponent<WeaponExecutable>());
             }
         }
 

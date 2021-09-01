@@ -25,7 +25,7 @@ public class MechManager : MonoBehaviour {
     List<GameObject> equippedRightArmObj = new List<GameObject>();
     List<GameObject> equippedLeftShoulderObj = new List<GameObject>();
     List<GameObject> equippedRightShoulderObj = new List<GameObject>();
-	
+
 	List<WeaponExecutable> executableLeftArm = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableRightArm = new List<WeaponExecutable>();
 	List<WeaponExecutable> executableLeftShoulder = new List<WeaponExecutable>();

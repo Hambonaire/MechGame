@@ -86,7 +86,7 @@ public class LevelManager : MonoBehaviour
             {
                 if (objective.targetPatterns[index] != null)
                 {
-                    builder.BuildFromMechObj(objective.targetPatterns[index].mech, Vector3.forward * 10, true);
+                    hostileMechs.Add(builder.BuildFromMechObj(objective.targetPatterns[index].mech, Vector3.forward * 10, true));
                 }
                 else
                 {

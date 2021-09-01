@@ -8,6 +8,7 @@ using UnityEngine;
  *
  */
 [RequireComponent(typeof(HitRegister))]
+[RequireComponent(typeof(WeaponExecutable))]
 public class Weapon : MonoBehaviour
 {
     /* Should be set automatically by mechBuilder */

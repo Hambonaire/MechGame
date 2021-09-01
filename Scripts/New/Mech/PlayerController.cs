@@ -17,6 +17,8 @@ public class PlayerController : MechController
         characterController = GetComponent<CharacterController>();
 
 		AttachCamera(LevelManager._instance.playerCam);
+
+        myTarget = LevelManager._instance.hostileMechs[0].GetComponent<SectionManager>().torsoSection.gameObject;
     }
 
      void Update()
@@ -54,7 +56,6 @@ public class PlayerController : MechController
 
         if (Input.GetMouseButton(0))
         {
-
             Fire();
         }
         else

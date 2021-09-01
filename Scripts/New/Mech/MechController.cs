@@ -98,14 +98,12 @@ public class MechController : MonoBehaviour
 
     protected void Reload()
     {
-        mechManager.weaponSystem.Reload();
-
+        //mechManager.weaponSystem.Reload();
     }
 
     protected void OnCooldown()
     {
-        mechManager.weaponSystem.OnCooldown();
-
+        //mechManager.weaponSystem.OnCooldown();
     }
 
     public virtual void GetFiringSolutionPoint()

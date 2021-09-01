@@ -7,13 +7,20 @@ public class HangarUI : MonoBehaviour
     public static HangarUI _instance;
 
     bool isDirty;
-    bool[] dirtyFlags = new bool[4] { false, false, false, false };
+    bool[] dirtyFlags = new bool[5] { true, true, true, true, true };
 
     [Header ("Mech Select Buttons")]
     /* List of buttons that select the mech to modify, send signal back to HangarManager */
-    public List<GameObject> mechSelectButton = new List<GameObject>();
-    public GameObject mechSelBtnParent;
-    public GameObject mechSelBtnPrefab;
+    public List<GameObject> mechSelectButtons = new List<GameObject>();
+
+    [Header("Mech Section Select Buttons")]
+    /* Subsection buttons */
+    public List<GameObject> sectionSelectButtons = new List<GameObject>();
+
+    [Header("Mech Subsection Select Buttons")]
+    /* Subsection buttons */
+    public GameObject subsectionButtonContent;
+    public List<GameObject> subsectionSelectButtons = new List<GameObject>();
 
     [Header("Mech Info Panel")]
     /* Mech info panel */
@@ -55,7 +62,7 @@ public class HangarUI : MonoBehaviour
         {
             BuildUI();
             isDirty = false;
-            dirtyFlags = new bool[4] { false, false, false, false };
+            dirtyFlags = new bool[5] { false, false, false, false, false };
         }
     }
 
@@ -65,18 +72,20 @@ public class HangarUI : MonoBehaviour
      *  3: Item Info Panel
      *  4: Shop
      */
-    public void MakeDirty(bool selectButtons, bool mechInfoPanel, bool itemInfoPanel, bool shop)
+    public void MakeDirty(bool mechSelectButtons, bool subsectionSelectButtons, bool mechInfoPanel, bool itemInfoPanel, bool shop)
     {
         isDirty = true;
 
-        if (selectButtons)
+        if (mechSelectButtons)
             dirtyFlags[0] = true;
+        if (subsectionSelectButtons)
+            dirtyFlags[1] = true; 
         if (mechInfoPanel)
-            dirtyFlags[1] = true;
-        if (itemInfoPanel)
             dirtyFlags[2] = true;
-        if (shop)
+        if (itemInfoPanel)
             dirtyFlags[3] = true;
+        if (shop)
+            dirtyFlags[4] = true;
     }
 
     /*  Main build function
@@ -90,20 +99,26 @@ public class HangarUI : MonoBehaviour
             BuildMechSelectButtons();
         }
 
-        /* Build the mech info panel (LEFT) */
+        /* Build the subsection buttons */
         if (dirtyFlags[1])
+        {
+            BuildSubsectionSelectButtons();
+        }
+
+        /* Build the mech info panel (LEFT) */
+        if (dirtyFlags[2])
         {
             BuildMechInfoPanel();
         }
 
         /* Build the item info panel (RIGHT) */
-        if (dirtyFlags[2])
+        if (dirtyFlags[3])
         {
             BuildItemInfoPanel();
         }
 
         /* Build the shop panel */
-        if (dirtyFlags[3])
+        if (dirtyFlags[4])
         {
             BuildShopPanel();
         }
@@ -112,15 +127,47 @@ public class HangarUI : MonoBehaviour
     /* Build the mech select buttons (top?) of the screen */
     void BuildMechSelectButtons()
     {
-        foreach (Transform child in mechSelBtnParent.transform)
+        /* Disable buttons based on available mechs */
+        for (int index = 0; index < 4; index++)
         {
-            Destroy(child.gameObject);
-        }
+            mechSelectButtons[index].SetActive(true);
 
-        foreach (Mech mech in GameManager._instance.availableMechs)
-        {
-            GameObject button = Instantiate(mechSelBtnPrefab);
+            if (HangarManager._instance.currentlySelectedMechIndex == index)
+                mechSelectButtons[index].GetComponent<ButtonGlow>().SetGlowActive(true);
+            else
+                mechSelectButtons[index].GetComponent<ButtonGlow>().SetGlowActive(false);
         }
+    }
+
+    /* Build the mech select buttons (top?) of the screen */
+    void BuildSectionSelectButtons()
+    {
+        
+    }
+
+    /* Build the mech select buttons (top?) of the screen */
+    void BuildSubsectionSelectButtons()
+    {
+        /* TOD: Fix for drag and drop and instantiate pref..?
+        for (int index = 0; index < 5; index++)
+        {
+
+
+            subsectionSelectButtons[index].SetActive(false);
+
+            if (HangarManager._instance.currentylSelectedSectionIndex == -1)
+                continue;
+
+            if (index < GameManager._instance.availableMechs[HangarManager._instance.currentlySelectedMechIndex].GetSubsectionCountByIndex(index))
+            {
+                subsectionSelectButtons[index].SetActive(true);
+
+                // Set the stuff here
+                //subsectionSelectButtons[index].
+            }
+
+        }
+        */
     }
 
     /* Build the mech info panel (left?) of the screen */

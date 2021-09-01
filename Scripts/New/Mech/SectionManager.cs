@@ -19,26 +19,17 @@ public class SectionManager : MonoBehaviour
     public Vector3 cameraOffset;
 
     [Header ("Parent Transforms")]
-    [SerializeField]
     Transform torsoParent;
-    [SerializeField]
     Transform headParent;
-    [SerializeField]
     Transform leftLegParent;
-    [SerializeField]
     Transform rightLegParent;
-    [SerializeField]
     Transform LeftArmParent;
-    [SerializeField]
     Transform rightArmParent;
-    [SerializeField]
     Transform leftShoulderParent;
-    [SerializeField]
     Transform rightShoulderParent;
 
     [Header("Section Stats")]
-    [SerializeField]
-    Section torsoSection;
+    public Section torsoSection;
     [SerializeField]
     Section headSection;
     [SerializeField]
