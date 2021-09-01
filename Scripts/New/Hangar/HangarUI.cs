@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class HangarUI : MonoBehaviour
 {
@@ -27,11 +29,14 @@ public class HangarUI : MonoBehaviour
     public GameObject mechInfoPanel;
 
     [Header("Item Info Panel")]
-    /* Mech info panel */
+    /* Item info panel */
     public GameObject itemInfoPanel;
+	public TextMeshProUGUI itemPnlName;
+	public Image itemPnlIcon
+	
 
     [Header("Shop")]
-    /* Mech info panel */
+    /* Shop panel */
     public GameObject shopPanel;
     public GameObject shopItemBtnParent;
     public GameObject shopItemBtnPrefab;
@@ -179,7 +184,10 @@ public class HangarUI : MonoBehaviour
     /* Build the item info panel (right?) of the screen */
     void BuildItemInfoPanel()
     {
-
+		Item item = HangarManager._instance.currentlySelectedMechItem;
+		
+		itemPnlName.text = item.name;
+		itemPnlIcon.sprite = item.icon;
     }
 
     /* Build the shop panel */

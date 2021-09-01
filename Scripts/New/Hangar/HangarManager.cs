@@ -16,11 +16,12 @@ public class HangarManager : MonoBehaviour
     /* -1: Nothing
      * 0: Torso
      * 1: Head
-     * 2: Legs
-     * 3: Left Arm
-     * 4: Right Arm
-     * 5: Left Shoulder
-     * 6: Right Shoulder 
+     * 2: L Leg
+     * 3: R Leg
+     * 4: Left Arm
+     * 5: Right Arm
+     * 6: Left Shoulder
+     * 7: Right Shoulder 
      */
     public int currentylSelectedSectionIndex = -1;
 
@@ -28,6 +29,8 @@ public class HangarManager : MonoBehaviour
      * x: Subsection index
      */
     public int currentlySelectedSubsectionIndex = -1;
+
+	public Item currentlySelectedMechItem;
 
     [Header("Camera")]
     Camera mainHangarCamera;
@@ -117,6 +120,16 @@ public class HangarManager : MonoBehaviour
         lookAtTarget.transform.position = (Vector3.right * currentlySelectedMechIndex * mechSpacing) + Vector3.up * 1.3f;
         
     }
+
+	/*
+	 *	Build item info pnl
+	 */
+	public void SelectMechItem(Item item)
+	{
+		currentlySelectedMechItem = item;
+		
+		HangarUI._instance.MakeDirty(false, false, false, true, false);
+	}
 
     /*
      *  Equip/Swap the equipped item on the mech
