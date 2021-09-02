@@ -32,7 +32,7 @@ public class HangarUI : MonoBehaviour
     /* Item info panel */
     public GameObject itemInfoPanel;
 	public TextMeshProUGUI itemPnlName;
-	public Image itemPnlIcon
+    public Image itemPnlIcon;
 	
 
     [Header("Shop")]
@@ -185,9 +185,12 @@ public class HangarUI : MonoBehaviour
     void BuildItemInfoPanel()
     {
 		Item item = HangarManager._instance.currentlySelectedMechItem;
-		
+
+        if (item == null)
+            return;
+
 		itemPnlName.text = item.name;
-		itemPnlIcon.sprite = item.icon;
+		//itemPnlIcon.sprite = item.icon;
     }
 
     /* Build the shop panel */

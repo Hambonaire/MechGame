@@ -8,7 +8,7 @@ public class ShopItem : MonoBehaviour
 {
     public bool isSelected = false;
 
-    public InfoPanel infoRef;
+    //public InfoPanel infoRef;
     public Shop shopRef;
 
     public Item myItem;
@@ -104,15 +104,15 @@ public class ShopItem : MonoBehaviour
     void OnBuyPressed()
     {
         //IncreaseAmountInInventory(1);
-        InventoryManager.Instance.Add(myItem);
-        buyButton.gameObject.SetActive(false);
-        equipButton.gameObject.SetActive(true);
+       // InventoryManager.Instance.Add(myItem);
+       // buyButton.gameObject.SetActive(false);
+       // equipButton.gameObject.SetActive(true);
     }
 
     void OnEquipPressed()
     {
         //InventoryManager.Instance.Add(myItem);
         //InventoryManager.Instance.Add(myItem);
-        EquipmentManager.Instance.Equip(myItem, null);
+       // EquipmentManager.Instance.Equip(myItem, null);
     }
 }

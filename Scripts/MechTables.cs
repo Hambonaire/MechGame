@@ -23,7 +23,9 @@ public class MechTables : MonoBehaviour
 	{
 		foreach (WeaponItem item in weaponTable)
 		{
-			if (item.tier <= tier && (int)item.rarity <= rarity)
+			//if (item.tier <= tier && (int)item.rarity <= rarity)
 		}
+
+		return null;
 	}
 }

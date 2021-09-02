@@ -52,10 +52,10 @@ public class Shop : MonoBehaviour
 	 */
 	void GenerateItemList()
 	{
-		itemTable 
-		weaponTable 
-		mechTemplateTable
-		mechPatternTable
+		//itemTable 
+		//weaponTable 
+		//mechTemplateTable
+		//mechPatternTable
 	}
 	
 	public void BuyItem()
