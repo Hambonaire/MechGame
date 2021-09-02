@@ -23,6 +23,7 @@ public class HangarUI : MonoBehaviour
     /* Subsection buttons */
     public GameObject subsectionButtonContent;
     public List<GameObject> subsectionSelectButtons = new List<GameObject>();
+	public GameObject mechItemButtonPrefab;
 
     [Header("Mech Info Panel")]
     /* Mech info panel */
@@ -153,6 +154,15 @@ public class HangarUI : MonoBehaviour
     /* Build the mech select buttons (top?) of the screen */
     void BuildSubsectionSelectButtons()
     {
+		/* Destroy old ItemButtons first */
+		
+		
+		for (int index = 0; index < GameManager._instance.availableMechs[HangarManager._instance.currentlySelectedMechIndex].GetSubsectionCountByIndex(index) ; index++)
+		{
+			var newButton = Instantiate(mechItemButtonPrefab);
+			newButton = GetComponent<
+		}
+		
         /* TOD: Fix for drag and drop and instantiate pref..?
         for (int index = 0; index < 5; index++)
         {
