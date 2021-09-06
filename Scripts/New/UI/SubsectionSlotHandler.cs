@@ -50,8 +50,17 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
     public void OnItemDrop(PointerEventData eventData)
 	{
         // Section has space and its a mechitembutton
-		if (handlerItems.Count < GameManager._instance.availableMechs[HangarManager._instance.currentlySelectedMechIndex].GetSubsectionCountByIndex(HangarManager._instance.currentylSelectedSectionIndex) && eventData.pointerDrag.GetComponent<MechItemButton>() != null)
+		if (handlerItems.Count < GameManager._instance.availableMechs[HangarManager._instance.currentlySelectedMechIndex].GetSubsectionCountByIndex(HangarManager._instance.currentylSelectedSectionIndex) 
+			&& eventData.pointerDrag.GetComponent<MechItemButton>() != null)
         {
+			// TODO: Make this better... create separate lists in Mech.cs..?
+			// If not weapon but trying to slot into arms or shoulders
+			if (eventData.pointerDrag.GetComponent<MechItemButton>().myItem is Accessory
+				&& HangarManager._instance.currentylSelectedSectionIndex >= (int) SectionIndex.leftArm)
+				return;
+			else if (eventData.pointerDrag.GetComponent<MechItemButton>().myItem is Weapon
+				&& HangarManager._instance.currentylSelectedSectionIndex < (int) SectionIndex.leftArm)
+			
             eventData.pointerDrag.GetComponent<MechItemButton>().ChangeHandler(this as ItemSlotHandler);
 
             handlerItems.Add(new ListItem(1, eventData.pointerDrag.GetComponent<MechItemButton>().myItem));

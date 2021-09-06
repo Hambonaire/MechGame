@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum WeaponSlot { Primary, Secondary, Artillery }
+
 public enum FireType { Regular, Beam, Charge, Multi}
 
 public enum WeaponType { Ballistic, Energy, Missile }

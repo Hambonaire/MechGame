@@ -14,6 +14,13 @@ using UnityEngine;
 
 public enum SectionIndex { torso, head, leftLeg, rightLeg, leftArm, rightArm, leftShoulder, rightShoulder};
 
+public class WeaponStruct
+{
+	public Weapon[] primaries;
+	public Weapon[] secondaries;
+	public Weapon[] artillery;
+}
+
 [System.Serializable]
 public class Mech
 {
@@ -33,14 +40,25 @@ public class Mech
     public MechBase mechBaseRef;
 
     /* Weapons/Items sriptable object refs */
-    Item[] equippedTorsoItems;
-    Item[] equippedHeadItems;
-    Item[] equippedLeftLegItems;
-    Item[] equippedRightLegItems;
+    Accessory[] equippedTorsoItems;
+    Accessory[] equippedHeadItems;
+    Accessory[] equippedLeftLegItems;
+    Accessory[] equippedRightLegItems;
+	
     [SerializeField]
-    Item[] equippedLeftArmWeapons;
+    Item[] equippedLeftArmPrimaries;
+	[SerializeField]
+    Item[] equippedLeftArmSecondaries;
+	[SerializeField]
+    Item[] equippedLeftArmArtillery;
+	
     [SerializeField]
+    Item[] equippedRightArmPrimaries;
+	[SerializeField]
+    Item[] equippedRightArmSecondaries;
+	[SerializeField]
     Item[] equippedRightArmWeapons;
+	
     Item[] equippedLeftShoulderWeapons;
     Item[] equippedRightShoulderWeapons;
 
