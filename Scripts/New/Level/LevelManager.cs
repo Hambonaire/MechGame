@@ -18,6 +18,8 @@ public class LevelManager : MonoBehaviour
 	public Transform playerSpawn;
 
     public GameObject playerMech;
+    public MechController playerMechController;
+    public MechManager playerMechManager;
 
     public List<GameObject> hostileMechs = new List<GameObject>();
 
@@ -60,6 +62,8 @@ public class LevelManager : MonoBehaviour
 		MechBuilder builder = new MechBuilder();
 
         playerMech = builder.BuildFromMechObj(GameManager._instance.availableMechs[0], Vector3.zero, true, true, false);
+        playerMechManager = playerMech.GetComponent<MechManager>();
+        playerMechController = playerMech.GetComponent<MechController>();
 
         //playerMech.GetComponent<PlayerController>().AttachCamera(playerCam);
     }

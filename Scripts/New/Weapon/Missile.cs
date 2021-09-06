@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    bool track;
+
     public Transform target;
     private float rocketTurnSpeed;
     private float rocketSpeed;
@@ -21,6 +23,8 @@ public class Missile : MonoBehaviour
 
         timerSinceLaunch_Contor = 0;
         objectLifeTimerValue = 10;
+
+        track = true;
     }
 
     // Update is called once per frame
@@ -34,7 +38,7 @@ public class Missile : MonoBehaviour
             {
                 transform.Translate(Vector3.forward * rocketSpeed * Time.deltaTime);
             }
-            else if (timerSinceLaunch_Contor > 0.25)
+            else if (timerSinceLaunch_Contor > 0.1)
             {
                 if ((target.position - transform.position).magnitude >= 8)
                 {
@@ -43,17 +47,29 @@ public class Missile : MonoBehaviour
                 }
                 else
                 {
-                    randomOffset = 2f;
+                    //track = false;
+
+                    randomOffset = 3f;
                     //if close to target
                     if ((target.position - transform.position).magnitude < 4)
                     {
-                        rocketTurnSpeed = 1000.0f;
+                        track = false;
+                    }
+                    else if ((target.position - transform.position).magnitude < 6)
+                    {
+                        rocketTurnSpeed = 50.0f;
                     }
                 }
 
-                Vector3 direction = target.position - transform.position + Random.insideUnitSphere * randomOffset;
-                direction.Normalize();
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), rocketTurnSpeed * Time.deltaTime);
+                if (track)
+                {
+                    Vector3 direction = target.position - transform.position + Random.insideUnitSphere * randomOffset;
+                    direction.Normalize();
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), rocketTurnSpeed * Time.deltaTime);
+                }
+                else
+                    Debug.Log("Not tracking");
+
                 transform.Translate(Vector3.forward * rocketSpeed * Time.deltaTime);
             }
             else
@@ -70,6 +86,8 @@ public class Missile : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.transform.position) <= 1f)
         {
+            target.GetComponent<HitRegister>()?.RegisterHit(2.0f);
+
             Destroy(gameObject);
         }
     }

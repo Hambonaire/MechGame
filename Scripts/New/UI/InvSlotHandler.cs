@@ -3,17 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InvSlotHandler : MonoBehaviour, IDropHandler
+public class InvSlotHandler : ItemSlotHandler, IDropHandler
 {
-	[SerializeField]
-	GameObject contentObj;
-
-	[SerializeField]
-	GameObject itemButtonPrefab;
-
-	[HideInInspector]
-	List<Item> inventoryItems = new List<Item>();
-
 	public void OnDrop(PointerEventData eventData)
 	{
 		if (eventData.pointerDrag != null)
@@ -22,41 +13,58 @@ public class InvSlotHandler : MonoBehaviour, IDropHandler
 		}
 	}
 
-	public void Build()
+	public new void BuildClean()
 	{
-		inventoryItems.Clear();
+        base.BuildClean();
 
-		foreach (Transform child in contentObj.transform)
-			Destroy(child.gameObject);
-
-		for (int index = 0; index < inventoryItems.Count; index++)
+		for (int index = 0; index < handlerItems.Count; index++)
 		{
 			var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
-			newButton.GetComponent<MechItemButton>().Initialize(inventoryItems[index]);
+			newButton.GetComponent<MechItemButton>().Initialize(handlerItems[index].item, handlerItems[index].count, this as ItemSlotHandler);
 
-			inventoryItems.Add(inventoryItems[index]);
+			//inventoryItems.Add(inventoryItems[index]);
 		}
 	}
 
-	public void ParseItemsFromButtons()
-	{
-		inventoryItems.Clear();
+    public new void ParseItemsFromButtons()
+    {
+        print("Parsing!");
 
-		foreach (Transform child in contentObj.transform)
-		{
-			inventoryItems.Add(child.GetComponent<MechItemButton>().myItem);
-		}
+        handlerItems.Clear();
 
-	}
+        foreach (Transform child in contentObj.transform)
+        {
+            AddItemToList(child.GetComponent<MechItemButton>().myItem, child.GetComponent<MechItemButton>().count);
+        }
 
-	public void OnItemDrop(PointerEventData eventData)
+        BuildFromItemList();
+
+    }
+
+    public new void AddItemToList(Item newItem, int count)
+    {
+        var existingItem = handlerItems.Find(x => x.item.Equals(newItem));
+
+        if (existingItem != null)
+        {
+            existingItem.count += count;
+        }
+        else
+        {
+            handlerItems.Add(new ListItem(count, newItem));
+        }
+    }
+
+    public void OnItemDrop(PointerEventData eventData)
 	{
 		if (eventData.pointerDrag.GetComponent<MechItemButton>() != null)
 		{
-			inventoryItems.Add(eventData.pointerDrag.GetComponent<MechItemButton>().myItem);
+            AddItemToList(eventData.pointerDrag.GetComponent<MechItemButton>().myItem, eventData.pointerDrag.GetComponent<MechItemButton>().count);
 
 			eventData.pointerDrag.transform.parent = contentObj.transform;
-			eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+
+            //BuildFromItemList();
 		}
 
 	}

@@ -83,6 +83,16 @@ public class SectionManager : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        if (torsoSection.isDestroyed)
+        {
+            Debug.Log(gameObject.name + " torso was destroyed!");
+
+            gameObject.SetActive(false);
+        }
+    }
+
     public Transform[] GetSectionLinksByIndex(int index)
     {
         if (index == 4)

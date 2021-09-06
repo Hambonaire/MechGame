@@ -18,6 +18,7 @@ public class PlayerController : MechController
 
 		AttachCamera(LevelManager._instance.playerCam);
 
+        // TODO: TESTING PURPOSE ONLY
         myTarget = LevelManager._instance.hostileMechs[0].GetComponent<SectionManager>().torsoSection.gameObject;
     }
 

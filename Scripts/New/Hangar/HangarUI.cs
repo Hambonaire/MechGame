@@ -173,13 +173,13 @@ public class HangarUI : MonoBehaviour
     /* Build the mech select buttons (top?) of the screen */
     void BuildSubectionItemUI()
     {
-        subsectionHandler.Build();
+        subsectionHandler.BuildClean();
     }
 
     /* Build the inventory list + buttons */
     void BuildInventoryItemUI()
     {
-        inventoryHandler.Build();
+        inventoryHandler.BuildClean();
     }
 
     /* Build the mech info panel (left?) of the screen */
@@ -210,13 +210,15 @@ public class HangarUI : MonoBehaviour
     {
         Debug.Log("On Button Drop");
 
-        //
-        inventoryHandler.ParseItemsFromButtons();
-        subsectionHandler.ParseItemsFromButtons();
+        // TODO: Need this until implement remove item from handler on PICKUP
+        //inventoryHandler.ParseItemsFromButtons();
+        //subsectionHandler.ParseItemsFromButtons();
+        inventoryHandler.BuildFromItemList();
+        subsectionHandler.BuildFromItemList();
 
         // Save stuff
         // Modify the mech.cs
-        GameManager._instance.availableMechs[HangarManager._instance.currentlySelectedMechIndex].SetSectionItemsByIndex(HangarManager._instance.currentylSelectedSectionIndex, subsectionHandler.subsectionItems);
+        GameManager._instance.availableMechs[HangarManager._instance.currentlySelectedMechIndex].SetSectionItemsByIndex(HangarManager._instance.currentylSelectedSectionIndex, subsectionHandler.GetItemsAsList());
 
         HangarManager._instance.RebuildMechCurrentIndex();
 

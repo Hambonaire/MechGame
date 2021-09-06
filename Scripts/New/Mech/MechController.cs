@@ -110,4 +110,9 @@ public class MechController : MonoBehaviour
     {
 
     }
+
+    public GameObject GetTarget()
+    {
+        return myTarget;
+    }
 }

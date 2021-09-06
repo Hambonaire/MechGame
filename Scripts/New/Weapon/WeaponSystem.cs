@@ -11,6 +11,7 @@ public class WeaponSystem : MonoBehaviour
 {
 	MechManager mechManager;
 	
+	[SerializeField]
 	GameObject target;
 
 	public bool lockOnCapable;
@@ -135,5 +136,15 @@ public class WeaponSystem : MonoBehaviour
 			lockOnProgress += lockOnTime / Time.deltaTime;
 		else
 			lockOnProgress -= lockOnTime / Time.deltaTime;
+	}
+
+	public GameObject GetMyTarget()
+    {
+		return target;
+    }
+	
+	public void SetMyTarget(GameObject newTarget)
+    {
+		target = newTarget;
 	}
 }

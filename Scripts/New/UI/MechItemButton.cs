@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
 public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
+    [SerializeField]
+    ItemSlotHandler myHandler;
+
     Canvas canvas;
     RectTransform rectTransform;
 	CanvasGroup cGroup;
@@ -13,8 +17,11 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     Transform lastParent;
 
 	public Item myItem;
+    public int count;
 
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI countText;
+    public Image iconSprite;
     //public TextMeshProUGUI 
 
     void Start()
@@ -23,23 +30,42 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
         cGroup = GetComponent<CanvasGroup>();
 
         canvas = HangarUI._instance.parentCanvas;
-
-        Initialize(null);
     }
 
-	public void Initialize(Item newItem)
+	public void Initialize(Item newItem, int count, ItemSlotHandler handler)
 	{
-        if (newItem != null)
-		    myItem = newItem;
-        
-        if (myItem != null)
-            nameText.text = myItem.name;
-	}
+        print("here");
+        print(handler.gameObject.name);
 
+        myHandler = handler;
+
+        if (newItem != null)
+        {
+            myItem = newItem;
+            this.count = count;
+        }
+
+        if (myItem != null)
+        {
+            nameText.text = myItem.name;
+            if (count > 1)
+                countText.text = "x" + count;
+            else
+                countText.text = "";
+        }
+    }
+
+    /* 
+     *  When a button is in the inventory section and picked up
+     *  - 
+     * 
+     */
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("On Begin Drag");
 		cGroup.blocksRaycasts = false;
+
+        myHandler.RemoveItemFromList(myItem, 1);
 
         lastParent = transform.parent;
 
@@ -63,9 +89,13 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
             //Debug.Log("Not in a handler");
             transform.parent = lastParent;
 
+            // Add the item back in the manner that the handler would like (no dupes for inv)
+            myHandler.AddItemToList(myItem, 1);
         }
-
-        HangarUI._instance.OnItemButtonChange();
+        else
+        {
+            HangarUI._instance.OnItemButtonChange();
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -76,5 +106,10 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     public void OnDrop(PointerEventData eventData)
     {
         //Debug.Log("On Drop");
+    }
+
+    public void ChangeHandler(ItemSlotHandler newHandler)
+    {
+        myHandler = newHandler;
     }
 }
