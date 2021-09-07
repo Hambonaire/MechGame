@@ -2,6 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  Mech objects (not GameObjects) are held in memory as the complete mechs
+ *  - Has Base Model & equipped weapons and items
+ *  
+ *  Mech's are built from the MechBase scriptable object reference & equipped items lists
+ *  - Mech builder creates the base model
+ *  - Mech builder creates the weapon models and places refs in the MechManager in the new mech's encapsulating GameObject 
+ *  
+ */
+
+public enum SectionIndex { torso, head, leftLeg, rightLeg, leftArm, rightArm, leftShoulder, rightShoulder};
+
+/* For passing items from scripts, not for usage in the Mech really */
+public class ItemStruct
+{
+    public SectionIndex refIndex;
+
+    public Item[] items;
+
+    public ItemStruct(int size = 1)
+    {
+        items = new Item[size];
+    }
+
+    public ItemStruct(Item[] _items)
+    {
+        items = _items;
+    }
+}
+
+/* This extended class does get used as holder for items for corresponding wep sections */
+public class WeaponStruct : ItemStruct
+{
+	public WeaponItem[] primary;
+	public WeaponItem[] secondary;
+	public WeaponItem[] tertiary;
+
+    public WeaponStruct(int size = 1)
+    {
+        primary = new WeaponItem[size];
+        secondary = new WeaponItem[size];
+        tertiary = new WeaponItem[size];
+    }
+}
+
 [System.Serializable]
 public class Mech
 {
@@ -9,126 +54,162 @@ public class Mech
      * -1: Nothing
      * 0: Torso
      * 1: Head
-     * 2: Legs
-     * 3: Left Arm
-     * 4: Right Arm
-     * 5: Left Shoulder
-     * 6: Right Shoulder 
+     * 2: Left Leg
+     * 3: Right Leg
+     * 4: Left Arm
+     * 5: Right Arm
+     * 6: Left Shoulder
+     * 7: Right Shoulder 
      */
 
     /* Mech Base scriptable object ref */
     public MechBase mechBaseRef;
 
     /* Weapons/Items sriptable object refs */
-    Item[] equippedTorsoItems;
-    Item[] equippedHeadItems;
-    Item[] equippedLegItems;
+    Accessory[] equippedTorsoItems;
+    Accessory[] equippedHeadItems;
+    Accessory[] equippedLeftLegItems;
+    Accessory[] equippedRightLegItems;
+	
     [SerializeField]
-    Item[] equippedLeftArmWeapons;
-    [SerializeField]
-    Item[] equippedRightArmWeapons;
-    Item[] equippedLeftShoulderWeapons;
-    Item[] equippedRightShoulderWeapons;
-
-    /* Weapon Gameobject refs */
-    List<GameObject> equippedLeftArmObj;
-    List<GameObject> equippedRightArmObj;
-    List<GameObject> equippedLeftShoulderObj;
-    List<GameObject> equippedRightShoulderObj;
+    WeaponStruct equippedLeftArmWeapons;
+	
+	[SerializeField]
+    WeaponStruct equippedRightArmWeapons;
+	
+    WeaponStruct equippedLeftShoulderWeapons;
+    WeaponStruct equippedRightShoulderWeapons;
 
     public Mech()
     {
-        equippedTorsoItems = new Item[1];
-        equippedHeadItems = new Item[1];
-        equippedLegItems = new Item[1];
-        equippedLeftArmWeapons = new Item[1];
-        equippedRightArmWeapons = new Item[1];
-        equippedLeftShoulderWeapons = new Item[1];
-        equippedRightShoulderWeapons = new Item[1];
+        equippedTorsoItems = new Accessory[1];
+        equippedHeadItems = new Accessory[1];
+        equippedLeftLegItems = new Accessory[1];
+        equippedRightLegItems = new Accessory[1];
 
-        equippedLeftArmObj = new List<GameObject>();
-        equippedRightArmObj = new List<GameObject>();
-        equippedLeftShoulderObj = new List<GameObject>();
-        equippedRightShoulderObj = new List<GameObject>();
+        equippedLeftArmWeapons = new WeaponStruct();
+        equippedRightArmWeapons = new WeaponStruct();
+        equippedLeftShoulderWeapons = new WeaponStruct();
+        equippedRightShoulderWeapons = new WeaponStruct();
     }
 
     public Mech(MechBase mechBase)
     {
         mechBaseRef = mechBase;
 
-        equippedTorsoItems = new Item[mechBaseRef.torsoSlots];
-        equippedHeadItems = new Item[mechBaseRef.headSlots];
-        equippedLegItems = new Item[mechBaseRef.legSlots];
-        equippedLeftArmWeapons = new Item[mechBaseRef.leftArmSlots];
-        equippedRightArmWeapons = new Item[mechBaseRef.rightArmSlots];
-        equippedLeftShoulderWeapons = new Item[mechBaseRef.leftShoulderSlots];
-        equippedRightShoulderWeapons = new Item[mechBaseRef.rightShoulderSlots];
+        equippedTorsoItems = new Accessory[mechBaseRef.torsoSlots];
+        equippedHeadItems = new Accessory[mechBaseRef.headSlots];
+        equippedLeftLegItems = new Accessory[mechBaseRef.leftLegSlots];
+        equippedRightLegItems = new Accessory[mechBaseRef.rightLegSlots];
 
-        equippedLeftArmObj = new List<GameObject>();
-        equippedRightArmObj = new List<GameObject>();
-        equippedLeftShoulderObj = new List<GameObject>();
-        equippedRightShoulderObj = new List<GameObject>();
+        equippedLeftArmWeapons = new WeaponStruct(mechBaseRef.leftArmSlots);
+        equippedRightArmWeapons = new WeaponStruct(mechBaseRef.rightArmSlots);
+        equippedLeftShoulderWeapons = new WeaponStruct(mechBaseRef.leftShoulderSlots);
+        equippedRightShoulderWeapons = new WeaponStruct(mechBaseRef.rightShoulderSlots);
     }
 
-    public Item[] GetSectionItemsByIndex(int index)
+    public ItemStruct GetSectionItemsByIndex(int index)
     {
+        ItemStruct retStruct;// = new ItemStruct();
+
         if (index == 0)
-            return equippedTorsoItems;
+            retStruct = new ItemStruct(equippedTorsoItems);
         else if (index == 1)
-            return equippedHeadItems;
+            retStruct = new ItemStruct(equippedHeadItems);
         else if (index == 2)
-            return equippedLegItems;
+            retStruct = new ItemStruct(equippedLeftLegItems);
         else if (index == 3)
-            return equippedLeftArmWeapons;
+            retStruct = new ItemStruct(equippedRightLegItems);
+
         else if (index == 4)
-            return equippedRightArmWeapons;
+            return equippedLeftArmWeapons;
+
         else if (index == 5)
-            return equippedLeftShoulderWeapons;
+            return equippedRightArmWeapons;
+
         else if (index == 6)
+            return equippedLeftShoulderWeapons;
+
+        else if (index == 7)
             return equippedRightShoulderWeapons;
+
         else
             return null;
     }
 
-    public int GetSubsectionCountByIndex(int index)
+    public int GetSubsectionCountByIndex(int index, int subIndex = 0)
     {
         if (index == 0)
             return mechBaseRef.torsoSlots;
         else if (index == 1)
             return mechBaseRef.headSlots;
         else if (index == 2)
-            return mechBaseRef.legSlots;
+            return mechBaseRef.leftLegSlots;
         else if (index == 3)
+            return mechBaseRef.rightLegSlots;
+
+        else if (index == 4 && subIndex == 0)
             return mechBaseRef.leftArmSlots;
-        else if (index == 4)
+        else if (index == 4 && subIndex == 1)
+            return mechBaseRef.leftArmSlots;
+        else if (index == 4 && subIndex == 2)
+            return mechBaseRef.leftArmSlots;
+
+        else if (index == 5 && subIndex == 0)
             return mechBaseRef.rightArmSlots;
-        else if (index == 5)
+        else if (index == 5 && subIndex == 1)
+            return mechBaseRef.rightArmSlots;
+        else if (index == 5 && subIndex == 2)
+            return mechBaseRef.rightArmSlots;
+
+        else if (index == 6 && subIndex == 0)
             return mechBaseRef.leftShoulderSlots;
-        else if (index == 6)
+        else if (index == 6 && subIndex == 1)
+            return mechBaseRef.leftShoulderSlots;
+        else if (index == 6 && subIndex == 2)
+            return mechBaseRef.leftShoulderSlots;
+
+        else if (index == 7 && subIndex == 0)
+            return mechBaseRef.rightShoulderSlots;
+        else if (index == 7 && subIndex == 1)
+            return mechBaseRef.rightShoulderSlots;
+        else if (index == 7 && subIndex == 2)
             return mechBaseRef.rightShoulderSlots;
         else
             return 0;
     }
 
-    public List<GameObject> GetWeaponObjByIndex(int index)
+    public void SetSectionItemsByIndex(int index, ItemStruct itemStruct)
     {
-        if (index == 3)
-            return equippedLeftArmObj;
-        else if (index == 4)
-            return equippedRightArmObj;
-        else if (index == 5)
-            return equippedLeftShoulderObj;
-        else if (index == 6)
-            return equippedRightShoulderObj;
+        if (index == 0)
+            equippedTorsoItems = itemStruct.items;
+        else if (index == 1)
+            equippedHeadItems = itemStruct.items;
+        else if (index == 2)
+            equippedLeftLegItems = itemStruct.items;
+        else if (index == 3)
+            equippedRightLegItems = itemStruct.items;
+        else if (4 <= index && index <= 7)
+            AddToWList(index, itemStruct as WeaponStruct);
         else
-            return null;
+            return;
     }
-    
-    public void ResetObjLists()
+
+    private void AddToWList(int index, WeaponStruct weaponStruct)
     {
-        equippedLeftArmObj.Clear();
-        equippedRightArmObj.Clear();
-        equippedLeftShoulderObj.Clear();
-        equippedRightShoulderObj.Clear();
+        WeaponStruct refWStruct = new WeaponStruct();
+
+        if (index == 4)
+            refWStruct = equippedLeftArmWeapons;
+        else if (index == 5)
+            refWStruct = equippedRightArmWeapons;
+        else if (index == 6)
+            refWStruct = equippedLeftShoulderWeapons;
+        else if (index == 7)
+            refWStruct = equippedRightShoulderWeapons;
+
+        refWStruct.primary = weaponStruct.primary;
+        refWStruct.secondary = weaponStruct.secondary;
+        refWStruct.tertiary = weaponStruct.tertiary;
     }
 }

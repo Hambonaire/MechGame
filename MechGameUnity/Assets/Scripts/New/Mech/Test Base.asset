@@ -17,8 +17,10 @@ MonoBehaviour:
     type: 3}
   headSlots: 1
   torsoSlots: 1
-  legSlots: 1
+  leftLegSlots: 1
+  rightLegSlots: 1
   leftArmSlots: 1
   rightArmSlots: 1
   leftShoulderSlots: 1
   rightShoulderSlots: 1
+  baseMoveSpeed: 4

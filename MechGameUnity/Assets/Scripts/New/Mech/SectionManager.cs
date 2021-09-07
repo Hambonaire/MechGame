@@ -47,13 +47,32 @@ public class SectionManager : MonoBehaviour
 
     [Header ("Weapon Link Transforms")]
     [SerializeField]
-    Transform[] leftArmLinks;
+    Transform[] leftArmPrimaryLinks;
     [SerializeField]
-    Transform[] rightArmLinks;
+    Transform[] leftArmSecondaryLinks;
     [SerializeField]
-    Transform[] leftShoulderLinks;
+    Transform[] leftArmTertiaryLinks;
+
     [SerializeField]
-    Transform[] rightShoulderLinks;
+    Transform[] rightArmPrimaryLinks;
+    [SerializeField]
+    Transform[] rightArmSecondaryLinks;
+    [SerializeField]
+    Transform[] rightArmTertiaryLinks;
+
+    [SerializeField]
+    Transform[] leftShoulderPrimaryLinks;
+    [SerializeField]
+    Transform[] leftShoulderSecondaryLinks;
+    [SerializeField]
+    Transform[] leftShoulderTertiaryLinks;
+
+    [SerializeField]
+    Transform[] rightShoulderPrimaryLinks;
+    [SerializeField]
+    Transform[] rightShoulderSecondaryLinks;
+    [SerializeField]
+    Transform[] rightShoulderTertiaryLinks;
 
     void Start()
     {
@@ -93,16 +112,35 @@ public class SectionManager : MonoBehaviour
         }
     }
 
-    public Transform[] GetSectionLinksByIndex(int index)
+    public Transform[] GetSectionLinksByIndex(int index, int subindex)
     {
-        if (index == 4)
-            return leftArmLinks;
-        else if (index == 5)
-            return rightArmLinks;
-        else if (index == 6)
-            return leftShoulderLinks;
-        else if (index == 7)
-            return rightShoulderLinks;
+        if (index == 4 && subindex == 0)
+            return leftArmPrimaryLinks;
+        else if (index == 4 && subindex == 1)
+            return leftArmSecondaryLinks;
+        else if (index == 4 && subindex == 2)
+            return leftArmTertiaryLinks;
+
+        else if (index == 5 && subindex == 0)
+            return rightArmPrimaryLinks;
+        else if (index == 5 && subindex == 1)
+            return rightArmSecondaryLinks;
+        else if (index == 5 && subindex == 2)
+            return rightArmTertiaryLinks;
+
+        else if (index == 6 && subindex == 0)
+            return leftShoulderPrimaryLinks;
+        else if (index == 6 && subindex == 1)
+            return leftShoulderSecondaryLinks;
+        else if (index == 6 && subindex == 2)
+            return leftShoulderTertiaryLinks;
+
+        else if (index == 7 && subindex == 0)
+            return rightShoulderPrimaryLinks;
+        else if (index == 7 && subindex == 1)
+            return rightShoulderSecondaryLinks;
+        else if (index == 7 && subindex == 2)
+            return rightShoulderTertiaryLinks;
         else
             return null;
     }

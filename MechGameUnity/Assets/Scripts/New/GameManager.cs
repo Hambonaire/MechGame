@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
     public static GameManager _instance;
-
-    public MechBase testMechBase;
 
     /* List of mechs out of storage in the hangar */
     //[HideInInspector]
@@ -14,22 +13,25 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        _instance = this;
-
-        DontDestroyOnLoad(this.gameObject);
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //Mech testMech = new Mech(testMechBase);
-
-        //availableMechs.Add(testMech);
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

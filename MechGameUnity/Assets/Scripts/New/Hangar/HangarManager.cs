@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  On hangar scene load build each mech from each Mech.cs script in the saved list (Put in GameManager...?)
+ *
+ *
+ */
 public class HangarManager : MonoBehaviour
 {
-    /*
-     *  On hangar scene load build each mech from each Mech.cs script in the saved list (Put in GameManager...?)
-     *
-     *
-     */
-
     public static HangarManager _instance;
+
+    public GameObject[] mechObjects = { null, null, null, null };
 
     public int currentlySelectedMechIndex = 0;
 
     /* -1: Nothing
      * 0: Torso
      * 1: Head
-     * 2: Legs
-     * 3: Left Arm
-     * 4: Right Arm
-     * 5: Left Shoulder
-     * 6: Right Shoulder 
+     * 2: L Leg
+     * 3: R Leg
+     * 4: Left Arm
+     * 5: Right Arm
+     * 6: Left Shoulder
+     * 7: Right Shoulder 
      */
     public int currentylSelectedSectionIndex = -1;
 
@@ -30,6 +32,15 @@ public class HangarManager : MonoBehaviour
      */
     public int currentlySelectedSubsectionIndex = -1;
 
+	public Item currentlySelectedMechItem;
+
+    [Header("Camera")]
+    Camera mainHangarCamera;
+    public GameObject lookAtTarget;
+    Vector3 cameraStartPos;
+
+	int mechSpacing = 6;
+
     void Awake()
     {
         _instance = this;
@@ -37,11 +48,22 @@ public class HangarManager : MonoBehaviour
 
     void Start()
     {
+        //mainHangarCamera = FindObjectOfType<Camera>();
+        //cameraStartPos = mainHangarCamera.transform.position;
+        lookAtTarget.transform.position = Vector3.up * 1.3f;
 
         MechBuilder builder = new MechBuilder();
+		
+		for (int mechIndex = 0; mechIndex < GameManager._instance.availableMechs.Count; mechIndex++)
+		{
+            if (mechIndex > 3)
+                break;
 
-        builder.BuildFromMechObj(GameManager._instance.availableMechs[0]);
+			GameObject mech = builder.BuildFromMechObj(GameManager._instance.availableMechs[mechIndex], Vector3.right * mechIndex * mechSpacing, false, false, false);
+            mech.transform.rotation = Quaternion.Euler(0, 180, 0);
 
+            mechObjects[mechIndex] = mech;
+		}
     }
 
     void Update()
@@ -60,10 +82,15 @@ public class HangarManager : MonoBehaviour
     {
         currentlySelectedMechIndex = index;
 
+        currentylSelectedSectionIndex = -1;
+        currentlySelectedSubsectionIndex = -1;
+
         // TODO: Remove/modify this if buttons use built-in color updates
-        HangarUI._instance.MakeDirty(true, true, true, false);
+        HangarUI._instance.MakeDirty(true, true ,true, true, false, false);
 
         SwapMechView(index);
+
+        HangarUI._instance.EnableUI(false, false, false);
     }
 
     /*
@@ -76,7 +103,9 @@ public class HangarManager : MonoBehaviour
     {
         currentylSelectedSectionIndex = index;
 
-        HangarUI._instance.MakeDirty(false, true, true, false);
+        HangarUI._instance.MakeDirty(false, true, true, true, false, false);
+
+        HangarUI._instance.EnableUI(true, false, true);
     }
 
     /*
@@ -87,17 +116,32 @@ public class HangarManager : MonoBehaviour
     */
     public void SelectMechSubsection(int index)
     {
-        currentlySelectedSubsectionIndex = index;
+        Debug.LogError("SelectMechSubsection DONT USE (probably)");
 
-        HangarUI._instance.MakeDirty(false, true, true, true);
+        //currentlySelectedSubsectionIndex = index;
+
+        //HangarUI._instance.MakeDirty(false, true, true, true, false, false);
     }
 
     /* Move the hangar view from current mech to the selected mech */
     public void SwapMechView(int index)
     {
 
+        lookAtTarget.transform.position = (Vector3.right * currentlySelectedMechIndex * mechSpacing) + Vector3.up * 1.3f;
+        
     }
 
+	/*
+	 *	Build item info pnl
+	 */
+	public void SelectMechItem(Item item)
+	{
+		currentlySelectedMechItem = item;
+		
+		HangarUI._instance.MakeDirty(false, false, false, true, false, false);
+	}
+
+    // TODO
     /*
      *  Equip/Swap the equipped item on the mech
      *  1. modify the Mech.cs for the selected mech
@@ -126,9 +170,20 @@ public class HangarManager : MonoBehaviour
 
         /* Build */
         MechBuilder builder = new MechBuilder();
-        builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex]);
+        builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex], Vector3.right * currentlySelectedMechIndex * mechSpacing, false, false, false);
 
-        HangarUI._instance.MakeDirty(false, true, false, false);
+        HangarUI._instance.MakeDirty(false, true, true, false, false, false);
+    }
+
+    public void RebuildMechCurrentIndex()
+    {
+        MechBuilder builder = new MechBuilder();
+
+        GameObject mech = builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex], Vector3.right * currentlySelectedMechIndex * mechSpacing, false, false, false);
+        mech.transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        Destroy(mechObjects[currentlySelectedMechIndex]);
+        mechObjects[currentlySelectedMechIndex] = mech;
     }
 
     /*
@@ -144,4 +199,10 @@ public class HangarManager : MonoBehaviour
     {
 
     }
+
+    public void ConfirmSection()
+    {
+        HangarUI._instance.EnableUI(false, false, false);
+    }
+
 }
