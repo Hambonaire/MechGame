@@ -92,10 +92,9 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
             // Add the item back in the manner that the handler would like (no dupes for inv)
             myHandler.AddItemToList(myItem, 1);
         }
-        else
-        {
-            HangarUI._instance.OnItemButtonChange();
-        }
+        
+        HangarUI._instance.OnItemButtonChange();
+        
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -8,7 +8,7 @@ public class ListItem
     public int count = 0;
     public Item item;
 
-    public ListItem(int _count, Item _item)
+    public ListItem(Item _item, int _count)
     {
         count = _count;
         item = _item;
@@ -17,6 +17,9 @@ public class ListItem
 
 public class ItemSlotHandler : MonoBehaviour
 {
+    HangarManager hangarManager;
+    GameManager gameManager;
+
     [SerializeField]
     public List<ListItem> handlerItems = new List<ListItem>();
 
@@ -27,7 +30,8 @@ public class ItemSlotHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GameManager._instance;
+        hangarManager = HangerManager._instance;
     }
 
     // Update is called once per frame
@@ -63,28 +67,28 @@ public class ItemSlotHandler : MonoBehaviour
 
         foreach (Transform child in contentObj.transform)
         {
-            handlerItems.Add(
-                new ListItem(child.GetComponent<MechItemButton>().count,
-                child.GetComponent<MechItemButton>().myItem));
+            handlerItems.Add(new ListItem(child.GetComponent<MechItemButton>().myItem, child.GetComponent<MechItemButton>().count));
         }
 
     }
 
-    public void AddItemToList(Item newItem, int count)
+    public bool AddItemToList(Item newItem, int count)
     {
         var existingItem = handlerItems.Find(x => x.item.Equals(newItem));
 
         if (existingItem != null)
         {
             existingItem.count += count;
+            return true;
         }
         else
         {
-            handlerItems.Add(new ListItem(count, newItem));
+            handlerItems.Add(new ListItem(newItem, count));
+            return true;
         }
     }
 
-    public void RemoveItemFromList(Item newItem, int count)
+    public bool RemoveItemFromList(Item newItem, int count)
     {
         var existingItem = handlerItems.Find(x => x.item.Equals(newItem));
 
@@ -96,8 +100,11 @@ public class ItemSlotHandler : MonoBehaviour
 
             if (existingItem.count <= 0)
                 handlerItems.Remove(existingItem);
+
+            return true;
         }
 
+        return false;
     }
 
 }

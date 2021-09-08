@@ -19,23 +19,23 @@ public class MechBuilder
         for (int secIndex = (int) SectionIndex.leftArm; secIndex < (int) SectionIndex.rightShoulder; secIndex++)
         {
             /* Get the ItemStruct for each section */
-            WeaponStruct refWeapons = mech.GetSectionItemsByIndex(secIndex);
+            ItemStruct refStruct = mech.GetSectionItemsByIndex(secIndex);
 
             /* Build from WeaponStruct */
             int subIndex = 0;
-            foreach (WeaponItem wItem in refWeapons.primary)
+            foreach (WeaponItem wItem in refStruct.primary)
             {
                 BuildWeaponClass(wItem, mechManager, sectionManager, secIndex, subIndex);
                 subIndex++;
             }
             subIndex = 0;
-            foreach (WeaponItem wItem in refWeapons.secondary)
+            foreach (WeaponItem wItem in refStruct.secondary)
             {
                 BuildWeaponClass(wItem, mechManager, sectionManager, secIndex, subIndex);
                 subIndex++;
             }
             subIndex = 0;
-            foreach (WeaponItem wItem in refWeapons.tertiary)
+            foreach (WeaponItem wItem in refStruct.tertiary)
             {
                 BuildWeaponClass(wItem, mechManager, sectionManager, secIndex, subIndex);
                 subIndex++;

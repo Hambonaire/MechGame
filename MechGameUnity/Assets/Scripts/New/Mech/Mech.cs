@@ -19,28 +19,16 @@ public class ItemStruct
 {
     public SectionIndex refIndex;
 
-    public Item[] items;
+    public Accessory[] upgrades;
 
-    public ItemStruct(int size = 1)
-    {
-        items = new Item[size];
-    }
-
-    public ItemStruct(Item[] _items)
-    {
-        items = _items;
-    }
-}
-
-/* This extended class does get used as holder for items for corresponding wep sections */
-public class WeaponStruct : ItemStruct
-{
-	public WeaponItem[] primary;
+    public WeaponItem[] primary;
 	public WeaponItem[] secondary;
 	public WeaponItem[] tertiary;
 
-    public WeaponStruct(int size = 1)
+    public ItemStruct(int size = 1)
     {
+        upgrades = new Accessory[size];
+
         primary = new WeaponItem[size];
         secondary = new WeaponItem[size];
         tertiary = new WeaponItem[size];
@@ -66,60 +54,58 @@ public class Mech
     public MechBase mechBaseRef;
 
     /* Weapons/Items sriptable object refs */
-    Accessory[] equippedTorsoItems;
-    Accessory[] equippedHeadItems;
-    Accessory[] equippedLeftLegItems;
-    Accessory[] equippedRightLegItems;
+    ItemStruct equippedTorsoItems;
+    ItemStruct equippedHeadItems;
+    ItemStruct equippedLeftLegItems;
+    ItemStruct equippedRightLegItems;
 	
     [SerializeField]
-    WeaponStruct equippedLeftArmWeapons;
+    ItemStruct equippedLeftArmWeapons;
 	
 	[SerializeField]
-    WeaponStruct equippedRightArmWeapons;
+    ItemStruct equippedRightArmWeapons;
 	
-    WeaponStruct equippedLeftShoulderWeapons;
-    WeaponStruct equippedRightShoulderWeapons;
+    ItemStruct equippedLeftShoulderWeapons;
+    ItemStruct equippedRightShoulderWeapons;
 
     public Mech()
     {
-        equippedTorsoItems = new Accessory[1];
-        equippedHeadItems = new Accessory[1];
-        equippedLeftLegItems = new Accessory[1];
-        equippedRightLegItems = new Accessory[1];
+        equippedTorsoItems = new ItemStruct();
+        equippedHeadItems = new ItemStruct();
+        equippedLeftLegItems = new ItemStruct();
+        equippedRightLegItems = new ItemStruct();
 
-        equippedLeftArmWeapons = new WeaponStruct();
-        equippedRightArmWeapons = new WeaponStruct();
-        equippedLeftShoulderWeapons = new WeaponStruct();
-        equippedRightShoulderWeapons = new WeaponStruct();
+        equippedLeftArmWeapons = new ItemStruct();
+        equippedRightArmWeapons = new ItemStruct();
+        equippedLeftShoulderWeapons = new ItemStruct();
+        equippedRightShoulderWeapons = new ItemStruct();
     }
 
     public Mech(MechBase mechBase)
     {
         mechBaseRef = mechBase;
 
-        equippedTorsoItems = new Accessory[mechBaseRef.torsoSlots];
-        equippedHeadItems = new Accessory[mechBaseRef.headSlots];
-        equippedLeftLegItems = new Accessory[mechBaseRef.leftLegSlots];
-        equippedRightLegItems = new Accessory[mechBaseRef.rightLegSlots];
+        equippedTorsoItems = new ItemStruct(mechBaseRef.torsoSlots);
+        equippedHeadItems = new ItemStruct(mechBaseRef.headSlots);
+        equippedLeftLegItems = new ItemStruct(mechBaseRef.leftLegSlots);
+        equippedRightLegItems = new ItemStruct(mechBaseRef.rightLegSlots);
 
-        equippedLeftArmWeapons = new WeaponStruct(mechBaseRef.leftArmSlots);
-        equippedRightArmWeapons = new WeaponStruct(mechBaseRef.rightArmSlots);
-        equippedLeftShoulderWeapons = new WeaponStruct(mechBaseRef.leftShoulderSlots);
-        equippedRightShoulderWeapons = new WeaponStruct(mechBaseRef.rightShoulderSlots);
+        equippedLeftArmWeapons = new ItemStruct(mechBaseRef.leftArmSlots);
+        equippedRightArmWeapons = new ItemStruct(mechBaseRef.rightArmSlots);
+        equippedLeftShoulderWeapons = new ItemStruct(mechBaseRef.leftShoulderSlots);
+        equippedRightShoulderWeapons = new ItemStruct(mechBaseRef.rightShoulderSlots);
     }
 
     public ItemStruct GetSectionItemsByIndex(int index)
     {
-        ItemStruct retStruct;// = new ItemStruct();
-
         if (index == 0)
-            retStruct = new ItemStruct(equippedTorsoItems);
+            return equippedTorsoItems;
         else if (index == 1)
-            retStruct = new ItemStruct(equippedHeadItems);
+            return equippedHeadItems;
         else if (index == 2)
-            retStruct = new ItemStruct(equippedLeftLegItems);
+            return equippedLeftLegItems;
         else if (index == 3)
-            retStruct = new ItemStruct(equippedRightLegItems);
+            return equippedRightLegItems;
 
         else if (index == 4)
             return equippedLeftArmWeapons;
@@ -182,34 +168,23 @@ public class Mech
     public void SetSectionItemsByIndex(int index, ItemStruct itemStruct)
     {
         if (index == 0)
-            equippedTorsoItems = itemStruct.items;
+            equippedTorsoItems = itemStruct;
         else if (index == 1)
-            equippedHeadItems = itemStruct.items;
+            equippedHeadItems = itemStruct;
         else if (index == 2)
-            equippedLeftLegItems = itemStruct.items;
+            equippedLeftLegItems = itemStruct;
         else if (index == 3)
-            equippedRightLegItems = itemStruct.items;
-        else if (4 <= index && index <= 7)
-            AddToWList(index, itemStruct as WeaponStruct);
+            equippedRightLegItems = itemStruct;
+        else if (index == 4)
+            equippedLeftArmWeapons = itemStruct;
+        else if (index == 5)
+            equippedRightArmWeapons = itemStruct;
+        else if (index == 6)
+            equippedLeftShoulderWeapons = itemStruct;
+        else if (index == 7)
+            equippedRightShoulderWeapons = itemStruct;
         else
             return;
     }
 
-    private void AddToWList(int index, WeaponStruct weaponStruct)
-    {
-        WeaponStruct refWStruct = new WeaponStruct();
-
-        if (index == 4)
-            refWStruct = equippedLeftArmWeapons;
-        else if (index == 5)
-            refWStruct = equippedRightArmWeapons;
-        else if (index == 6)
-            refWStruct = equippedLeftShoulderWeapons;
-        else if (index == 7)
-            refWStruct = equippedRightShoulderWeapons;
-
-        refWStruct.primary = weaponStruct.primary;
-        refWStruct.secondary = weaponStruct.secondary;
-        refWStruct.tertiary = weaponStruct.tertiary;
-    }
 }
