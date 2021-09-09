@@ -113,7 +113,7 @@ public class WeaponExecutable : MonoBehaviour{
             FireMissileVolley(targetobject);
         }
 
-        /**
+        /*
         bool ret = false;
 
         //if (needTarget && (controller.MyTarget == null || playerTargetDistance.value > targetDistance))// && playerTargetInRange.value)
@@ -301,8 +301,8 @@ public class WeaponExecutable : MonoBehaviour{
     {
         isFiring = true;
 
-        if (!isReloading)
-        {
+        //if (!isReloading)
+        //{
             if (Time.time > nextFire && currentAmmo > 0)
             {
                 nextFire = Time.time + weaponItemRef.secBetweenFire;
@@ -319,19 +319,16 @@ public class WeaponExecutable : MonoBehaviour{
                     bullet.transform.LookAt(firingSolutionPoint);
 
                 bullet.transform.rotation *= Quaternion.Euler(randX, randY, randZ);
-
                 bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
 
-                bullet.GetComponent<Bullet>().SetDamage(weaponItemRef.damage);
-
-                Destroy(bullet, bulletLife);
+                bullet.GetComponent<Bullet>().Initialize(weaponItemRef);
             }
-            else if (currentAmmo <= 0)
-            {
-                Reload();
-            }
+            //else if (currentAmmo <= 0)
+            //{
+            //    Reload();
+            //}
 
-        }
+        //}
 
     }
 
@@ -340,33 +337,25 @@ public class WeaponExecutable : MonoBehaviour{
     {
         isFiring = true;
 
-        if (!isReloading)
+        if (Time.time > nextFire && currentAmmo > 0)
         {
-            if (Time.time > nextFire && currentAmmo > 0)
+            nextFire = Time.time + weaponItemRef.secBetweenFire;
+            currentAmmo--;
+
+            /* Random bullet spray */
+            //float randX = Random.Range(-spread / 50, spread / 50);
+            //float randY = Random.Range(-spread / 50, spread / 50);
+            //float randZ = Random.Range(-spread / 50, spread / 50);
+
+            //bullet.transform.rotation *= Quaternion.Euler(randX, randY, randZ);
+
+            //TODO: if (targetObject != null) ;
+
+            for (int locIndex = 0; locIndex < weapon.bulSpwnLoc.Length; locIndex++)
             {
-                nextFire = Time.time + weaponItemRef.secBetweenFire;
-                currentAmmo--;
-
-                /* Random bullet spray */
-                //float randX = Random.Range(-spread / 50, spread / 50);
-                //float randY = Random.Range(-spread / 50, spread / 50);
-                //float randZ = Random.Range(-spread / 50, spread / 50);
-
-                //bullet.transform.rotation *= Quaternion.Euler(randX, randY, randZ);
-
-                //TODO: if (targetObject != null) ;
-
-                for (int locIndex = 0; locIndex < weapon.bulSpwnLoc.Length; locIndex++)
-                {
-                    StartCoroutine(MissileSpawnDelay(weapon.bulSpwnLoc[locIndex], targetObject, 0.05f * locIndex));
-                }
-
+                StartCoroutine(MissileSpawnDelay(weapon.bulSpwnLoc[locIndex], targetObject, 0.05f * locIndex));
             }
 
-            else if (currentAmmo == 0 && !isReloading)
-            {
-                Reload();
-            }
         }
 
     }
@@ -411,7 +400,7 @@ public class WeaponExecutable : MonoBehaviour{
 
         var bullet = Instantiate(weaponItemRef.bullet, location.position, location.rotation);
 
-        bullet.GetComponent<Missile>().target = target.transform;
+        bullet.GetComponent<Missile>().Initialize(weaponItemRef, target.transform);
     }
 
 }

@@ -108,12 +108,8 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 
     public override bool AddItemToList(Item newItem, int count)
     {
-        print("here 1");
-
         if (newItem is WeaponItem)
         {
-            print("here 2");
-
             WeaponItem newWeapon = newItem as WeaponItem;
             WeaponItem[] classArray = new WeaponItem[0];
 
@@ -127,12 +123,8 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
             if (classArray.Length == 0)
                 return false;
 
-            print(classArray.Length);
-
             for (int index = 0; index < classArray.Length; index++)
             {
-                print("here 3");
-
                 if (classArray[index] == null)
                 {
                     classArray[index] = newWeapon;

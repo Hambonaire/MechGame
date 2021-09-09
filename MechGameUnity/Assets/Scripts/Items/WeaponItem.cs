@@ -21,6 +21,7 @@ public class WeaponItem : Item {
     public FireType fireType = FireType.Regular;
     public WeaponType weaponType = WeaponType.Ballistic;
     public WeaponClass weaponClass = WeaponClass.Primary;
+
     //public float chargeTime;
     //public int projectileCount;
     //public float beamTime;
@@ -28,6 +29,7 @@ public class WeaponItem : Item {
 
     public bool autoTarget;
     public bool needTarget;
+
     public float maxTrackDistance;
 
     [Header("Weapon Stats")]
@@ -45,4 +47,8 @@ public class WeaponItem : Item {
     public float bulletSpeed;
     public float bulletLife;
 
+    [Header("Missile Vars")]
+    public Vector2 turnMinMax = new Vector3(50, 400);
+
+    public Vector2 offsetMinMax = new Vector2(3, 50);
 }

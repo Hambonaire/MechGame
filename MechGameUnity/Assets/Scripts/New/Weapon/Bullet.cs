@@ -17,6 +17,13 @@ public class Bullet : MonoBehaviour
         prevPos = transform.position;
     }
 
+    public void Initialize(WeaponItem refItem)
+    {
+        damage = refItem.damage;
+
+        Destroy(gameObject, refItem.bulletLife);
+    }
+
     void Update()
     {
         RaycastHit[] hits = Physics.RaycastAll(new Ray(prevPos, (transform.position - prevPos).normalized), (transform.position - prevPos).magnitude);
@@ -31,22 +38,5 @@ public class Bullet : MonoBehaviour
         }
 
         prevPos = transform.position;
-    }
-
-    public void SetDamage(float inDam)
-    {
-        damage = inDam;
-    }
-
-    public void SetFaction(int inFaction)
-    {
-        if (inFaction == 0)
-        {
-
-        }
-        else if (inFaction == 1)
-        {
-
-        }
     }
 }

@@ -22,10 +22,27 @@ public class MechBase : ScriptableObject
     public int torsoSlots = 0;
     public int leftLegSlots = 0;
     public int rightLegSlots = 0;
-    public int leftArmSlots = 0;
-    public int rightArmSlots = 0;
-    public int leftShoulderSlots = 0;
-    public int rightShoulderSlots = 0;
+
+    public int leftArmSlotsU = 0;
+    public int leftArmSlotsP = 0;
+    public int leftArmSlotsS = 0;
+    public int leftArmSlotsT = 0;
+
+    public int rightArmSlotsU = 0;
+    public int rightArmSlotsP = 0;
+    public int rightArmSlotsS = 0;
+    public int rightArmSlotsT = 0;
+
+    public int leftShoulderSlotsU = 0;
+    public int leftShoulderSlotsP = 0;
+    public int leftShoulderSlotsS = 0;
+    public int leftShoulderSlotsT = 0;
+
+    public int rightShoulderSlotsU = 0;
+    public int rightShoulderSlotsP = 0;
+    public int rightShoulderSlotsS = 0;
+    public int rightShoulderSlotsT = 0;
+
 
 	[Header("Stats")]
 	public float baseMoveSpeed = 5;

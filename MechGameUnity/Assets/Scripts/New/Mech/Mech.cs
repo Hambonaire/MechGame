@@ -21,19 +21,37 @@ public class ItemStruct
 {
     SectionIndex refIndex;
 
+    private int sizeU;
+    private int sizeP;
+    private int sizeS;
+    private int sizeT;
+
     public Accessory[] upgrades = new Accessory[0];
 
     public WeaponItem[] primary = new WeaponItem[0];
 	public WeaponItem[] secondary = new WeaponItem[0];
 	public WeaponItem[] tertiary = new WeaponItem[0];
 
-    public ItemStruct(int size = 0)
+    public ItemStruct(int sizeU = 0, int sizeP = 0, int sizeS = 0, int sizeT = 0)
     {
-        upgrades = new Accessory[size];
+        this.sizeU = sizeU;
+        this.sizeP = sizeP;
+        this.sizeS = sizeS;
+        this.sizeT = sizeT;
 
-        primary = new WeaponItem[size];
-        secondary = new WeaponItem[size];
-        tertiary = new WeaponItem[size];
+        upgrades = new Accessory[sizeU];
+
+        primary = new WeaponItem[sizeP];
+        secondary = new WeaponItem[sizeS];
+        tertiary = new WeaponItem[sizeT];
+    }
+
+    public void Init()
+    {
+        Array.Resize(ref upgrades, sizeU);
+        Array.Resize(ref primary, sizeP);
+        Array.Resize(ref secondary, sizeS);
+        Array.Resize(ref tertiary, sizeT);
     }
 }
 
@@ -102,15 +120,22 @@ public class Mech
         equippedLeftLegItems = new ItemStruct(mechBaseRef.leftLegSlots);
         equippedRightLegItems = new ItemStruct(mechBaseRef.rightLegSlots);
 
-        equippedLeftArmWeapons = new ItemStruct(mechBaseRef.leftArmSlots);
-        equippedRightArmWeapons = new ItemStruct(mechBaseRef.rightArmSlots);
-        equippedLeftShoulderWeapons = new ItemStruct(mechBaseRef.leftShoulderSlots);
-        equippedRightShoulderWeapons = new ItemStruct(mechBaseRef.rightShoulderSlots);
+        equippedLeftArmWeapons = new ItemStruct(mechBaseRef.leftArmSlotsU, mechBaseRef.leftArmSlotsP, mechBaseRef.leftArmSlotsS, mechBaseRef.leftArmSlotsT);
+        equippedRightArmWeapons = new ItemStruct(mechBaseRef.rightArmSlotsU, mechBaseRef.rightArmSlotsP, mechBaseRef.rightArmSlotsS, mechBaseRef.rightArmSlotsT);
+        equippedLeftShoulderWeapons = new ItemStruct(mechBaseRef.leftShoulderSlotsU, mechBaseRef.leftShoulderSlotsP, mechBaseRef.leftShoulderSlotsS, mechBaseRef.leftShoulderSlotsT);
+        equippedRightShoulderWeapons = new ItemStruct(mechBaseRef.rightShoulderSlotsU, mechBaseRef.rightShoulderSlotsP, mechBaseRef.rightShoulderSlotsS, mechBaseRef.rightShoulderSlotsT);
     }
 
     public void Initialize()
     {
-        
+        equippedTorsoItems.Init();
+        equippedHeadItems.Init();
+        equippedLeftLegItems.Init();
+        equippedRightLegItems.Init();
+        equippedLeftArmWeapons.Init();
+        equippedRightArmWeapons.Init();
+        equippedLeftShoulderWeapons.Init();
+        equippedRightShoulderWeapons.Init();
     }
 
     public ItemStruct GetSectionItemsByIndex(int index)

@@ -10,6 +10,7 @@ using UnityEngine;
 public class WeaponSystem : MonoBehaviour
 {
 	MechManager mechManager;
+	MechController mechController;
 	
 	[SerializeField]
 	GameObject target;
@@ -27,6 +28,7 @@ public class WeaponSystem : MonoBehaviour
     void Start()
     {
 		mechManager = GetComponent<MechManager>();
+		mechController = GetComponent<MechController>();
 
 		for (int secIndex = (int)SectionIndex.leftArm; secIndex < (int)SectionIndex.rightShoulder; secIndex++)
         {
@@ -49,8 +51,10 @@ public class WeaponSystem : MonoBehaviour
 			LockOnTarget();
 	}
 
-	public void FireBallisticExe(Vector3 firingSolution)
+	public void FireBallisticExe()
     {
+		Vector3 firingSolution = mechController.GetFiringSolutionPoint();
+
 		for (int execIndex = 0; execIndex < ballisticExecutables.Count; execIndex++)
         {
 			ballisticExecutables[execIndex].Fire(firingSolution, default);
@@ -62,11 +66,14 @@ public class WeaponSystem : MonoBehaviour
 		}
 	}
 
-	public void FireMissileExe(GameObject targetObject)
+	public void FireMissileExe()
     {
+		if (target == null || !target.isActive)
+			FindTargetInView(mechController.mechCamera);
+			
 		for (int execIndex = 0; execIndex < missileExecutables.Count; execIndex++)
 		{
-			missileExecutables[execIndex].Fire(default, targetObject);
+			missileExecutables[execIndex].Fire(default, target);
 
 			//if ( == 1)
 			//{
@@ -109,7 +116,7 @@ public class WeaponSystem : MonoBehaviour
 	*/
 
 	/* Camera from this mech */
-	bool HasTargetInView(Camera mechCam)
+	bool FindTargetInView(Camera mechCam)
 	{
 		var hostiles = LevelManager._instance.GetAllEntitiesInRange(gameObject, 20, Faction.enemy);
 
@@ -132,7 +139,7 @@ public class WeaponSystem : MonoBehaviour
 	
 	void LockOnTarget()
 	{
-		if (HasTargetInView(null))
+		if (FindTargetInView(null))
 			lockOnProgress += lockOnTime / Time.deltaTime;
 		else
 			lockOnProgress -= lockOnTime / Time.deltaTime;

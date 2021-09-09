@@ -25,11 +25,8 @@ public class MechController : MonoBehaviour
 
     protected Vector3 forward;
 
-    [SerializeField]
-    protected GameObject myTarget;
-
-    protected Vector3 firingSolution = new Vector3();
-
+    [HideInInspector]
+    public Camera mechCamera;
 
     protected float gravity = -9.8f;
     public float walkSpeed = 5;
@@ -76,9 +73,9 @@ public class MechController : MonoBehaviour
 
     protected void Fire()
     {
-        mechManager.weaponSystem.FireBallisticExe(firingSolution);
+        mechManager.weaponSystem.FireBallisticExe();
 
-        mechManager.weaponSystem.FireMissileExe(myTarget);
+        mechManager.weaponSystem.FireMissileExe();
 
         /**
         for (int secIndex = (int) SectionIndex.leftArm; secIndex < (int) SectionIndex.rightShoulder; secIndex++)
