@@ -17,30 +17,11 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 			OnItemDrop(eventData);
 		}
     }
-
-	public new void BuildClean()
-	{
-        base.BuildClean();
-
-        subsectionItems = GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex);
-
-        /* Enable the subsection slot icons */
-        for (int index = 0; index < subsectionSlotIcon.Count; index++)
-        {
-            subsectionSlotIcon[index].SetActive(false);
-
-            if (HangarManager._instance.currentylSelectedSectionIndex == -1)
-                continue;
-        }
-
-        BuildFromStruct();
-
-    }
-
+    
     public void OnItemDrop(PointerEventData eventData)
-	{
+    {
         // Section has space and its a mechitembutton
-		if (eventData.pointerDrag.GetComponent<MechItemButton>() != null)
+        if (eventData.pointerDrag.GetComponent<MechItemButton>() != null)
         {
             if (AddItemToList(eventData.pointerDrag.GetComponent<MechItemButton>().myItem, 1))
             {
@@ -54,64 +35,117 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
             {
 
             }
-			
+
             //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
 
             //BuildFromItemList();
-		}
-
-	}
-
-    public new bool RemoveItemFromList(Item newItem, int count)
-    {   
-        if (newItem is WeaponItem)
-        {
-            WeaponItem newWeapon = newItem as WeaponItem;
-            WeaponItem[] classArray;
-
-            if (newWeapon.WeaponClass == WeaponClass.primary)
-                classArray = subsectionItems.primary;
-            if (newWeapon.WeaponClass == WeaponClass.secondary)
-                classArray = subsectionItems.secondary;
-            if (newWeapon.WeaponClass == WeaponClass.tertiary)
-                classArray = subsectionItems.tertiary;
-
-            for (int index = 0; index < classArray.Length; index++)
-            {
-                if (classArray[index].Equals(newWeapon))
-                    classArray[index] = null;
-            }
         }
-        else
+
+    }
+    public override void BuildClean()
+	{
+        base.BuildClean();
+
+        if (HangarManager._instance.currentylSelectedSectionIndex == -1)
+            return;
+
+        subsectionItems = GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex);
+
+        BuildFromStruct();
+
+        /* Enable the subsection slot icons */
+        for (int index = 0; index < subsectionSlotIcon.Count; index++)
         {
-            
+            subsectionSlotIcon[index].SetActive(false);
+
+            if (HangarManager._instance.currentylSelectedSectionIndex == -1)
+                continue;
         }
+
     }
 
-    public new bool AddItemToList(Item newItem, int count)
+    public override void BuildFromItemList()
     {
+        foreach (Transform child in contentObj.transform)
+            Destroy(child.gameObject);
+
+        BuildFromStruct();
+    }
+
+    public override bool RemoveItemFromList(Item newItem, int count)
+    {
+        print("SubSlotHand Remove");
+
         if (newItem is WeaponItem)
         {
             WeaponItem newWeapon = newItem as WeaponItem;
-            WeaponItem[] classArray;
+            WeaponItem[] classArray = new WeaponItem[0];
 
-            if (newWeapon.WeaponClass == WeaponClass.primary)
+            if (newWeapon.weaponClass == WeaponClass.Primary)
                 classArray = subsectionItems.primary;
-            if (newWeapon.WeaponClass == WeaponClass.secondary)
+            else if (newWeapon.weaponClass == WeaponClass.Secondary)
                 classArray = subsectionItems.secondary;
-            if (newWeapon.WeaponClass == WeaponClass.tertiary)
+            else if (newWeapon.weaponClass == WeaponClass.Tertiary)
                 classArray = subsectionItems.tertiary;
 
             for (int index = 0; index < classArray.Length; index++)
             {
+                if (classArray[index] == newWeapon)
+                {
+                    classArray[index] = null;
+                    print("Found removed inv");
+                    return true;
+                }
+            }
+        }
+        else
+        {
+
+        }
+
+        return false;
+    }
+
+    public override bool AddItemToList(Item newItem, int count)
+    {
+        print("here 1");
+
+        if (newItem is WeaponItem)
+        {
+            print("here 2");
+
+            WeaponItem newWeapon = newItem as WeaponItem;
+            WeaponItem[] classArray = new WeaponItem[0];
+
+            if (newWeapon.weaponClass == WeaponClass.Primary)
+                classArray = subsectionItems.primary;
+            if (newWeapon.weaponClass == WeaponClass.Secondary)
+                classArray = subsectionItems.secondary;
+            if (newWeapon.weaponClass == WeaponClass.Tertiary)
+                classArray = subsectionItems.tertiary;
+
+            if (classArray.Length == 0)
+                return false;
+
+            print(classArray.Length);
+
+            for (int index = 0; index < classArray.Length; index++)
+            {
+                print("here 3");
+
                 if (classArray[index] == null)
+                {
                     classArray[index] = newWeapon;
+                    return true;
+                }
             }
         }
         else
         {
             
         }
+
+        return false;
     }
 
     public ItemStruct GetItemsAsList()
@@ -123,6 +157,9 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
     {
         foreach(WeaponItem wItem in subsectionItems.primary)
         {
+            if (wItem == null)
+                return;
+
             var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
 
             //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
@@ -132,6 +169,9 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 
         foreach(WeaponItem wItem in subsectionItems.secondary)
         {
+            if (wItem == null)
+                return;
+
             var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
 
             //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
@@ -141,6 +181,9 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 
         foreach(WeaponItem wItem in subsectionItems.tertiary)
         {
+            if (wItem == null)
+                return;
+
             var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
 
             //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
@@ -148,13 +191,16 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
             newButton.GetComponent<MechItemButton>().Initialize(wItem, 1, this as ItemSlotHandler);
         }
 
-        foreach(Accessory aItem in subsectionItems.accessories)
+        foreach(Accessory aItem in subsectionItems.upgrades)
         {
+            if (aItem == null)
+                return;
+
             var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
 
             //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
 
-            newButton.GetComponent<MechItemButton>().Initialize(wItem, 1, this as ItemSlotHandler);             
+            newButton.GetComponent<MechItemButton>().Initialize(aItem, 1, this as ItemSlotHandler);             
         }
 
         /*

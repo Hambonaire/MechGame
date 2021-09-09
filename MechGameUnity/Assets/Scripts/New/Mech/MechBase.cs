@@ -18,14 +18,14 @@ public class MechBase : ScriptableObject
     public GameObject basePrefab;
 
 	[Header("Slots")]
-    public int headSlots = 1;
-    public int torsoSlots = 1;
-    public int leftLegSlots = 1;
-    public int rightLegSlots = 1;
-    public int leftArmSlots = 1;
-    public int rightArmSlots = 1;
-    public int leftShoulderSlots = 1;
-    public int rightShoulderSlots = 1;
+    public int headSlots = 0;
+    public int torsoSlots = 0;
+    public int leftLegSlots = 0;
+    public int rightLegSlots = 0;
+    public int leftArmSlots = 0;
+    public int rightArmSlots = 0;
+    public int leftShoulderSlots = 0;
+    public int rightShoulderSlots = 0;
 
 	[Header("Stats")]
 	public float baseMoveSpeed = 5;

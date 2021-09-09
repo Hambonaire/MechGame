@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /*
  *  Mech objects (not GameObjects) are held in memory as the complete mechs
@@ -15,17 +16,18 @@ using UnityEngine;
 public enum SectionIndex { torso, head, leftLeg, rightLeg, leftArm, rightArm, leftShoulder, rightShoulder};
 
 /* For passing items from scripts, not for usage in the Mech really */
+[System.Serializable]
 public class ItemStruct
 {
-    public SectionIndex refIndex;
+    SectionIndex refIndex;
 
-    public Accessory[] upgrades;
+    public Accessory[] upgrades = new Accessory[0];
 
-    public WeaponItem[] primary;
-	public WeaponItem[] secondary;
-	public WeaponItem[] tertiary;
+    public WeaponItem[] primary = new WeaponItem[0];
+	public WeaponItem[] secondary = new WeaponItem[0];
+	public WeaponItem[] tertiary = new WeaponItem[0];
 
-    public ItemStruct(int size = 1)
+    public ItemStruct(int size = 0)
     {
         upgrades = new Accessory[size];
 
@@ -54,9 +56,16 @@ public class Mech
     public MechBase mechBaseRef;
 
     /* Weapons/Items sriptable object refs */
+    [SerializeField]
     ItemStruct equippedTorsoItems;
+
+    [SerializeField]
     ItemStruct equippedHeadItems;
+
+    [SerializeField]
     ItemStruct equippedLeftLegItems;
+
+    [SerializeField]
     ItemStruct equippedRightLegItems;
 	
     [SerializeField]
@@ -64,8 +73,11 @@ public class Mech
 	
 	[SerializeField]
     ItemStruct equippedRightArmWeapons;
-	
+
+    [SerializeField]
     ItemStruct equippedLeftShoulderWeapons;
+
+    [SerializeField]
     ItemStruct equippedRightShoulderWeapons;
 
     public Mech()
@@ -94,6 +106,11 @@ public class Mech
         equippedRightArmWeapons = new ItemStruct(mechBaseRef.rightArmSlots);
         equippedLeftShoulderWeapons = new ItemStruct(mechBaseRef.leftShoulderSlots);
         equippedRightShoulderWeapons = new ItemStruct(mechBaseRef.rightShoulderSlots);
+    }
+
+    public void Initialize()
+    {
+        
     }
 
     public ItemStruct GetSectionItemsByIndex(int index)

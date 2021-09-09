@@ -25,19 +25,34 @@ public class MechBuilder
             int subIndex = 0;
             foreach (WeaponItem wItem in refStruct.primary)
             {
-                BuildWeaponClass(wItem, mechManager, sectionManager, secIndex, subIndex);
+
+                if (subIndex >= sectionManager.GetSectionLinksByIndex(secIndex, 0).Length)
+                {
+                    Debug.Log("Too many weapons to links in sec " + secIndex + " primary weapons ");
+                    break;
+                }
+
+                BuildClassWeapon(wItem, mechManager, sectionManager, secIndex, subIndex, 0);
                 subIndex++;
             }
+
             subIndex = 0;
             foreach (WeaponItem wItem in refStruct.secondary)
             {
-                BuildWeaponClass(wItem, mechManager, sectionManager, secIndex, subIndex);
+                if (subIndex >= sectionManager.GetSectionLinksByIndex(secIndex, 1).Length)
+                    break;
+
+                BuildClassWeapon(wItem, mechManager, sectionManager, secIndex, subIndex, 1);
                 subIndex++;
             }
+
             subIndex = 0;
             foreach (WeaponItem wItem in refStruct.tertiary)
             {
-                BuildWeaponClass(wItem, mechManager, sectionManager, secIndex, subIndex);
+                if (subIndex >= sectionManager.GetSectionLinksByIndex(secIndex, 2).Length)
+                    break;
+
+                BuildClassWeapon(wItem, mechManager, sectionManager, secIndex, subIndex, 2);
                 subIndex++;
             }
         }
@@ -50,13 +65,13 @@ public class MechBuilder
         return mechObj;
     }
 
-    private void BuildWeaponClass(WeaponItem wItem, MechManager mechManager, SectionManager sectionManager, int secIndex, int subIndex)
+    private void BuildClassWeapon(WeaponItem wItem, MechManager mechManager, SectionManager sectionManager, int secIndex, int subIndex, int classIndex)
     {
         if (wItem == null)
-            continue;
+            return;
 
         /* Create the Wep */
-        GameObject newWeapon = Object.Instantiate(wItem.prefab, sectionManager.GetSectionLinksByIndex(secIndex)[subIndex]);
+        GameObject newWeapon = Object.Instantiate(wItem.prefab, sectionManager.GetSectionLinksByIndex(secIndex, classIndex)[subIndex]);
         newWeapon.transform.localPosition = Vector3.zero;
 
         /* Add the weapons to the MechManager on the mech encapsulating object */

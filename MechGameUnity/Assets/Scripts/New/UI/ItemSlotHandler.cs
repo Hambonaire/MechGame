@@ -17,8 +17,8 @@ public class ListItem
 
 public class ItemSlotHandler : MonoBehaviour
 {
-    HangarManager hangarManager;
-    GameManager gameManager;
+    protected HangarManager hangarManager;
+    protected GameManager gameManager;
 
     [SerializeField]
     public List<ListItem> handlerItems = new List<ListItem>();
@@ -31,7 +31,7 @@ public class ItemSlotHandler : MonoBehaviour
     void Start()
     {
         gameManager = GameManager._instance;
-        hangarManager = HangerManager._instance;
+        hangarManager = HangarManager._instance;
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class ItemSlotHandler : MonoBehaviour
         
     }
 
-    public void BuildClean()
+    public virtual void BuildClean()
     {
         handlerItems.Clear();
 
@@ -48,7 +48,7 @@ public class ItemSlotHandler : MonoBehaviour
             Destroy(child.gameObject);
     }
 
-    public void BuildFromItemList()
+    public virtual void BuildFromItemList()
     {
         foreach (Transform child in contentObj.transform)
             Destroy(child.gameObject);
@@ -61,7 +61,7 @@ public class ItemSlotHandler : MonoBehaviour
         }
     }
 
-    public void ParseItemsFromButtons()
+    public virtual void ParseItemsFromButtons()
     {
         handlerItems.Clear();
 
@@ -72,7 +72,7 @@ public class ItemSlotHandler : MonoBehaviour
 
     }
 
-    public bool AddItemToList(Item newItem, int count)
+    public virtual bool AddItemToList(Item newItem, int count)
     {
         var existingItem = handlerItems.Find(x => x.item.Equals(newItem));
 
@@ -88,7 +88,7 @@ public class ItemSlotHandler : MonoBehaviour
         }
     }
 
-    public bool RemoveItemFromList(Item newItem, int count)
+    public virtual bool RemoveItemFromList(Item newItem, int count)
     {
         var existingItem = handlerItems.Find(x => x.item.Equals(newItem));
 

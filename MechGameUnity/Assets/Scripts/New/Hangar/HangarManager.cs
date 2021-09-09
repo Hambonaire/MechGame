@@ -163,10 +163,10 @@ public class HangarManager : MonoBehaviour
             return;
 
         /* Remove the item in the selected section -> subsection */
-        GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSectionItemsByIndex(currentylSelectedSectionIndex)[currentlySelectedSubsectionIndex] = null;
+        //GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSectionItemsByIndex(currentylSelectedSectionIndex)[currentlySelectedSubsectionIndex] = null;
 
         /* Put the item in the selected section -> subsection */
-        GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSectionItemsByIndex(currentylSelectedSectionIndex)[currentlySelectedSubsectionIndex] = item;
+        //GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSectionItemsByIndex(currentylSelectedSectionIndex)[currentlySelectedSubsectionIndex] = item;
 
         /* Build */
         MechBuilder builder = new MechBuilder();

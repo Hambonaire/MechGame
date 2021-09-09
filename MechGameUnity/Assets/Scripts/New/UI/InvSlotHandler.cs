@@ -13,7 +13,21 @@ public class InvSlotHandler : ItemSlotHandler, IDropHandler
 		}
 	}
 
-	public new void BuildClean()
+    public void OnItemDrop(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag.GetComponent<MechItemButton>() != null)
+        {
+            AddItemToList(eventData.pointerDrag.GetComponent<MechItemButton>().myItem, eventData.pointerDrag.GetComponent<MechItemButton>().count);
+
+            eventData.pointerDrag.transform.parent = contentObj.transform;
+            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+
+            //BuildFromItemList();
+        }
+
+    }
+
+    public override void BuildClean()
 	{
         base.BuildClean();
 
@@ -26,10 +40,8 @@ public class InvSlotHandler : ItemSlotHandler, IDropHandler
 		}
 	}
 
-    public new void ParseItemsFromButtons()
+    public override void ParseItemsFromButtons()
     {
-        print("Parsing!");
-
         handlerItems.Clear();
 
         foreach (Transform child in contentObj.transform)
@@ -41,31 +53,19 @@ public class InvSlotHandler : ItemSlotHandler, IDropHandler
 
     }
 
-    public new void AddItemToList(Item newItem, int count)
+    public override bool AddItemToList(Item newItem, int count)
     {
         var existingItem = handlerItems.Find(x => x.item.Equals(newItem));
 
         if (existingItem != null)
         {
             existingItem.count += count;
+            return true;
         }
         else
         {
-            handlerItems.Add(new ListItem(count, newItem));
+            handlerItems.Add(new ListItem(newItem, count));
+            return true;
         }
     }
-
-    public void OnItemDrop(PointerEventData eventData)
-	{
-		if (eventData.pointerDrag.GetComponent<MechItemButton>() != null)
-		{
-            AddItemToList(eventData.pointerDrag.GetComponent<MechItemButton>().myItem, eventData.pointerDrag.GetComponent<MechItemButton>().count);
-
-			eventData.pointerDrag.transform.parent = contentObj.transform;
-            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-
-            //BuildFromItemList();
-		}
-
-	}
 }

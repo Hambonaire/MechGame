@@ -34,9 +34,6 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
 
 	public void Initialize(Item newItem, int count, ItemSlotHandler handler)
 	{
-        print("here");
-        print(handler.gameObject.name);
-
         myHandler = handler;
 
         if (newItem != null)

@@ -175,7 +175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a40943d7e2f184799f52f8b693aef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   lockOnCapable: 0
+  ballisticExecutables: []
+  missileExecutables: []
 --- !u!114 &5620739934993923493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6717d0cf77d0208429dad8d2c7c7822a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sectionManager: {fileID: 0}
+  weaponSystem: {fileID: 0}
   baseMoveSpeed: 5
 --- !u!114 &7190662444877935316
 MonoBehaviour:
@@ -205,14 +210,6 @@ MonoBehaviour:
   armRotAxis: {fileID: 1390829848346986718}
   legsAnimator: {fileID: 1035045322268752044}
   cameraOffset: {x: 1.7, y: 3, z: 4}
-  torsoParent: {fileID: 0}
-  headParent: {fileID: 0}
-  leftLegParent: {fileID: 0}
-  rightLegParent: {fileID: 0}
-  LeftArmParent: {fileID: 0}
-  rightArmParent: {fileID: 0}
-  leftShoulderParent: {fileID: 0}
-  rightShoulderParent: {fileID: 0}
   torsoSection: {fileID: 7423617774458393507}
   headSection: {fileID: 0}
   leftLegSection: {fileID: 2334919311020755096}
@@ -221,12 +218,20 @@ MonoBehaviour:
   rightArmSection: {fileID: 5283578006525506193}
   leftShoulderSection: {fileID: 0}
   rightShoulderSection: {fileID: 0}
-  leftArmLinks:
+  leftArmPrimaryLinks:
   - {fileID: 1392625982992595118}
-  rightArmLinks:
+  leftArmSecondaryLinks: []
+  leftArmTertiaryLinks: []
+  rightArmPrimaryLinks:
   - {fileID: 1392701244415026214}
-  leftShoulderLinks: []
-  rightShoulderLinks: []
+  rightArmSecondaryLinks: []
+  rightArmTertiaryLinks: []
+  leftShoulderPrimaryLinks: []
+  leftShoulderSecondaryLinks: []
+  leftShoulderTertiaryLinks: []
+  rightShoulderPrimaryLinks: []
+  rightShoulderSecondaryLinks: []
+  rightShoulderTertiaryLinks: []
 --- !u!143 &4653572474692844614
 CharacterController:
   m_ObjectHideFlags: 0

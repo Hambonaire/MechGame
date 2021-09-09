@@ -20,6 +20,7 @@ public class WeaponItem : Item {
     [Header("Weapon")]
     public FireType fireType = FireType.Regular;
     public WeaponType weaponType = WeaponType.Ballistic;
+    public WeaponClass weaponClass = WeaponClass.Primary;
     //public float chargeTime;
     //public int projectileCount;
     //public float beamTime;

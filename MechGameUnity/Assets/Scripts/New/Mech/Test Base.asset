@@ -15,12 +15,12 @@ MonoBehaviour:
   baseName: Test Base
   basePrefab: {fileID: 6168261378854728456, guid: f9239e64333338a46bb04749a7313629,
     type: 3}
-  headSlots: 1
-  torsoSlots: 1
-  leftLegSlots: 1
-  rightLegSlots: 1
+  headSlots: 0
+  torsoSlots: 0
+  leftLegSlots: 0
+  rightLegSlots: 0
   leftArmSlots: 1
-  rightArmSlots: 1
-  leftShoulderSlots: 1
-  rightShoulderSlots: 1
+  rightArmSlots: 0
+  leftShoulderSlots: 0
+  rightShoulderSlots: 0
   baseMoveSpeed: 4

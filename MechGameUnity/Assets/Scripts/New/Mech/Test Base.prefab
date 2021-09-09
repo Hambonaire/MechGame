@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2119289068826282640}
   - component: {fileID: 328906917022696406}
   m_Layer: 0
-  m_Name: TestBase
+  m_Name: Test Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6717d0cf77d0208429dad8d2c7c7822a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sectionManager: {fileID: 0}
+  weaponSystem: {fileID: 0}
   baseMoveSpeed: 5
 --- !u!114 &7779371067717692075
 MonoBehaviour:
@@ -95,14 +97,6 @@ MonoBehaviour:
   armRotAxis: {fileID: 6163784824063261211}
   legsAnimator: {fileID: 6109162627112028962}
   cameraOffset: {x: 1.7, y: 3, z: 4}
-  torsoParent: {fileID: 0}
-  headParent: {fileID: 0}
-  leftLegParent: {fileID: 0}
-  rightLegParent: {fileID: 0}
-  LeftArmParent: {fileID: 0}
-  rightArmParent: {fileID: 0}
-  leftShoulderParent: {fileID: 0}
-  rightShoulderParent: {fileID: 0}
   torsoSection: {fileID: 4309953590795751684}
   headSection: {fileID: 0}
   leftLegSection: {fileID: 522491875622157221}
@@ -111,12 +105,20 @@ MonoBehaviour:
   rightArmSection: {fileID: 7260254703206404677}
   leftShoulderSection: {fileID: 0}
   rightShoulderSection: {fileID: 0}
-  leftArmLinks:
+  leftArmPrimaryLinks:
   - {fileID: 6166776674856606457}
-  rightArmLinks:
+  leftArmSecondaryLinks: []
+  leftArmTertiaryLinks: []
+  rightArmPrimaryLinks:
   - {fileID: 6164143386475382175}
-  leftShoulderLinks: []
-  rightShoulderLinks: []
+  rightArmSecondaryLinks: []
+  rightArmTertiaryLinks: []
+  leftShoulderPrimaryLinks: []
+  leftShoulderSecondaryLinks: []
+  leftShoulderTertiaryLinks: []
+  rightShoulderPrimaryLinks: []
+  rightShoulderSecondaryLinks: []
+  rightShoulderTertiaryLinks: []
 --- !u!114 &2119289068826282640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +131,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a40943d7e2f184799f52f8b693aef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   lockOnCapable: 0
+  ballisticExecutables: []
+  missileExecutables: []
 --- !u!143 &328906917022696406
 CharacterController:
   m_ObjectHideFlags: 0
