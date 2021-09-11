@@ -141,40 +141,6 @@ public class HangarManager : MonoBehaviour
 		HangarUI._instance.MakeDirty(false, false, false, true, false, false);
 	}
 
-    // TODO
-    /*
-     *  Equip/Swap the equipped item on the mech
-     *  1. modify the Mech.cs for the selected mech
-     *  2. Rebuild the selected Mech
-     *  3. Rebuild the Hangar UI
-     */
-    public void EquipMechItem(Item item)
-    {
-        /* Any selection type is invalid */
-        if (currentlySelectedMechIndex == -1 || currentylSelectedSectionIndex == -1 || currentlySelectedSubsectionIndex == -1)
-            return;
-
-        /* Not enough slots in the selected subsection */
-        if (currentlySelectedSubsectionIndex < GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSubsectionCountByIndex(currentlySelectedSubsectionIndex))
-            return;
-
-        /* Selected Head, Torso, or Legs but item is not an accessory */
-        if (currentylSelectedSectionIndex == 0 || currentylSelectedSectionIndex == 1 || currentylSelectedSectionIndex == 2 && !(item is Accessory))
-            return;
-
-        /* Remove the item in the selected section -> subsection */
-        //GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSectionItemsByIndex(currentylSelectedSectionIndex)[currentlySelectedSubsectionIndex] = null;
-
-        /* Put the item in the selected section -> subsection */
-        //GameManager._instance.availableMechs[currentlySelectedMechIndex].GetSectionItemsByIndex(currentylSelectedSectionIndex)[currentlySelectedSubsectionIndex] = item;
-
-        /* Build */
-        MechBuilder builder = new MechBuilder();
-        builder.BuildFromMechObj(GameManager._instance.availableMechs[currentlySelectedMechIndex], Vector3.right * currentlySelectedMechIndex * mechSpacing, false, false, false);
-
-        HangarUI._instance.MakeDirty(false, true, true, false, false, false);
-    }
-
     public void RebuildMechCurrentIndex()
     {
         MechBuilder builder = new MechBuilder();

@@ -5,8 +5,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     float damage;
-
-    public ParticleSystem hitEffect;
     
     public float explosionRadius = 0;
 

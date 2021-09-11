@@ -20,9 +20,6 @@ public class InvSlotHandler : ItemSlotHandler, IDropHandler
             AddItemToList(eventData.pointerDrag.GetComponent<MechItemButton>().myItem, eventData.pointerDrag.GetComponent<MechItemButton>().count);
 
             eventData.pointerDrag.transform.parent = contentObj.transform;
-            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-
-            //BuildFromItemList();
         }
 
     }
@@ -35,8 +32,6 @@ public class InvSlotHandler : ItemSlotHandler, IDropHandler
 		{
 			var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
 			newButton.GetComponent<MechItemButton>().Initialize(handlerItems[index].item, handlerItems[index].count, this as ItemSlotHandler);
-
-			//inventoryItems.Add(inventoryItems[index]);
 		}
 	}
 

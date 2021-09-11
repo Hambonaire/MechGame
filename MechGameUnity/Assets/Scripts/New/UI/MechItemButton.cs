@@ -22,7 +22,6 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI countText;
     public Image iconSprite;
-    //public TextMeshProUGUI 
 
     void Start()
     {
@@ -53,13 +52,10 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     }
 
     /* 
-     *  When a button is in the inventory section and picked up
-     *  - 
-     * 
+     *  When a button is picked up remove itself preemptively from the handler, and set parent to main canvas and move to front
      */
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("On Begin Drag");
 		cGroup.blocksRaycasts = false;
 
         myHandler.RemoveItemFromList(myItem, 1);
@@ -72,36 +68,29 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("On Drag");
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
+    /* 
+     *  For moving the button back if not dropped on valid container
+     *
+     *  This occurs AFTER onDragDrop so the handler will have already set itself as this button's parent
+     *  if the handler has space and is the correct type etc.
+     */ 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("On End Drag");
 		cGroup.blocksRaycasts = true;
 
+        // Defaulting back to old parent
         if (transform.parent == canvas.transform)
         {
-            //Debug.Log("Not in a handler");
             transform.parent = lastParent;
 
-            // Add the item back in the manner that the handler would like (no dupes for inv)
+            // Return the item back to the handler how it would like (no dupes for inv)
             myHandler.AddItemToList(myItem, 1);
         }
         
-        HangarUI._instance.OnItemButtonChange();
-        
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //Debug.Log("On M Down");
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        //Debug.Log("On Drop");
+        HangarUI._instance.OnItemButtonChange();       
     }
 
     public void ChangeHandler(ItemSlotHandler newHandler)

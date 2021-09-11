@@ -16,6 +16,7 @@ public class WeaponItem : Item {
     public GameObject prefab;
     public Image ammoIcon;
     public GameObject bullet;
+    public ParticleSystem hitEffect;
 
     [Header("Weapon")]
     public FireType fireType = FireType.Regular;
@@ -48,6 +49,8 @@ public class WeaponItem : Item {
     public float bulletLife;
 
     [Header("Missile Vars")]
+    public float explosionRadius = 0.5f;
+
     public Vector2 turnMinMax = new Vector3(50, 400);
 
     public Vector2 offsetMinMax = new Vector2(3, 50);

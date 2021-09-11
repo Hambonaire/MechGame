@@ -5,11 +5,18 @@ using UnityEngine.EventSystems;
 
 public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 {
+    GameObject upgradeContent;
+    GameObject primaryContent;
+    GameObject SecondaryContent;
+    GameObject tertiaryContent;
+
+
 	[SerializeField]
 	List<GameObject> subsectionSlotIcon = new List<GameObject>();
 
     ItemStruct subsectionItems;
 	
+
     public void OnDrop(PointerEventData eventData)
     {
 		if (eventData.pointerDrag != null)
@@ -27,21 +34,16 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
             {
                 eventData.pointerDrag.GetComponent<MechItemButton>().ChangeHandler(this as ItemSlotHandler);
 
-                //handlerItems.Add(new ListItem(1, eventData.pointerDrag.GetComponent<MechItemButton>().myItem));
-
-                eventData.pointerDrag.transform.parent = contentObj.transform;
+                SetItemButtonParent(eventData.pointerDrag.GetComponent<MechItemButton>());
             }
             else
             {
-
+                // Do nothing..? Button itself takes care of resetting it's parent
             }
-
-            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-
-            //BuildFromItemList();
         }
 
     }
+    
     public override void BuildClean()
 	{
         base.BuildClean();
@@ -66,7 +68,13 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 
     public override void BuildFromItemList()
     {
-        foreach (Transform child in contentObj.transform)
+        foreach (Transform child in upgradeContent.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in primaryContent.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in SecondaryContent.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in tertiaryContent.transform)
             Destroy(child.gameObject);
 
         BuildFromStruct();
@@ -74,8 +82,6 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 
     public override bool RemoveItemFromList(Item newItem, int count)
     {
-        print("SubSlotHand Remove");
-
         if (newItem is WeaponItem)
         {
             WeaponItem newWeapon = newItem as WeaponItem;
@@ -93,14 +99,22 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
                 if (classArray[index] == newWeapon)
                 {
                     classArray[index] = null;
-                    print("Found removed inv");
                     return true;
                 }
             }
         }
-        else
+        else if (newItem is Accessory)
         {
+            Accessory newAccessory = newItem as Accessory;
 
+            for (int index = 0; index < subsectionItems.upgrades.Length; index++)
+            {
+                if (subsectionItems.upgrades[index] == newAccessory)
+                {
+                    subsectionItems.upgrades[index] = null;
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -132,9 +146,21 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
                 }
             }
         }
-        else
+        else if (newItem is Accessory)
         {
-            
+            Accessory newAccessory = newItem as Accessory;
+
+            if (subsectionItems.upgrades.Length == 0)
+                return false;
+
+            for (int index = 0; index < subsectionItems.upgrades.Length; index++)
+            {
+                if (subsectionItems.upgrades[index] == null)
+                {
+                    subsectionItems.upgrades[index] = newAccessory;
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -145,17 +171,13 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
         return subsectionItems;
     }
 
-    void BuildFromStruct()
+    private void BuildFromStruct()
     {
         foreach(WeaponItem wItem in subsectionItems.primary)
         {
             if (wItem == null)
                 return;
-
-            var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
-
-            //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
-
+            var newButton = Instantiate(itemButtonPrefab, primaryContent.transform);
             newButton.GetComponent<MechItemButton>().Initialize(wItem, 1, this as ItemSlotHandler);
         }
 
@@ -163,11 +185,7 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
         {
             if (wItem == null)
                 return;
-
-            var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
-
-            //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
-
+            var newButton = Instantiate(itemButtonPrefab, SecondaryContent.transform);
             newButton.GetComponent<MechItemButton>().Initialize(wItem, 1, this as ItemSlotHandler);
         }
 
@@ -175,11 +193,7 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
         {
             if (wItem == null)
                 return;
-
-            var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
-
-            //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
-
+            var newButton = Instantiate(itemButtonPrefab, tertiaryContent.transform);
             newButton.GetComponent<MechItemButton>().Initialize(wItem, 1, this as ItemSlotHandler);
         }
 
@@ -187,30 +201,27 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
         {
             if (aItem == null)
                 return;
-
-            var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
-
-            //handlerItems.Add(new ListItem(1, GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
-
+            var newButton = Instantiate(itemButtonPrefab, upgradeContent.transform);
             newButton.GetComponent<MechItemButton>().Initialize(aItem, 1, this as ItemSlotHandler);             
         }
-
-        /*
-        if (index < gameManager.availableMechs[hangarManager.currentlySelectedMechIndex].GetSubsectionCountByIndex(index))
-        {
-
-            if (gameManager.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index] != null)
-            {
-                var newButton = Instantiate(itemButtonPrefab, contentObj.transform);
-
-                handlerItems.Add(new ListItem(1, 
-                    GameManager._instance.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index]));
-
-                newButton.GetComponent<MechItemButton>().Initialize(gameManager.availableMechs[hangarManager.currentlySelectedMechIndex].GetSectionItemsByIndex(hangarManager.currentylSelectedSectionIndex)[index], 
-                    1, this as ItemSlotHandler);
-            }
-        }
-        */
     }
 
+    private void SetItemButtonParent(MechItemButton button)
+    {
+        if (button.myItem is WeaponItem)
+        {
+            WeaponItem newWeapon = button.myItem as WeaponItem;
+
+            if (newWeapon.weaponClass == WeaponClass.Primary)
+                button.transform.parent = primaryContent.transform;
+            if (newWeapon.weaponClass == WeaponClass.Secondary)
+                button.transform.parent = SecondaryContent.transform;
+            if (newWeapon.weaponClass == WeaponClass.Tertiary)
+                button.transform.parent = tertiaryContent.transform;
+        }
+        else if (button.myItem is Accessory)
+        {
+            button.transform.parent = upgradeContent.transform;
+        }
+    }
 }

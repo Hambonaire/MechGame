@@ -62,11 +62,6 @@ public class HangarUI : MonoBehaviour
         BuildUI();   
     }
 
-    void Update()
-    {
-
-    }
-
     void LateUpdate()
     {
         if (isDirty)
@@ -208,8 +203,6 @@ public class HangarUI : MonoBehaviour
 
     public void OnItemButtonChange()
     {
-        Debug.Log("On Button Drop");
-
         // TODO: Need this until implement remove item from handler on PICKUP
         //inventoryHandler.ParseItemsFromButtons();
         //subsectionHandler.ParseItemsFromButtons();
