@@ -212,12 +212,32 @@ public class HangarUI : MonoBehaviour
     {
 		Item item = HangarManager._instance.currentlySelectedMechItem;
 
-        zzzzroear.aff
+        
+        
+        
 
-        if (item == null)
-            return;
+        if (item != null)
+        {
+            if (item is WeaponItem)
+            {
+                WeaponItem weapon = item as WeaponItem;
 
-		itemPnlName.text = item.name;
+                itemPnlName.text = weapon.name;
+
+                itemPnlHealthVal.text = weapon.bonusIntegrity.ToString();
+
+                itemPnlDamageVal.text = weapon.damage.ToString();
+            }
+            else if (item is Accessory)
+            {
+                Accessory upgrade = item as Accessory;
+
+            }
+
+
+        }
+
+
 		//itemPnlIcon.sprite = item.icon;
     }
 
