@@ -5,17 +5,21 @@ using UnityEngine.EventSystems;
 
 public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
 {
+    [SerializeField]
     GameObject upgradeContent;
+    [SerializeField]
     GameObject primaryContent;
+    [SerializeField]
     GameObject SecondaryContent;
+    [SerializeField]
     GameObject tertiaryContent;
 
 
 	[SerializeField]
 	List<GameObject> subsectionSlotIcon = new List<GameObject>();
 
-    ItemStruct subsectionItems;
-	
+    [SerializeField]
+    public ItemStruct subsectionItems;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -46,7 +50,15 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
     
     public override void BuildClean()
 	{
-        base.BuildClean();
+        //base.BuildClean();
+        foreach (Transform child in upgradeContent.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in primaryContent.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in SecondaryContent.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in tertiaryContent.transform)
+            Destroy(child.gameObject);
 
         if (HangarManager._instance.currentylSelectedSectionIndex == -1)
             return;
@@ -177,6 +189,7 @@ public class SubsectionSlotHandler : ItemSlotHandler, IDropHandler
         {
             if (wItem == null)
                 return;
+
             var newButton = Instantiate(itemButtonPrefab, primaryContent.transform);
             newButton.GetComponent<MechItemButton>().Initialize(wItem, 1, this as ItemSlotHandler);
         }

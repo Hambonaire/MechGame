@@ -103,13 +103,9 @@ public class MechController : MonoBehaviour
         //mechManager.weaponSystem.OnCooldown();
     }
 
-    public virtual void GetFiringSolutionPoint()
+    public virtual Vector3 GetFiringSolutionPoint()
     {
-
+        return Vector3.zero;
     }
 
-    public GameObject GetTarget()
-    {
-        return myTarget;
-    }
 }

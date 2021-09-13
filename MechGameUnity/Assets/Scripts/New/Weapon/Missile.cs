@@ -21,13 +21,11 @@ public class Missile : MonoBehaviour
     {
         this.target = target;
 
-        this.speed = refItem.bulletSpeed;
+        speed = refItem.bulletSpeed;
 
-        this.turnMinMax = refItem.turnMinMax;
-        this.turnSpeed = refItem.turnSpeed;
-
-        this.offsetMinMax = refItem.offsetMinMax;
-        this.lifeTimer = refItem.bulletLife;
+        turnMinMax = refItem.turnMinMax;
+        offsetMinMax = refItem.offsetMinMax;
+        lifeTimer = refItem.bulletLife;
 
         turnSpeed = turnMinMax.y;
         randomOffset = offsetMinMax.x;
@@ -38,7 +36,7 @@ public class Missile : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (target != null && target.isActive)
+        if (target != null && target.gameObject.activeSelf)
         {
             track = true;
 

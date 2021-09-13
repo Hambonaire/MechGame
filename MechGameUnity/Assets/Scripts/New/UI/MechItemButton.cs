@@ -5,23 +5,28 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public class MechItemButton : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
 {
     [SerializeField]
-    ItemSlotHandler myHandler;
+    GameObject selectGlow;
 
-    Canvas canvas;
-    RectTransform rectTransform;
-	CanvasGroup cGroup;
+    private ItemSlotHandler myHandler;
 
-    Transform lastParent;
+    private Canvas canvas;
+    private RectTransform rectTransform;
+    private CanvasGroup cGroup;
+
+    private Transform lastParent;
 
 	public Item myItem;
     public int count;
 
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI countText;
-    public Image iconSprite;
+    [SerializeField]
+    TextMeshProUGUI nameText;
+    [SerializeField]
+    TextMeshProUGUI countText;
+    [SerializeField]
+    Image iconSprite;
 
     void Start()
     {
@@ -48,6 +53,26 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
                 countText.text = "x" + count;
             else
                 countText.text = "";
+
+            
+            if (myItem is WeaponItem)
+            {
+                WeaponItem item = myItem as WeaponItem;
+
+                if (item.weaponClass == WeaponClass.Primary)
+                    GetComponent<Image>().color = Utilities.PRIMARY_ITEM_COLOR;
+                if (item.weaponClass == WeaponClass.Secondary)
+                    GetComponent<Image>().color = Utilities.SECONDARY_ITEM_COLOR;
+                if (item.weaponClass == WeaponClass.Tertiary)
+                    GetComponent<Image>().color = Utilities.TERTIARY_ITEM_COLOR;
+            }
+            else if (myItem is Accessory)
+            {
+                Accessory item = myItem as Accessory;
+
+                GetComponent<Image>().color = Utilities.UPGRADE_ITEM_COLOR;
+            }
+            
         }
     }
 
@@ -96,5 +121,17 @@ public class MechItemButton : MonoBehaviour, IPointerDownHandler, IBeginDragHand
     public void ChangeHandler(ItemSlotHandler newHandler)
     {
         myHandler = newHandler;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Select(true);
+
+        HangarManager._instance.SelectMechItem(this);
+    }
+
+    public void Select(bool val)
+    {
+        selectGlow.SetActive(val);
     }
 }

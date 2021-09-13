@@ -177,32 +177,32 @@ public class Mech
             return mechBaseRef.rightLegSlots;
 
         else if (index == 4 && subIndex == 0)
-            return mechBaseRef.leftArmSlots;
+            return mechBaseRef.leftArmSlotsP;
         else if (index == 4 && subIndex == 1)
-            return mechBaseRef.leftArmSlots;
+            return mechBaseRef.leftArmSlotsP;
         else if (index == 4 && subIndex == 2)
-            return mechBaseRef.leftArmSlots;
+            return mechBaseRef.leftArmSlotsT;
 
         else if (index == 5 && subIndex == 0)
-            return mechBaseRef.rightArmSlots;
+            return mechBaseRef.rightArmSlotsP;
         else if (index == 5 && subIndex == 1)
-            return mechBaseRef.rightArmSlots;
+            return mechBaseRef.rightArmSlotsS;
         else if (index == 5 && subIndex == 2)
-            return mechBaseRef.rightArmSlots;
+            return mechBaseRef.rightArmSlotsT;
 
         else if (index == 6 && subIndex == 0)
-            return mechBaseRef.leftShoulderSlots;
+            return mechBaseRef.leftShoulderSlotsP;
         else if (index == 6 && subIndex == 1)
-            return mechBaseRef.leftShoulderSlots;
+            return mechBaseRef.leftShoulderSlotsS;
         else if (index == 6 && subIndex == 2)
-            return mechBaseRef.leftShoulderSlots;
+            return mechBaseRef.leftShoulderSlotsT;
 
         else if (index == 7 && subIndex == 0)
-            return mechBaseRef.rightShoulderSlots;
+            return mechBaseRef.rightShoulderSlotsP;
         else if (index == 7 && subIndex == 1)
-            return mechBaseRef.rightShoulderSlots;
+            return mechBaseRef.rightShoulderSlotsS;
         else if (index == 7 && subIndex == 2)
-            return mechBaseRef.rightShoulderSlots;
+            return mechBaseRef.rightShoulderSlotsT;
         else
             return 0;
     }

@@ -20,7 +20,7 @@ public class AutoLockOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerTarget = LevelManager._instance.playerMechController.GetTarget();
+        playerTarget = LevelManager._instance.playerMechManager.weaponSystem.GetMyTarget();
 
         if (playerTarget != null)
         {

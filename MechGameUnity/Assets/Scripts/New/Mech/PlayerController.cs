@@ -17,9 +17,6 @@ public class PlayerController : MechController
         characterController = GetComponent<CharacterController>();
 
 		AttachCamera(LevelManager._instance.playerCam);
-
-        // TODO: TESTING PURPOSE ONLY
-        myTarget = LevelManager._instance.hostileMechs[0].GetComponent<SectionManager>().torsoSection.gameObject;
     }
 
      void Update()
@@ -118,12 +115,12 @@ public class PlayerController : MechController
         armRotAxis.rotation = Quaternion.Euler(eulerRotationArms);
     }
 
-    public override void GetFiringSolutionPoint()
+    public override Vector3 GetFiringSolutionPoint()
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Physics.Raycast(ray, out RaycastHit hit);
 
-        firingSolution = hit.point;
+        return hit.point;
     }
 }

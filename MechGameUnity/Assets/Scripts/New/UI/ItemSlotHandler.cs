@@ -20,12 +20,13 @@ public class ItemSlotHandler : MonoBehaviour
     protected HangarManager hangarManager;
     protected GameManager gameManager;
 
+    protected List<ListItem> handlerItems = new List<ListItem>();
+
     [SerializeField]
-    public List<ListItem> handlerItems = new List<ListItem>();
+    protected GameObject contentObj;
 
-    public GameObject contentObj;
-
-    public GameObject itemButtonPrefab;
+    [SerializeField]
+    protected GameObject itemButtonPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -94,8 +95,6 @@ public class ItemSlotHandler : MonoBehaviour
 
         if (existingItem != null)
         {
-            print("Found -> Removing");
-
             existingItem.count -= count;
 
             if (existingItem.count <= 0)

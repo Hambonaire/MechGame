@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  *  On hangar scene load build each mech from each Mech.cs script in the saved list (Put in GameManager...?)
@@ -32,7 +33,9 @@ public class HangarManager : MonoBehaviour
      */
     public int currentlySelectedSubsectionIndex = -1;
 
+
 	public Item currentlySelectedMechItem;
+	MechItemButton currentlySelectedItemButton;
 
     [Header("Camera")]
     Camera mainHangarCamera;
@@ -85,6 +88,8 @@ public class HangarManager : MonoBehaviour
         currentylSelectedSectionIndex = -1;
         currentlySelectedSubsectionIndex = -1;
 
+        SelectMechItem(null);
+
         // TODO: Remove/modify this if buttons use built-in color updates
         HangarUI._instance.MakeDirty(true, true ,true, true, false, false);
 
@@ -102,6 +107,8 @@ public class HangarManager : MonoBehaviour
     public void SelectMechSection(int index)
     {
         currentylSelectedSectionIndex = index;
+
+        SelectMechItem(null);
 
         HangarUI._instance.MakeDirty(false, true, true, true, false, false);
 
@@ -134,11 +141,23 @@ public class HangarManager : MonoBehaviour
 	/*
 	 *	Build item info pnl
 	 */
-	public void SelectMechItem(Item item)
-	{
-		currentlySelectedMechItem = item;
-		
-		HangarUI._instance.MakeDirty(false, false, false, true, false, false);
+	public void SelectMechItem(MechItemButton itemButton)
+    {
+        if (currentlySelectedItemButton != null)
+            currentlySelectedItemButton.Select(false);
+
+        if (itemButton != null)
+        {
+            currentlySelectedItemButton = itemButton;
+            currentlySelectedMechItem = itemButton.myItem;
+        }
+        else
+        {
+            currentlySelectedItemButton = null;
+            currentlySelectedMechItem = null;
+        }
+
+        HangarUI._instance.MakeDirty(false, false, false, true, false, false);
 	}
 
     public void RebuildMechCurrentIndex()
@@ -169,6 +188,18 @@ public class HangarManager : MonoBehaviour
     public void ConfirmSection()
     {
         HangarUI._instance.EnableUI(false, false, false);
+    }
+
+    public void FadeOutItemUI()
+    {
+        HangarUI._instance.subsectionPanel.GetComponent<CanvasGroup>().alpha = 0.15f;
+        HangarUI._instance.inventoryPanel.GetComponent<CanvasGroup>().alpha = 0.15f;
+    }
+
+    public void FadeInItemUI()
+    {
+        HangarUI._instance.subsectionPanel.GetComponent<CanvasGroup>().alpha = 1;
+        HangarUI._instance.inventoryPanel.GetComponent<CanvasGroup>().alpha = 1;
     }
 
 }

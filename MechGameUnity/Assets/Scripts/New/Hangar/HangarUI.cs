@@ -25,6 +25,10 @@ public class HangarUI : MonoBehaviour
     /* Subsection buttons */
     public GameObject subsectionPanel;
     public SubsectionSlotHandler subsectionHandler;
+    public TextMeshProUGUI primaryCountTxt;
+    public TextMeshProUGUI secondaryCountTxt;
+    public TextMeshProUGUI tertiaryCountTxt;
+    public TextMeshProUGUI upgradeCountTxt;
 
     [Header("Inv Item Buttons")]
     /* Inv item buttons */
@@ -38,9 +42,24 @@ public class HangarUI : MonoBehaviour
     [Header("Item Info Panel")]
     /* Item info panel */
     public GameObject itemInfoPanel;
-	public TextMeshProUGUI itemPnlName;
     public Image itemPnlIcon;
-	
+    public TextMeshProUGUI itemPnlName;
+    public TextMeshProUGUI itemPnlPrice;
+    public TextMeshProUGUI itemPnlHealth;
+    public TextMeshProUGUI itemPnlShield;
+    public TextMeshProUGUI itemPnlRegen;
+    public TextMeshProUGUI itemPnlArmorLvl;
+    public TextMeshProUGUI itemPnlArmorHealth;
+    public TextMeshProUGUI itemPnlDamage;
+
+    public TextMeshProUGUI itemPnlHealthVal;
+    public TextMeshProUGUI itemPnlShieldVal;
+    public TextMeshProUGUI itemPnlRegenVal;
+    public TextMeshProUGUI itemPnlArmorLvlVal;
+    public TextMeshProUGUI itemPnlArmorHealthVal;
+    public TextMeshProUGUI itemPnlDamageVal;
+
+
     [Header("Shop")]
     /* Shop panel */
     public GameObject shopPanel;
@@ -169,6 +188,11 @@ public class HangarUI : MonoBehaviour
     void BuildSubectionItemUI()
     {
         subsectionHandler.BuildClean();
+
+        primaryCountTxt.text = "x" + subsectionHandler.subsectionItems.primary.Length.ToString();
+        secondaryCountTxt.text = "x" + subsectionHandler.subsectionItems.secondary.Length.ToString();
+        tertiaryCountTxt.text = "x" + subsectionHandler.subsectionItems.tertiary.Length.ToString();
+        upgradeCountTxt.text = "x" + subsectionHandler.subsectionItems.upgrades.Length.ToString();
     }
 
     /* Build the inventory list + buttons */
@@ -187,6 +211,8 @@ public class HangarUI : MonoBehaviour
     void BuildItemInfoPanel()
     {
 		Item item = HangarManager._instance.currentlySelectedMechItem;
+
+        zzzzroear.aff
 
         if (item == null)
             return;

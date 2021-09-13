@@ -68,7 +68,7 @@ public class WeaponSystem : MonoBehaviour
 
 	public void FireMissileExe()
     {
-		if (target == null || !target.isActive)
+		if (target == null || !target.activeSelf)
 			FindTargetInView(mechController.mechCamera);
 			
 		for (int execIndex = 0; execIndex < missileExecutables.Count; execIndex++)
@@ -82,7 +82,7 @@ public class WeaponSystem : MonoBehaviour
 		}
 	}
 
-	/**
+	/*
 	public void OnCooldown()
 	{
 		for (int secIndex = (int)SectionIndex.leftArm; secIndex < (int)SectionIndex.rightShoulder; secIndex++)
