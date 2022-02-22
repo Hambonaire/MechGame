@@ -1,0 +1,3 @@
+rep "Mecha@Orion_Soft@cloud"
+  path "/"
+    smartbranch "/main"

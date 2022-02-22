@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: MissileBox
+  m_EditorClassIdentifier: 
+  name: Missile Box
+  icon: {fileID: 0}
+  tier: 1
+  rarity: 0
+  price: 1000
+  bonusArmor: 0
+  bonusIntegrity: 0
+  bonusShield: 0
+  bonusShieldRegen: 0
+  description: 
+  manufacturer: 
+  prefab: {fileID: 1194511120266532, guid: f23bec633490d8f4a8525f386a92bd73, type: 3}
+  ammoIcon: {fileID: 0}
+  bullet: {fileID: 1445590625573682, guid: 2cffcdda5f2c5ef4e80d6ea986541df8, type: 3}
+  hitEffect: {fileID: 0}
+  fireType: 1
+  weaponType: 2
+  weaponClass: 0
+  volleyCount: 22
+  volleyDelay: 0.05
+  autoTarget: 1
+  needTarget: 1
+  maxTrackDistance: 100
+  maxAmmo: 220
+  damage: 3
+  secBetweenFire: 10
+  reloadTime: 100
+  bulletSpread: 0
+  bulletSpeed: 25
+  bulletLife: 5
+  explosionRadius: 0.5
+  turnMinMax: {x: 10, y: 200}
+  offsetMinMax: {x: 2, y: 4}

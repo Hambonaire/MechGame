@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d147b6923c4eec4cae878e4ef159db0, type: 3}
+  m_Name: Cannon
+  m_EditorClassIdentifier: 
+  name: Auto Cannon
+  icon: {fileID: 21300000, guid: 895c15ce0aea05840bc9d09f721c577f, type: 3}
+  tier: 0
+  rarity: 0
+  price: 1000
+  bonusArmor: 0
+  bonusIntegrity: 0
+  bonusShield: 0
+  bonusShieldRegen: 0
+  description: 
+  manufacturer: 
+  prefab: {fileID: 1398840141341336, guid: fc73896c649a0774e9025e067ebc42f4, type: 3}
+  ammoIcon: {fileID: 0}
+  bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
+  hitEffect: {fileID: 0}
+  needsAnimationEvent: 1
+  fireType: 0
+  ammoType: 0
+  weaponClass: 0
+  volleyCount: 0
+  volleyDelay: 0
+  autoTarget: 1
+  needTarget: 0
+  maxTrackDistance: 0
+  maxAmmo: 9999
+  damage: 10
+  secBetweenFire: 0
+  reloadTime: 6
+  bulletSpeed: 380
+  bulletLife: 4
+  bulletSpread: 10
+  bloomIncrement: 0.1
+  bloomDecrement: 0.3
+  explosionRadius: 0.5
+  turnMinMax: {x: 50, y: 400}
+  offsetMinMax: {x: 3, y: 50}

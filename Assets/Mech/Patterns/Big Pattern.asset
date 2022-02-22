@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6081369d456c0624ab0743c3734c268c, type: 3}
+  m_Name: Big Pattern
+  m_EditorClassIdentifier: 
+  patternName: Big
+  tier: 0
+  price: 100000
+  mech:
+    mechBaseRef: {fileID: 11400000, guid: 9cc6a7a359935f04fb7761cce9b0fa93, type: 2}
+    equippedTorsoItems:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
+    equippedHeadItems:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
+    equippedLegItems:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
+    equippedLeftArmWeapons:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
+    equippedRightArmWeapons:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
+    equippedLeftShoulderWeapons:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
+    equippedRightShoulderWeapons:
+      upgrades: []
+      primary: []
+      secondary: []
+      tertiary: []
