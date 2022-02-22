@@ -103,6 +103,7 @@ public class LevelManager : MonoBehaviour
         {
             print("Level Completed");
             // Level Over
+            LevelUIManager._instance.ShowLevelEndMenu();
         }
         else
             InitializeObjective(levelObjectives[objectiveIndex]);

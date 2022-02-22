@@ -25,7 +25,7 @@ MonoBehaviour:
   manufacturer: 
   prefab: {fileID: 1398840141341336, guid: fc73896c649a0774e9025e067ebc42f4, type: 3}
   ammoIcon: {fileID: 0}
-  bullet: {fileID: 1576272300944638, guid: 02be5ca9b9c36c54da8ca6d415264fbb, type: 3}
+  bullet: {fileID: 5666567498867774124, guid: 2f49779793101e241b5cfa89cfcd9208, type: 3}
   hitEffect: {fileID: 0}
   needsAnimationEvent: 1
   fireType: 0

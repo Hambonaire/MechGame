@@ -306,14 +306,8 @@ MonoBehaviour:
   torsoRotAxis: {fileID: 4130940724044828434}
   armRotAxis: {fileID: 4130936234663037666}
   legsAnimator: {fileID: 5526593194830892160}
-  cameraOffset: {x: 2, y: 4, z: 5}
+  cameraOffset: {x: 2, y: 3.5, z: 5}
   torsoSection: {fileID: 0}
-  headSection: {fileID: 0}
-  legsSection: {fileID: 0}
-  leftArmSection: {fileID: 0}
-  rightArmSection: {fileID: 0}
-  leftShoulderSection: {fileID: 0}
-  rightShoulderSection: {fileID: 0}
   leftArmPrimaryLinks:
   - {fileID: 4131048039210470258}
   - {fileID: 8212276819091572055}
@@ -345,11 +339,12 @@ MonoBehaviour:
   controllerHUD: {fileID: 0}
   target: {fileID: 0}
   targetCenter: {fileID: 0}
-  lockOnCapable: 0
-  optimalRanges: {x: 10, y: 20, z: 40}
   selectedGroup: 0
   weaponGroups: []
   weaponExecutables: []
+  lockOnCapable: 0
+  optimalRanges: {x: 10, y: 20, z: 40}
+  heat: 0
 --- !u!114 &8788137752339799987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,6 +1069,36 @@ PrefabInstance:
     - target: {fileID: 4925259845646942, guid: 9d662ca9051093244b1d008f3ad8678e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 143950331404161850, guid: 9d662ca9051093244b1d008f3ad8678e,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.016608134
+      objectReference: {fileID: 0}
+    - target: {fileID: 143950331404161850, guid: 9d662ca9051093244b1d008f3ad8678e,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.007506558
+      objectReference: {fileID: 0}
+    - target: {fileID: 143950331404161850, guid: 9d662ca9051093244b1d008f3ad8678e,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.014354429
+      objectReference: {fileID: 0}
+    - target: {fileID: 143950331404161850, guid: 9d662ca9051093244b1d008f3ad8678e,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -2.547207e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 143950331404161850, guid: 9d662ca9051093244b1d008f3ad8678e,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.003607742
+      objectReference: {fileID: 0}
+    - target: {fileID: 143950331404161850, guid: 9d662ca9051093244b1d008f3ad8678e,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.00043191214
       objectReference: {fileID: 0}
     - target: {fileID: 595203925539243948, guid: 9d662ca9051093244b1d008f3ad8678e,
         type: 3}

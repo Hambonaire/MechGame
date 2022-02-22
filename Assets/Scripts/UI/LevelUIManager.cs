@@ -48,6 +48,9 @@ public class LevelUIManager : MonoBehaviour
 
     void ShowUISetup(bool val)
     {
+        GameManager._instance.SetTimeScale(val ? 1 : 0);
+        InputManager._instance.ToggleInput(!val);
+
         Cursor.lockState = val ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = val;
     }
@@ -56,8 +59,6 @@ public class LevelUIManager : MonoBehaviour
     public void PauseToggle()
     {
         paused = !paused;
-        GameManager._instance.SetTimeScale(paused ? 0 : 1);
-        InputManager._instance.ToggleInput(!paused);
 
         pauseMenu.SetActive(paused);
 
@@ -80,9 +81,6 @@ public class LevelUIManager : MonoBehaviour
     // End Level Menuing functions
     public void ShowLevelEndMenu()
     {
-        GameManager._instance.SetTimeScale(0);
-        InputManager._instance.ToggleInput(false);
-
         ShowUISetup(true);
 
         levelEndMenu.SetActive(true);
